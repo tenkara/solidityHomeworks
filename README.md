@@ -1,2 +1,2 @@
-# solidityEthDenBC
-Primarily for the bootcamp homework
+# solidity homeworks from EthDenver bootcamp
+Primarily used for uploading finished work
