@@ -1,13 +1,19 @@
-# Sample Hardhat Project
+This Ballot Project demonstrates an on-chain ballot voting system consisting of proposals that voters can vote on for a winning proposal by following the rules of the Ballot.sol contract.
+This project uses yarn (as package manager), hardhat (as self contained dev environment to deploy and run the Ballot contract locally on a virtualized ethereum node), ethers.js (for connecting to a public blockchain testnet (Goerli), Typescript for writing tests with TDD approach, mocha test framework, chai for TDD/BDD assertions, and dotenv for loading the environment.
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+Run the following tasks to build, deploy and use the contract to vote on proposals:
 
-Try running some of the following tasks:
-
+git clone this repo to your local environment
+ensure node, yarn are installed
+yarn install
+yarn compile
+yarn config set nodeLinker node-modules
+yarn add hardhat --dev
+yarn hardhat init
+"Create a Typescript project"
+.gitignore? y
+yarn add --dev [list of suggested dev dependencies from running the above command]
+yarn add mocha --dev
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
+
+code .
