@@ -1,5 +1,5 @@
 // This script self delegates voting power for a given account 
-// usage: yarn run ts-node --files <*SelfDelegateMyVote.ts> <MyToken contract address> <account address for which to self-delegate voting power>
+// usage: yarn run ts-node --files <*SelfDelegateMyVote.ts> <token contract address> <self delegate account address> <address key #>
 
 import { ethers, Wallet } from "ethers";
 import { MyToken__factory } from "../typechain-types";
