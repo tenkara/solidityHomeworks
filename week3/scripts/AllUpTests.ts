@@ -1,7 +1,8 @@
 import { ethers } from "hardhat";
 import { MyToken__factory } from "../typechain-types";
 
-const MINT_VALUE = ethers.utils.parseEther("10");
+// const MINT_VALUE = ethers.utils.parseEther("10");
+const MINT_VALUE = ethers.utils.parseEther(process.argv[2]);
 
 async function main() {
     const accounts = await ethers.getSigners();

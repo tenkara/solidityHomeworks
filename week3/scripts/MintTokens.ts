@@ -1,9 +1,5 @@
-// Use this script to cast a vote on a proposal in the TokenizedBallot smart contract
-// First command line argument - TokenizedBallot contract address
-// Second command line argument - Proposal number sender wants to vote for
-
-// This script self delegates voting power for a given account 
-// usage: yarn run ts-node --files <*SelfDelegateMyVote.ts> <MyToken contract address> <account address for which to self-delegate voting power>
+// This script mints tokens for a input set of ether and account to a Goerli Testnet 
+// Usage: yarn run ts-node --files <*MintTokens.ts> <contractAddress> <etherAmount> <tokenAddress>
 
 import { ethers } from "ethers";
 import { MyToken__factory } from "../typechain-types";
@@ -17,8 +13,9 @@ dotenv.config();
 async function main() {
     // Parse the proposals from command line arguments
     const contractAdress = process.argv[2];
+    const tokenAmount = ethers.utils.parseEther(process.argv[3]);
     const tokensAddress = process.argv[4];
-    console.log(`Self delegate voting power of account ${tokensAddress} for smart contract at ${contractAdress}...\n`);
+    console.log(`Minting tokens with ${tokenAmount} ether using MyToken smart contract at ${contractAdress} for account ${tokensAddress}`);
     
     // set up a Provider
     const provider = ethers.getDefaultProvider("goerli", process.env.ALCHEMY_API_KEY ?? "");
@@ -31,24 +28,16 @@ async function main() {
     console.log(`Connected to the provider ${network.name} with wallet ${signer.address} and a balance of ${balance}\n`);
     if(balance.eq(0)) throw new Error("Cannot buy tokens with zero balance in the account\n");
 
-    // connect to  MyToken smart contract factory
+    // Attach to  MyToken smart contract factory
     const tokenContractFactory = new MyToken__factory(signer);
     const tokenContract = await tokenContractFactory.attach(contractAdress);
+    // Mint some tokens
+    const mintTx = await tokenContract.mint(tokensAddress, tokenAmount);
+    await mintTx.wait()
+    console.log(`Minted ${tokenAmount} of MyTokens to account ${tokensAddress}\n`);
+    console.log(`Transaction hash is ${mintTx.hash}\n`)
+    }
 
-    // Check the voting power before self-delegation
-    const votes = await tokenContract.getVotes(tokensAddress);
-    console.log(
-        `Account ${tokensAddress} has ${votes.toString()} of MyTokens voting power before self delegating\n`
-    );
-    // Self delegate
-    const delegateTx = await tokenContract.delegate(tokensAddress);
- 
-   // Check the voting power after self-delegation
-   const votesAfter = await tokenContract.getVotes(tokensAddress);
-   console.log(
-       `Account ${tokensAddress} has ${votesAfter.toString()} of MyTokens voting power after self delegating\n`
-   );
-}
 main().catch((error) => {
     console.error(error);
     process.exitCode = 1;
