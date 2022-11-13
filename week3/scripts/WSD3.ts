@@ -1,6 +1,6 @@
 // Demonstrates an end-to-end working of the Token and Ballot smart contracts resulting in a winning proposal
 // Usage yarn run ts-node --files .\scripts\WSD3.ts
-// Note: It takes roughly around 30 minutes to complete a run on Goerli testnet
+// Note: It now takes just under 3 minutes to complete a dry run on Goerli testnet
 
 // Essential imports
     import { ethers } from "ethers";
