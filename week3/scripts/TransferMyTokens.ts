@@ -1,5 +1,5 @@
 // This script transfers tokens between two accounts 
-// usage: yarn run ts-node --files <*TransferMyTokens.ts> <MyToken contract address> <from account address> <to account address> <transfer amount in ethers> <privateKeyIndex>
+// usage: yarn run ts-node --files <*TransferMyTokens.ts> <MyToken contract address> <from account address> <to account address> <transfer amount in ethers>
 
 import { ethers, Signer, Wallet } from "ethers";
 import { MyToken__factory } from "../typechain-types";
