@@ -16,7 +16,9 @@
 // Used to mint tokens worth 10 testnet Ether
     const MINT_VALUE = ethers.utils.parseEther("10");
 
-async function main() {
+// Keep the main thing the main thing 
+    async function main() {
+    
     // Start timer to measure elapsed time for the dry run
         const start = Date.now();
 
@@ -24,11 +26,11 @@ async function main() {
         console.log("--------------------------------------------------------------\n");
         console.log(`Starting WSD 3 dry run: Solidity bootcamp week 3 homework...\n`);
         console.log("--------------------------------------------------------------\n");
-        console.log("Setting up Alchemy provider with Goerli testnet provider...\n");    
+        console.log("Setting up Alchemy provider with Goerli testnet...\n");    
         const provider = new ethers.providers.AlchemyProvider("goerli", process.env.ALCHEMY_API_KEY ?? "");
         const network = await provider.getNetwork();
 
-    // connect Wallet to the Provider
+    // connect Wallet to the Provider #sign-in
         console.log("Connecting to a wallet...\n");
         const wallet1 = new ethers.Wallet(process.env.PRIVATE_KEY_1 ?? "");
         const signer1 = wallet1.connect(provider);
@@ -45,6 +47,12 @@ async function main() {
         const balance2 = await signer2.getBalance();
         console.log(`Connected to the provider ${network.name} with wallet ${signer2.address} and a balance of ${balance2}\n`);
         if(balance2.eq(0)) throw new Error("Cannot buy tokens with zero balance in the account\n");
+        const balance3 = await signer3.getBalance();
+        console.log(`Connected to the provider ${network.name} with wallet ${signer3.address} and a balance of ${balance3}\n`);
+        if(balance3.eq(0)) throw new Error("Cannot buy tokens with zero balance in the account\n");
+        const balance4 = await signer4.getBalance();
+        console.log(`Connected to the provider ${network.name} with wallet ${signer4.address} and a balance of ${balance4}\n`);
+        if(balance4.eq(0)) throw new Error("Cannot buy tokens with zero balance in the account\n");
 
     // Deploy the token contract factory
         console.log(`Initiating token contract deployment...\n`);
@@ -54,6 +62,7 @@ async function main() {
         console.log("--------------------------------------------------------------\n");
         console.log(`Token contract deployed at ${tokenContract.address}\n`);
         console.log("--------------------------------------------------------------\n");
+
     // Check the accounts' token balance before the Mint
         let acc1Balance = await tokenContract.balanceOf(signer1.address);
         let acc2Balance = await tokenContract.balanceOf(signer2.address);
@@ -63,6 +72,7 @@ async function main() {
         console.log(`Account ${signer2.address} has a token balance of ${acc2Balance.toString()} before Mint\n`)
         console.log(`Account ${signer3.address} has a token balance of ${acc2Balance.toString()} before Mint\n`)
         console.log(`Account ${signer4.address} has a token balance of ${acc2Balance.toString()} before Mint\n`)
+    
     // Mint tokens for account 1
         let mintTx = await tokenContract.mint(signer1.address, MINT_VALUE);
         await mintTx.wait()
@@ -156,6 +166,7 @@ async function main() {
         if (pastVotes.eq(0)) {
             setTimeout(() => {console.log("Slowing down for a few seconds for more on-chain blocks to be produced...\n")}, 10000)
         }
+
     // Deploy TokenBallot contract
         console.log(`Preparing to deploy Token Ballot smart contract...\n`);
         const proposals = ["Ironman", "CaptainAmerica", "Spiderman", "CaptainMarvel", "Wanda", "BlackWidow" ];
@@ -194,7 +205,7 @@ async function main() {
         console.log(`Elapsed time for the dry run: ${elapsed/1000} seconds.\n`)
 }
 
-// conversion used to process the proposals from String array to Bytes32 array
+// conversion to process the proposals from String array to Bytes32 array
     function convertStringArrayToBytes32(array: string[]) {
         const bytes32Array = [];
         for (let index = 0; index < array.length; index++) {
