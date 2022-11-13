@@ -1,5 +1,7 @@
 // This script deploys a Token smart contract based on ERC20 
 // to a Goerli Testnet
+// Usage: yarn run ts-node --files ./scripts/DeployMyToken.ts
+// Typical deployment time is under 10secs
 
 import { ethers } from "ethers";
 import { MyToken__factory } from "../typechain-types";
