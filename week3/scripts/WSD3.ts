@@ -41,6 +41,7 @@
         const wallet4 = new ethers.Wallet(process.env.PRIVATE_KEY_4 ?? "");
         const signer4 = wallet4.connect(provider);
 
+    // Check eth balance for all accounts
         const balance1 = await signer1.getBalance();
         console.log(`Connected to the provider ${network.name} with wallet ${signer1.address} and a balance of ${balance1}\n`);
         if(balance1.eq(0)) throw new Error("Cannot buy tokens with zero balance in the account\n");
@@ -63,7 +64,7 @@
         console.log(`Token contract deployed at ${tokenContract.address}\n`);
         console.log("--------------------------------------------------------------\n");
 
-    // Check the accounts' token balance before the Mint
+    // Check token balance for accounts before the Mint
         let acc1Balance = await tokenContract.balanceOf(signer1.address);
         let acc2Balance = await tokenContract.balanceOf(signer2.address);
         let acc3Balance = await tokenContract.balanceOf(signer3.address);
@@ -93,7 +94,7 @@
         await mintTx.wait()
         console.log(`Minted ${MINT_VALUE.toString()} tokens to account ${signer4.address}\n`);
 
-    // Check the token balances after the Mint
+    // Check token balance for accounts after the Mint
         acc1Balance = await tokenContract.balanceOf(signer1.address);
         acc2Balance = await tokenContract.balanceOf(signer2.address);
         acc3Balance = await tokenContract.balanceOf(signer3.address);
@@ -103,7 +104,7 @@
         console.log(`Account ${signer3.address} has a token balance of ${acc3Balance.toString()} after Mint\n`)
         console.log(`Account ${signer4.address} has a token balance of ${acc4Balance.toString()} after Mint\n`)
         
-    // Check the voting power before self delegating for both accounts
+    // Check voting power before self delegating
         let acc1VP = await tokenContract.getVotes(signer1.address);
         let acc2VP = await tokenContract.getVotes(signer2.address);
         let acc3VP = await tokenContract.getVotes(signer2.address);
@@ -133,7 +134,7 @@
         const delegateTx4 = await tokenContract.connect(signer2).delegate(signer2.address);
         await delegateTx4.wait();
 
-    // Check the voting power after self delegating for both accounts
+    // Check the voting power after self delegating for all accounts
         acc1VP = await tokenContract.getVotes(signer1.address);
         console.log(`Account ${signer1.address} has ${acc1VP.toString()} voting power after self delegating\n`);
         acc2VP = await tokenContract.getVotes(signer2.address);
@@ -143,7 +144,7 @@
         acc4VP = await tokenContract.getVotes(signer4.address);
         console.log(`Account ${signer4.address} has ${acc4VP.toString()} voting power after self delegating\n`);
 
-    // Check past voting power
+    // Check past voting power and slowdown for blocks to be chained in as needed
         const lastBlock = await provider.getBlock("latest");
         console.log(`Last block number is ${lastBlock.number}\n`);
         let pastVotes = await tokenContract.getPastVotes(signer1.address, lastBlock.number - 1);

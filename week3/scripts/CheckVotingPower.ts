@@ -14,7 +14,7 @@ dotenv.config();
 async function main() {
     // Parse the proposals from command line arguments
     const contractAdress = process.argv[2];
-    const tokensAddress = process.argv[4];
+    const tokensAddress = process.argv[3];
     console.log(`Checking voting power of account ${tokensAddress} for smart contract at ${contractAdress}...\n`);
     
     // set up a Provider
@@ -22,7 +22,7 @@ async function main() {
     const network = await provider.getNetwork();
     
     // connect Wallet to the Provider
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_ENCODE_BC ?? "");
+    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_4 ?? "");
     const signer = wallet.connect(provider);
     const balance = await signer.getBalance();
     console.log(`Connected to the provider ${network.name} with wallet ${signer.address} and a balance of ${balance}\n`);

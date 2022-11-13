@@ -14,15 +14,20 @@ async function main() {
     console.log("\n--------------------------------------------------------------\n");
     console.log(`\nMyToken contract deployed at ${contract.address}\n`);
     
+    // Check the account balance before the Mint
+    const balanceBefore = await contract.balanceOf(accounts[1].address);
+    console.log(`Account ${accounts[1].address} has a balance of ${balanceBefore.toString()} MyTokens before Mint\n`)
+    
     // Mint some tokens
     const mintTx = await contract.mint(accounts[1].address, MINT_VALUE);
     await mintTx.wait()
     console.log(`Minted ${MINT_VALUE.toString()} MyTokens to account ${accounts[1].address}\n`);
     
-    const balanceBN = await contract.balanceOf(accounts[1].address);
-    console.log(`Account ${accounts[1].address} has ${balanceBN.toString()} MyTokens\n`)
+    // Check the account balance after the Mint
+    const balanceAfter = await contract.balanceOf(accounts[1].address);
+    console.log(`Account ${accounts[1].address} has ${balanceAfter.toString()} MyTokens\n`)
     
-    // Check the voting power
+    // Check the voting power before self delegating
     const votes = await contract.getVotes(accounts[1].address)
     console.log(
         `Account ${accounts[1].address} has ${votes.toString()} of MyTokens voting power before self delegating\n`
@@ -35,7 +40,7 @@ async function main() {
         `Self delegation for Account ${accounts[1].address} in progress...\n`
     );
     
-    // Check the voting power
+    // Check the voting power after self delegating
     const votesAfter = await contract.getVotes(accounts[1].address);
     console.log(
         `Account ${
