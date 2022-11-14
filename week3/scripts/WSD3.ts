@@ -1,6 +1,6 @@
 // Demonstrates an end-to-end working of the Token and Ballot smart contracts resulting in a winning proposal
 // Usage yarn run ts-node --files .\scripts\WSD3.ts
-// Note: It now takes just under 3 minutes to complete a dry run on Goerli testnet
+// Note: It now takes under 3 minutes to complete a dry run on Goerli testnet
 
 // Essential imports
     import { ethers } from "ethers";
@@ -175,7 +175,7 @@
         proposals.forEach((element, index) => {
             console.log(`Proposal ${index}: ${element}`);
         });
-        console.log(`\nInitiating token contract deployment...\n`);
+        console.log(`\nInitiating token ballot contract deployment...\n`);
         const ballotContractFactory = new TokenizedBallot__factory(signer1);
         const ballotContract = await ballotContractFactory.deploy(convertStringArrayToBytes32(proposals), tokenContract.address, lastBlock.number - 1);
         await ballotContract.deployed();
