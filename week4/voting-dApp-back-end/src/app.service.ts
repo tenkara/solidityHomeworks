@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Address } from 'cluster';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import * as tokenJson from './assets/MyToken.json';
 // import * as dotenv from "dotenv";
 
 export class mintedTokens {
   mintToAddress: Address;
-  tokenAmnt: number;
+  tokenAmnt: string;
+}
+
+export class delegatedTokens {
+  delegatee: Address;
 }
 
 const ER20VOTES_TOKEN_ADDRESS = "0xdC0FF2Ce170c2E1c130960c7E64A2b18eAD3266F";
@@ -21,6 +25,7 @@ const ER20VOTES_TOKEN_ADDRESS = "0xdC0FF2Ce170c2E1c130960c7E64A2b18eAD3266F";
 export class AppService {
 
   provider: ethers.providers.AlchemyProvider;
+  tokenContractFactory: ethers.ContractFactory;
   tokenContract: ethers.Contract;
 
   constructor() {
@@ -29,21 +34,25 @@ export class AppService {
     // const network = await this.provider.getNetwork();
 
     // Connect Wallet to the provider
-    console.log("connecting to a wallet...\n");
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_1 ?? "");
-    const signer = wallet.connect(this.provider);
+    // console.log("connecting to a wallet...\n");
+    // const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_1 ?? "");
+    // const signer = wallet.connect(this.provider);
     
     //const balance = await signer.getBalance();
     // console.log(`Connected to the provider ${network.name} with wallet ${signer.address} and a balance of ${balance}\n`);
     // if(balance.eq(0)) throw new Error("Cannot buy tokens with zero balance in the account\n");
     
     // Attach to MyToken smart contract facotry with the signer
-    const tokenContractFactory = new ethers.ContractFactory(
+    this.tokenContractFactory = new ethers.ContractFactory(
       tokenJson.abi,
       tokenJson.bytecode,
-      signer
     );
-    this.tokenContract = tokenContractFactory.attach(ER20VOTES_TOKEN_ADDRESS);
+    
+    // Token contract instance
+    this.tokenContract = this.tokenContractFactory
+    .attach(ER20VOTES_TOKEN_ADDRESS)
+    .connect(this.provider);
+    
     // const signer = ethers.Wallet.fromMnemonic(process.env.MNEMONIC)
     // ...
   }  
@@ -52,14 +61,64 @@ export class AppService {
     return ER20VOTES_TOKEN_ADDRESS;
   }
 
-  async requestTokens(toAddress: Address, amount: number) {
+  async requestTokens(toAddress: Address, amount: string) {
+    
+    // Connect Wallet to the provider as minter
+    console.log("connecting to a wallet...\n");
+    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_1 ?? "");
+    const signer = wallet.connect(this.provider);
+
+    // Signer to send the transaction
+    const contractInstance = this.tokenContractFactory
+      .attach(ER20VOTES_TOKEN_ADDRESS)
+      .connect(signer);
+    
+    // Mint some tokens that matter - let's have a party!!!
+    const oneEther = BigNumber.from("1000000000000000000");
+    // const mintValue = (ethers.utils.parseEther(amount)).mul(oneEther);
+    const mintValue = (oneEther).mul(amount);
     
     // Mint some tokens
-    const mintTx = await this.tokenContract.mint(toAddress, amount);
+    const mintTx = await contractInstance.mint(toAddress, mintValue);
+    // const mintTx = await this.tokenContract.mint(toAddress, amount);
     await mintTx.wait()
-    console.log(`Minted ${amount} of Tokens to account ${toAddress}\n`);
+    console.log(`Minted ${mintValue} tokens for ${amount} Ether to account ${toAddress}\n`);
     console.log(`Transaction hash is ${mintTx.hash}\n`)
     const TxHash: string = mintTx.hash;
     return TxHash;
+  }
+
+  async selfDelegate(delegateeAddr: Address) {
+     
+    // Connect Wallet to the provider as delegatee
+     console.log("connecting to a wallet...\n");
+     const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_3 ?? "");
+     const signer = wallet.connect(this.provider);
+ 
+     // Signer to send the transaction
+     const contractInstance = this.tokenContractFactory
+       .attach(ER20VOTES_TOKEN_ADDRESS)
+       .connect(signer);
+    
+    //const delegateTx = await contractInstance.delegate(delegateeAddr);
+    const delegateTx = await contractInstance.delegate(signer.address);
+    await delegateTx.wait();
+    const TxHash: string = delegateTx.hash;
+    return TxHash;
+  }
+
+  async checkVotingPower(accountAddr: string): Promise<number> {
+    console.log(`Checking votes for address: ${accountAddr}\n`);
+    // const contractInstance = this.tokenContractFactory.attach(ER20VOTES_TOKEN_ADDRESS).connect(this.provider);
+    const votes = await this.tokenContract.getVotes(accountAddr);
+    return parseFloat(ethers.utils.formatEther(votes));
+  }
+
+  async tokenBalance(accountAddr: string): Promise<number> {
+    console.log(`Checking token balance for address: ${accountAddr}\n`);
+    // const contractInstance = this.tokenContractFactory.attach(ER20VOTES_TOKEN_ADDRESS).connect(this.provider);
+    const tokenBalance = await this.tokenContract.balanceOf(accountAddr);
+    console.log(`Account ${accountAddr} has a balance of ${tokenBalance} tokens\n`)
+    return parseFloat(ethers.utils.formatEther(tokenBalance));
   }
 }

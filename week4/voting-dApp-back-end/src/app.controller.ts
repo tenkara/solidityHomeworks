@@ -5,7 +5,7 @@ import { Query } from '@nestjs/common/decorators';
 import { Address } from 'cluster';
 import { ethers } from 'ethers';
 import { stringify } from 'querystring';
-import { AppService, mintedTokens } from './app.service';
+import { AppService, delegatedTokens, mintedTokens } from './app.service';
 
 @Controller()
 export class AppController {
@@ -19,5 +19,20 @@ export class AppController {
   @Post('request-tokens')
   async requestTokens(@Body() body: mintedTokens): Promise<string> {
     return await this.appService.requestTokens(body.mintToAddress, body.tokenAmnt);
+  }
+
+  @Post('self-delegate')
+  async selfDelegate(@Body() body: delegatedTokens): Promise<string> {
+    return await this.appService.selfDelegate(body.delegatee);
+  }
+
+  @Get('voting-power/:address')
+  checkVotingPower(@Param ('address') address: string): Promise<number> {
+    return this.appService.checkVotingPower(address)
+  }
+
+  @Get('token-balance/:address')
+  tokenBalance(@Param ('address') address: string): Promise<number> {
+    return this.appService.tokenBalance(address)
   }
 }
