@@ -7,7 +7,7 @@ import * as ballotJson from './assets/TokenizedBallot.json'
 // import * as dotenv from "dotenv";
 
 export class mintedTokens {
-  mintToAddress: Address;
+  mintToAddress: string;
   tokenAmnt: string;
 }
 
@@ -116,7 +116,7 @@ export class AppService {
   }
 
 
-  async requestTokens(toAddress: Address, amount: string) {
+  async requestTokens(toAddress: string, amount: string) {
     
     // Connect Wallet to the provider as minter
     console.log("connecting to a wallet...\n");
@@ -131,7 +131,7 @@ export class AppService {
     // Mint some tokens that matter - let's have a party!!!
     const oneEther = BigNumber.from("1000000000000000000");
     // const mintValue = (ethers.utils.parseEther(amount)).mul(oneEther);
-    const mintValue = (oneEther).mul(amount);
+    const mintValue = (oneEther).mul(BigNumber.from(1));
     
     // Mint some tokens
     const mintTx = await contractInstance.mint(toAddress, mintValue);
@@ -147,7 +147,7 @@ export class AppService {
      
     // Connect Wallet to the provider as delegatee
      console.log("connecting to a wallet...\n");
-     const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_3 ?? "");
+     const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_5 ?? "");
      const signer = wallet.connect(this.provider);
  
      // Signer to send the transaction
