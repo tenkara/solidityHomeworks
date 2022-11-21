@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { BigNumber, ethers } from 'ethers' ;
 import tokenJson from '../assets/MyToken.json';
-//import ballotJson from  
+import ballotJson from  '../assets/TokenizedBallot.json';
 
 //this is my token contract so I have minting power
 const ERC20VOTES_TOKEN_ADDRESS = '0x007d4680437174ccA622C3Ae230Df5b7A0a31779';
@@ -18,12 +18,14 @@ export class AppComponent {
   provider: ethers.providers.BaseProvider | undefined;
 
   tokenContractAddress: string | undefined;
-  ballotContractAddress = '0xa4B13aEe3Be9f95d50E043596b55C6d817aD3f20'
+  ballotContractAddress = '0xa4B13aEe3Be9f95d50E043596b55C6d817aD3f20';
 
   etherBalance: number | undefined;
   tokenBalance: number | undefined;
   votePower: number | undefined;
   tokenContract: ethers.Contract | undefined;
+  ballotContract: ethers.Contract | undefined;
+  ballotResults: string | undefined;
 
 
   //to do 
@@ -37,7 +39,13 @@ export class AppComponent {
     this.provider = ethers.providers.getDefaultProvider('goerli');
     this.walletAddress = walletAddr;
     this.createWallet();
+    
   }
+
+  connectBallot(){
+
+
+  }  
 
   createWallet() {
     this.provider = ethers.providers.getDefaultProvider('goerli');
@@ -78,20 +86,45 @@ export class AppComponent {
         }
       );
     }
-  }
+    if (this.ballotContractAddress && this.walletAddress) {
+      this.ballotContract = new ethers.Contract(
+        this.ballotContractAddress,
+        ballotJson.abi,
+        this.wallet
+      );
 
-
-
-  vote(voteId: string){
-    console.log("trying to vote for " + voteId);
-    //this.ballotContract["vote"](voteId);
-    //todo: pick ballot contract['vote'](voteId)
+      this.ballotContract['winnerName']().then(
+        (winnerName: any) => {
+          this.ballotResults = ethers.utils.parseBytes32String(winnerName);
+        }
+      );
+    }
   }
 
   request(amtToken: string){
     console.log("Trying to mint to " + this.walletAddress);
     this.http
-    .post<any>('http://localhost:3000/request-tokens', {address: this.walletAddress, amount: amtToken})
+    .post<any>('http://localhost:3000/request-tokens', {mintToAddress: this.walletAddress, tokenAmnt: amtToken})
+    .subscribe((ans) => {
+      console.log(ans);
+    });
+
+  }
+
+  delegate(){
+    console.log("delegating");
+    this.http
+    .post<any>('http://localhost:3000/self-delegate', {delegatee: this.walletAddress})
+    .subscribe((ans) => {
+      console.log(ans);
+    });
+
+  }
+
+  vote(proposalId: string, amount: string){
+    console.log("voting");
+    this.http
+    .post<any>('http://localhost:3000/vote', {proposalId: proposalId, amount: amount})
     .subscribe((ans) => {
       console.log(ans);
     });

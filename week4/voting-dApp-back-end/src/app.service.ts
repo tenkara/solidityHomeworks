@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Address } from 'cluster';
 import { BigNumber, ethers } from 'ethers';
 import * as tokenJson from './assets/MyToken.json';
+import * as ballotJson from './assets/TokenizedBallot.json';
 // import * as dotenv from "dotenv";
 
 export class mintedTokens {
@@ -13,7 +14,13 @@ export class delegatedTokens {
   delegatee: Address;
 }
 
+export class voteInfo {
+  proposalId: string;
+  amount: string;
+}
+
 const ER20VOTES_TOKEN_ADDRESS = "0x007d4680437174cca622c3ae230df5b7a0a31779";
+const BALLOT_ADDRESS = "0x9765fe8fb5642e90982E2C8F5257CF2534F68484";
 
 // Read the environment into this script
 // pre-req: install dotenv using yarn add dotenv --dev
@@ -27,6 +34,8 @@ export class AppService {
   provider: ethers.providers.AlchemyProvider;
   tokenContractFactory: ethers.ContractFactory;
   tokenContract: ethers.Contract;
+  ballotContractFactory: ethers.ContractFactory;
+  ballotContract: ethers.Contract;
 
   constructor() {
     // Set up a provider
@@ -51,6 +60,18 @@ export class AppService {
     // Token contract instance
     this.tokenContract = this.tokenContractFactory
     .attach(ER20VOTES_TOKEN_ADDRESS)
+    .connect(this.provider);
+
+
+    //attach to a ballot
+    this.ballotContractFactory = new ethers.ContractFactory(
+      ballotJson.abi,
+      ballotJson.bytecode,
+    );
+    
+    // ballot contract instance
+    this.ballotContract = this.ballotContractFactory
+    .attach(BALLOT_ADDRESS)
     .connect(this.provider);
     
     // const signer = ethers.Wallet.fromMnemonic(process.env.MNEMONIC)
@@ -92,8 +113,8 @@ export class AppService {
      
     // Connect Wallet to the provider as delegatee
      console.log("connecting to a wallet...\n");
-     const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_3 ?? "");
-     const signer = wallet.connect(this.provider);
+     const signerWallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC_ACCT1);
+    const signer = signerWallet.connect(this.provider);
  
      // Signer to send the transaction
      const contractInstance = this.tokenContractFactory
@@ -101,7 +122,7 @@ export class AppService {
        .connect(signer);
     
     //const delegateTx = await contractInstance.delegate(delegateeAddr);
-    const delegateTx = await contractInstance.delegate(signer.address);
+    const delegateTx = await contractInstance.delegate(delegateeAddr);
     await delegateTx.wait();
     const TxHash: string = delegateTx.hash;
     return TxHash;
@@ -120,5 +141,29 @@ export class AppService {
     const tokenBalance = await this.tokenContract.balanceOf(accountAddr);
     console.log(`Account ${accountAddr} has a balance of ${tokenBalance} tokens\n`)
     return parseFloat(ethers.utils.formatEther(tokenBalance));
+  }
+
+//Vote only works when connected to my wallet. 
+//Future iterations would need a user to sign in with their wallet, not just add an address
+  async vote(proposalId: string, amount: string) {
+    console.log(`Voting for proposal id: ${proposalId}\n`);
+    console.log("connecting to a wallet...\n");
+    const signerWallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC_ACCT1);
+    const signer = signerWallet.connect(this.provider);
+
+    // Signer to send the transaction
+    console.log("attach signer");
+    const contractInstance = this.ballotContractFactory
+      .attach(BALLOT_ADDRESS)
+      .connect(signer);
+    
+    const voteAmt = ethers.utils.parseUnits(amount); 
+    // Mint some tokens
+    const voteTx = await contractInstance.vote(proposalId, voteAmt);
+    // const mintTx = await this.tokenContract.mint(toAddress, amount);
+    await voteTx.wait()
+    console.log(`Transaction hash is ${voteTx.hash}\n`)
+    const TxHash: string = voteTx.hash;
+    return TxHash;
   }
 }

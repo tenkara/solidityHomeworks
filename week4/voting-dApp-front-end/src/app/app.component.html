@@ -21,7 +21,7 @@
   <div *ngIf="walletAddress">
     <p class="lead mb-4">This is your address: {{ walletAddress}}</p>
     <p class="lead mb-4">Your token contract address is: {{ tokenContractAddress }}</p>
-
+    <p class="lead mb-4">The ballot contract address is: {{ ballotContractAddress }}</p>
     <div class="card p2 m2"> 
       <p> Ether Balance</p>
       <p> {{ etherBalance }}</p>
@@ -36,8 +36,12 @@
       <p> Voting Power</p> 
       <p> {{ votePower }}</p>
     </div>
+    <div class="card">
+      <p> The Winner is:</p> 
+      <p> {{ ballotResults }}</p>
+    </div>
     <div>
-      <p>Vote:</p>
+      <p>Vote Amount:</p>
       <input 
         #voteId
         type="number" 
@@ -45,8 +49,17 @@
         [max]="votePower" 
         placeholder="0"
       >
+      <p>Vote Option:</p>
+      <p>0 = Vanilla, 1 = Chocolate, 2 = Cookie Dough</p>
+      <input 
+        #proposalId
+        type="number" 
+        min="0" 
+        [max]="2" 
+        placeholder="0"
+      >
       <button 
-        (click)="vote(voteId.value)" 
+        (click)="vote(proposalId.value, voteId.value)" 
         type="button" 
         class="btn btn-success btn-sm px-4 mx-2"
         >Vote
@@ -64,6 +77,14 @@
       <p>Request Tokens:</p>
       <button 
         (click)="request(amtToken.value)" 
+        type="button" 
+        class="btn btn-success btn-sm px-4 mx-2"
+        >Request
+      </button>
+
+      <p>Self-Delegate Voting Power</p>
+      <button 
+        (click)="delegate()" 
         type="button" 
         class="btn btn-success btn-sm px-4 mx-2"
         >Request
