@@ -1,4 +1,4 @@
-This is the app created by Gabrielle Goodwin
+This is the app created by Group 6
 
 Token Contract: https://goerli.etherscan.io/address/0x007d4680437174cca622c3ae230df5b7a0a31779
 Ballot Contract: https://goerli.etherscan.io/address/0xa4B13aEe3Be9f95d50E043596b55C6d817aD3f20
