@@ -1,0 +1,73 @@
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">My Example Ballot dApp</h1>
+  <div *ngIf="!walletAddress">
+    <p class="lead mb-4">Enter your wallet address:</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <p>Address:</p>
+      <input 
+        #walletAddr
+        type="string" 
+        placeholder="0x..."
+      >
+      <button 
+        (click)="connectWallet(walletAddr.value)" 
+        type="button" 
+        class="btn btn-success btn-sm px-4 mx-2"
+        >Connect
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="walletAddress">
+    <p class="lead mb-4">This is your address: {{ walletAddress}}</p>
+    <p class="lead mb-4">Your token contract address is: {{ tokenContractAddress }}</p>
+
+    <div class="card p2 m2"> 
+      <p> Ether Balance</p>
+      <p> {{ etherBalance }}</p>
+
+    </div>
+    <div class="card"> 
+      <p> Tokenized Votes Balance</p>
+      <p> {{ tokenBalance }}</p>
+
+    </div>
+    <div class="card">
+      <p> Voting Power</p> 
+      <p> {{ votePower }}</p>
+    </div>
+    <div>
+      <p>Vote:</p>
+      <input 
+        #voteId
+        type="number" 
+        min="0" 
+        [max]="votePower" 
+        placeholder="0"
+      >
+      <button 
+        (click)="vote(voteId.value)" 
+        type="button" 
+        class="btn btn-success btn-sm px-4 mx-2"
+        >Vote
+      </button>
+    </div>
+    <div>
+      <p>Amount of tokens:</p>
+      <input 
+        #amtToken
+        type="string" 
+        min="0" 
+        [max]="50" 
+        placeholder="0"
+      >
+      <p>Request Tokens:</p>
+      <button 
+        (click)="request(amtToken.value)" 
+        type="button" 
+        class="btn btn-success btn-sm px-4 mx-2"
+        >Request
+      </button>
+    </div>
+  </div>
+<div>

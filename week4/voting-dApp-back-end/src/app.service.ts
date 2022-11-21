@@ -13,7 +13,7 @@ export class delegatedTokens {
   delegatee: Address;
 }
 
-const ER20VOTES_TOKEN_ADDRESS = "0xdC0FF2Ce170c2E1c130960c7E64A2b18eAD3266F";
+const ER20VOTES_TOKEN_ADDRESS = "0x007d4680437174cca622c3ae230df5b7a0a31779";
 
 // Read the environment into this script
 // pre-req: install dotenv using yarn add dotenv --dev
@@ -65,18 +65,18 @@ export class AppService {
     
     // Connect Wallet to the provider as minter
     console.log("connecting to a wallet...\n");
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_1 ?? "");
-    const signer = wallet.connect(this.provider);
+    const signerWallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC_ACCT1);
+    const signer = signerWallet.connect(this.provider);
 
     // Signer to send the transaction
+    console.log("attach signer");
     const contractInstance = this.tokenContractFactory
       .attach(ER20VOTES_TOKEN_ADDRESS)
       .connect(signer);
     
     // Mint some tokens that matter - let's have a party!!!
-    const oneEther = BigNumber.from("1000000000000000000");
     // const mintValue = (ethers.utils.parseEther(amount)).mul(oneEther);
-    const mintValue = (oneEther).mul(amount);
+    const mintValue = ethers.utils.parseEther(amount);
     
     // Mint some tokens
     const mintTx = await contractInstance.mint(toAddress, mintValue);
