@@ -47,8 +47,8 @@ export class AppController {
   }
 
   @Get('winning-proposal')
-  getWinner() {
-    return this.appService.getWinner();
+  async getWinner() {
+    return  await  this.appService.getWinner() ;
   }
 
   @Post('cast-vote')

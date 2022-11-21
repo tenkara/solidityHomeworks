@@ -88,14 +88,14 @@ export class AppService {
     const winningProposal = await this.ballotContract.winningProposal();
     const winnerName = ethers.utils.parseBytes32String(await this.ballotContract.winnerName());
     console.log(`Winning proposal: ${winningProposal}, Winner name: ${winnerName}\n`);
-    return winnerName;
+    return winnerName.toLowerCase();
   }
 
   async castVote(voterAddress: string, votedOnProposal:string, tokenAmount:string) {
     
     // Connect Wallet to the provider as voter
     console.log("connecting to a wallet...\n");
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_3 ?? "");
+    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY_2 ?? "");
     const signer = wallet.connect(this.provider);
 
     // Signer to send the transaction
