@@ -1,7 +1,7 @@
-## EthDever Solidity Bootcamp Group 6 Week 4 Homework
+# EthDever Solidity Bootcamp Group 6 Week 4 Homework
 ### 21 November 2022
 
-## Summary Report with pictures here - [EthDever Solidity Bootcamp Group 6 Week 4 Homework.pdf](https://github.com/tenkara/solidityHomeworks/files/10067154/EthDever.Solidity.Bootcamp.Group.6.Week.4.Homework.pdf)
+## Summary Report PDF with pictures here - [EthDever Solidity Bootcamp Group 6 Week 4 Homework.pdf](https://github.com/tenkara/solidityHomeworks/files/10067154/EthDever.Solidity.Bootcamp.Group.6.Week.4.Homework.pdf)
 
 Name: Raj Nakka 
 Discord handle: @rajayana
@@ -22,7 +22,7 @@ Summary of my homework:
 5. The voting dApp contains front-end written in Angular and Bootstrap.
 6. The back-end is implemented using Nestjs
 
-Front End UI: Please see the summary report PDF link at the top
+Front End UI: Please see the summary report PDF
 
 
 Front end features:
@@ -37,7 +37,7 @@ Front end features:
 9. Tally votes and display winner
 
 Back end features and Swagger Hub testing:
-Screenshot of Swaggerhub API : Please see the summary report PDF link at the top
+Screenshot of Swaggerhub API : Please see the summary report PDF
 
 Backend Features:
 1. Get /token-address: Returns the Token smart contract address of the previously deployed contract in week 3 homework from Goerli testnet
