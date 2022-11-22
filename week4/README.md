@@ -2,7 +2,7 @@
 ### 21 November 2022
 
 ## Summary Report PDF with pictures here - [EthDever Solidity Bootcamp Group 6 Week 4 Homework.pdf](https://github.com/tenkara/solidityHomeworks/files/10067154/EthDever.Solidity.Bootcamp.Group.6.Week.4.Homework.pdf)
-
+See document above or the gabewin branch for more team contributions.
 Name: Raj Nakka 
 Discord handle: @rajayana
 
