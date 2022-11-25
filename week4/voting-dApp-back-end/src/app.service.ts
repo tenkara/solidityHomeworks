@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Address } from 'cluster';
 import { BigNumber, ethers } from 'ethers';
+import { stringify } from 'querystring';
 import * as tokenJson from './assets/MyToken.json';
 import * as ballotJson from './assets/TokenizedBallot.json'
 
@@ -19,6 +20,11 @@ export class castVoteDto {
   voterAddress: string;
   proposal: string;
   tokenAmount: string;
+}
+
+export class proposalDto {
+  name: string;
+  votes: number;
 }
 
 const ER20VOTES_TOKEN_ADDRESS = "0xdC0FF2Ce170c2E1c130960c7E64A2b18eAD3266F";
@@ -44,51 +50,59 @@ export class AppService {
     // Set up a provider
     this.provider = new ethers.providers.AlchemyProvider('goerli', process.env.ALCHEMY_API_KEY ?? "");
       
-    // Attach to MyToken smart contract facotry with the signer
+    // Create a Token contract factory out of a previously compiled Token contract
     this.tokenContractFactory = new ethers.ContractFactory(
       tokenJson.abi,
       tokenJson.bytecode,
     );
     
-    // Token contract instance
+    // Attach the current Token contract instance to an already deployed Token contract
     this.tokenContract = this.tokenContractFactory
     .attach(ER20VOTES_TOKEN_ADDRESS)
     .connect(this.provider);
     
-  // Attach to Ballot smart contract facotry with the signer
+  // Create a Ballot contract factory out of a previously compiled Token contract
     this.ballotContractFactory = new ethers.ContractFactory(
       ballotJson.abi,
       ballotJson.bytecode,
     );
     
-  // Ballot contract instance
+  // Attach the current Ballot contract instance to an already deployed Ballot contract
     this.ballotContract = this.ballotContractFactory
     .attach(BALLOT_ADDRESS)
     .connect(this.provider);
     }  
   
+  // End point to get the Token contract address
   getTokenAddress() {
     return ER20VOTES_TOKEN_ADDRESS;
   }
 
+  // End point to get the Ballot contract address
   getBallotAddress() {
     return BALLOT_ADDRESS;
   }
 
-  async getProposals() {
-    const props = await this.ballotContract.proposals();
-    console.log(`props: ${props}\n`)
-    props.forEach((element:string, index:number) => {
-      console.log(`Proposal ${index}: ${element}`)
-    });
-    return props;
+  // End point to get the proposal on the Ballot
+  async getProposal(id: number) {
+    let proposal : any;
+      try {
+        proposal = await this.ballotContract.proposals(id)
+        console.log(`Proposal ${proposal} name : ${proposal[0]}  votes: ${proposal[1]}`);
+    } catch(error) {
+      console.log(error);
+    } 
+    
+
+    return { proposal }
   }
 
   async getWinner() {
     const winningProposal = await this.ballotContract.winningProposal();
-    const winnerName = ethers.utils.parseBytes32String(await this.ballotContract.winnerName());
+    // const winnerName = ethers.utils.parseBytes32String(await this.ballotContract.winnerName());
+     const winnerName = ethers.utils.parseBytes32String(await this.ballotContract.winnerName());
     console.log(`Winning proposal: ${winningProposal}, Winner name: ${winnerName}\n`);
-    return winnerName.toLowerCase();
+    return winnerName;
   }
 
   async castVote(voterAddress: string, votedOnProposal:string, tokenAmount:string) {

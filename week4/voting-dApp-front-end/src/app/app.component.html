@@ -2,13 +2,13 @@
   <h1 class="display-5 fw-bold">Group 6 Ballot dApp</h1>
   <hr style="height:2px;border-width:0;color:gray;background-color:gray">
   <div class="col-lg-6 mx-auto">
-    <div *ngIf="!wallet">
+    <div *ngIf="!account">
       <p class="lead mb-4">Choose your connection method</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <button (click)="createWallet()" type="button" class="btn btn-primary btn-lg px-4 gap-3">
           Create a Wallet
         </button>
-        <button diaabled type="button" class="btn btn-secondary btn-lg px-4 gap-3">
+        <button (click)="connectWallet()" type="button" class="btn btn-secondary btn-lg px-4 gap-3">
           Connect a Wallet
         </button>
         <button disabled type="button" class="btn btn-info btn-lg px-4 gap-3">
@@ -16,8 +16,8 @@
         </button>
       </div>
     </div>
-    <div *ngIf="wallet" align="left">
-      <p class="lead mb-4">Account: {{ wallet.address }}</p>
+    <div *ngIf="account" align="left">
+      <p class="lead mb-4">Account: {{ account }}</p>
       <p class="lead mb-4">Token contract is : {{ tokenContractAddress }}</p>
       <p class="lead mb-4">Ballot contract is : {{ ballotContractAddress }}</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-left">
@@ -58,7 +58,8 @@
       </div>
       <div>
         <hr style="width:50%;text-align:left;margin-left:0">
-        <p><b>And the winner is ... {{ winnerName }}</b></p>
+        <button (click)="winner()" type="button" class="btn btn-success btn-sm px-4 mx-2">Winner</button>
+        <b> is ... {{ winnerName }}</b>
         <hr style="width:50%;text-align:left;margin-left:0">
       </div>
     </div>

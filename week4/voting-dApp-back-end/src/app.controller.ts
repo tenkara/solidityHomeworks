@@ -41,18 +41,18 @@ export class AppController {
     return { result: this.appService.getBallotAddress() };
   }
 
-  @Get('proposals')
-  getProposals() {
-    return this.appService.getProposals();
+  @Get('proposals/:id')
+  getProposals(@Param ('id') id:number) {
+    return this.appService.getProposal(id);
   }
 
   @Get('winning-proposal')
   async getWinner() {
-    return  await  this.appService.getWinner() ;
+    return  { result: await this.appService.getWinner() };
   }
 
   @Post('cast-vote')
-  async castVote(@Body() body: castVoteDto): Promise<string> {
-    return await this.appService.castVote(body.voterAddress, body.proposal, body.tokenAmount);
+  async castVote(@Body() body: castVoteDto): Promise<{ result: string }> {
+    return { result: (await this.appService.castVote(body.voterAddress, body.proposal, body.tokenAmount)) };
   }
 }
