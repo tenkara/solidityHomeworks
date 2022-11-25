@@ -26,6 +26,7 @@ export class AppComponent {
   tokenContract: ethers.Contract | undefined;
   ballotContract: ethers.Contract | undefined;
   ballotResults: string | undefined;
+  web3: any;
 
 
   //to do 
@@ -42,7 +43,13 @@ export class AppComponent {
     
   }
 
-  connectBallot(){
+  async connectMetaMask(){
+    console.log("trying to connect");
+    const provider2 = new ethers.providers.Web3Provider(this.web3.currentProvider);
+    // Prompt user for account connections
+    await provider2.send("eth_requestAccounts", []);
+    const signer = provider2.getSigner();
+    console.log("Account:", await signer.getAddress());
 
 
   }  
