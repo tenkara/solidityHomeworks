@@ -3,6 +3,11 @@
     <div class="col-md-4" style="background-color:black;">
       <h2>Token Lottery dApp</h2>
     </div>
+    <div class="col-md-5" *ngIf="account">
+      <p>Account: {{ account }}</p>
+      <p>Balance: {{ etherBalance }} ethers</p>
+      <p>Lottery: {{ lotteryContractAddress }}</p>
+    </div>
     <div class="col-md-8">
       <div class="pull-right">
         <p></p>
