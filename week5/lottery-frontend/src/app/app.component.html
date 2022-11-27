@@ -1,14 +1,16 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4" style="background-color:black;">
-      <h2>Token Lottery dApp</h2>
+      <h2>G6 Token Lottery dApp</h2>
     </div>
-    <div class="col-md-5" *ngIf="account">
+    <div class="col-md-7" style="background-color:#1c1b1b;">
+    <div *ngIf="account">
       <p>Account: {{ account }}</p>
       <p>Balance: {{ etherBalance }} ethers</p>
       <p>Lottery: {{ lotteryContractAddress }}</p>
     </div>
-    <div class="col-md-8">
+    </div>
+    <div class="col-md-1">
       <div class="pull-right">
         <p></p>
         <button (click)="connectWallet()" type="button" class="btn btn-primary"> Sign-In</button>
@@ -36,16 +38,61 @@
       <ul class="menuItems">
         <li>
           <button type="button" (click)="checkState()">
-            <span class="badge">1</span>
+            <span class="badge"></span>
             <span class="name">Check Lottery Status</span>
           </button>
         </li>
         <li>
-          <button type="button" (click)="checkState()">
-            <span class="badge">2</span>
+          <input #betDuration type="number" min="100" [max]="5000" placeholder="100" class="menuItem input-sm">
+          <button (click)="openBets(betDuration.value)" type="button">
+            <span class="badge"></span>
             <span class="name">Open Bets</span>
           </button>
         </li>
+        <li>
+          <button type="button" (click)="todo(3)">
+            <span class="badge"></span>
+            <span class="name">Top up Account Tokens</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="todo(4)">
+            <span class="badge"></span>
+            <span class="name">Bet with Account</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="todo(5)">
+            <span class="badge"></span>
+            <span class="name">Close Bets</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="todo(6)">
+            <span class="badge"></span>
+            <span class="name">Check Player prize</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="todo(7)">
+            <span class="badge"></span>
+            <span class="name">Withdraw</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="todo(8)">
+            <span class="badge"></span>
+            <span class="name">Burn Tokens</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="todo(9)">
+            <span class="badge"></span>
+            <span class="name">Exit</span>
+          </button>
+        </li>
+
+
       </ul>
     </div>
     <div class="col-md-1">
@@ -54,10 +101,41 @@
     <div class="col-md-7" style="background-color:black;">
       <h3>Details</h3>
       <hr>
-      <div *ngIf="menuSelected">
-            <p>Lottery State is : {{ lotteryState }}</p>
+      <div *ngIf="menuSelected==1">
+        <p>Lottery State is : {{ lotteryState }}</p>
+        <div *ngIf="lotteryState">
+          <p>The last block was mined at {{ lastBlockMinedDtTm }}</p>
+          <p>Lottery should close at {{ lotterCloseTm }}</p>
         </div>
       </div>
-
+      <div *ngIf="menuSelected==2">
+        <div *ngIf="lotteryState; else closed">
+          <p>The lottery is Open.</p>
+        </div>
+        <ng-template #closed>
+          <p>The lottery is Closed.</p>
+        </ng-template>
+      </div>
+      <div *ngIf="menuSelected==3">
+        <p>Todo: Top up your account with tokens</p>
     </div>
+      <div *ngIf="menuSelected==4">
+        <p>Todo: Bet with your account</p>
+      </div>
+      <div *ngIf="menuSelected==5">
+        <p>Todo: Close the bets</p>
+      </div>
+      <div *ngIf="menuSelected==6">
+        <p>Todo: Check your prize</p>
+      </div>
+      <div *ngIf="menuSelected==7">
+        <p>Todo: Withdraw your prize</p>
+      </div>
+      <div *ngIf="menuSelected==8">
+        <p>Todo: Burn your tokens</p>
+      </div>
+      <div *ngIf="menuSelected==9">
+        <p>Todo: Exit the lottery</p>
+      </div>
   </div>
+</div>
