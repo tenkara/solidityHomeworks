@@ -116,7 +116,6 @@ export class AppComponent implements OnInit {
 
   prizeMenu(){
     this.menuSelected = 3;
-
   }
 
   async checkPrize(address: string) {
