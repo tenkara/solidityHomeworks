@@ -46,6 +46,12 @@
             <span class="name">Open Bets</span>
           </button>
         </li>
+        <li>
+          <button type="button" (click)="prizeMenu()">
+            <span class="badge">3</span>
+            <span class="name">Check Prize</span>
+          </button>
+        </li>
       </ul>
     </div>
     <div class="col-md-1">
@@ -54,9 +60,23 @@
     <div class="col-md-7" style="background-color:black;">
       <h3>Details</h3>
       <hr>
-      <div *ngIf="menuSelected">
+      <div *ngIf="menuSelected==1">
             <p>Lottery State is : {{ lotteryState }}</p>
         </div>
+        <div *ngIf="menuSelected==3">
+          <p>Account to check : </p>
+          <input 
+            #prizeAddress
+            type="string" 
+            placeholder="0x00..."
+          >
+          <button 
+          (click)="checkPrize(prizeAddress.value)" 
+          type="button" 
+         class="btn btn-success btn-sm px-4 mx-2"
+          >Check Prize
+      </button>
+      </div>
       </div>
 
     </div>

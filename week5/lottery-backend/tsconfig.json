@@ -1,6 +1,7 @@
 {
   "include": ["./scripts", "./tests", "./typechain-types"],
   "files": ["./hardhat.config.ts"],
+  "resolveJsonModule": true,
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",

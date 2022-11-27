@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   lotteryContractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
   lotteryState: string | undefined; // whether lottery is open or closed
-  menuSelected: boolean = false; // Toggle Details panel display on html
+  menuSelected: number | undefined; // Toggle Details panel display on html
 
 
   constructor(private http: HttpClient) {
@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
 
   // Reuse from the class except we are implementing this in the frontend
   async checkState() {
-    this.menuSelected = true;
+    this.menuSelected = 1;
     const state = await this.lotteryContract?.['betsOpen']();
     this.lotteryState = state ? 'open' : 'closed';
     console.log(`The lottery is ${this.lotteryState}\n`);
@@ -112,6 +112,17 @@ export class AppComponent implements OnInit {
      const tx = await this.lotteryContract?.['openBets'](this.currentBlock.timestamp + Number(duration));
   //   const receipt = await tx.wait();
   //   console.log(`Bets opened (${receipt.transactionHash})`);
+  }
+
+  prizeMenu(){
+    this.menuSelected = 3;
+
+  }
+
+  async checkPrize(address: string) {
+    const prizeAmount = await this.lotteryContract?.['checkPrize'](address);
+    console.log(`Account ${address} has ${prizeAmount}\n`);
+
   }
 
 }
