@@ -881,9 +881,9 @@ __metadata:
   linkType: hard
 
 "@openzeppelin/contracts@npm:^4.7.3":
-  version: 4.8.0
-  resolution: "@openzeppelin/contracts@npm:4.8.0"
-  checksum: dfab51a7f91735cfb1e94dd5074736b0dac0207e4ebf26eb46b32defd3b67adce5a36b248daa7b841c21be74863c1e37cf92ed194a9c36d3f8c5326d1a24242a
+  version: 4.7.3
+  resolution: "@openzeppelin/contracts@npm:4.7.3"
+  checksum: 18382fcacf7cfd652f5dd0e70c08f08ea74eaa8ff11e9f9850639ada70198ae01a3f9493d89a52d724f2db394e9616bf6258017804612ba273167cf657fbb073
   languageName: node
   linkType: hard
 
@@ -3444,7 +3444,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.12.2":
+"hardhat@npm:^2.11.1":
   version: 2.12.2
   resolution: "hardhat@npm:2.12.2"
   dependencies:
@@ -4225,37 +4225,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lesson10@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "lesson10@workspace:."
-  dependencies:
-    "@ethersproject/abi": ^5.4.7
-    "@ethersproject/providers": ^5.4.7
-    "@nomicfoundation/hardhat-chai-matchers": ^1.0.0
-    "@nomicfoundation/hardhat-network-helpers": ^1.0.0
-    "@nomicfoundation/hardhat-toolbox": ^2.0.0
-    "@nomiclabs/hardhat-ethers": ^2.0.0
-    "@nomiclabs/hardhat-etherscan": ^3.0.0
-    "@openzeppelin/contracts": ^4.7.3
-    "@typechain/ethers-v5": ^10.1.0
-    "@typechain/hardhat": ^6.1.2
-    "@types/chai": ^4.2.0
-    "@types/mocha": ^9.1.0
-    "@types/node": ">=12.0.0"
-    chai: ^4.2.0
-    dotenv: ^16.0.3
-    ethers: ^5.4.7
-    hardhat: ^2.12.2
-    hardhat-gas-reporter: ^1.0.8
-    mocha: ^10.1.0
-    random-words: ^1.2.0
-    solidity-coverage: ^0.8.0
-    ts-node: ">=8.0.0"
-    typechain: ^8.1.0
-    typescript: ">=4.5.0"
-  languageName: unknown
-  linkType: soft
-
 "level-supports@npm:^4.0.0":
   version: 4.0.1
   resolution: "level-supports@npm:4.0.1"
@@ -4361,6 +4330,37 @@ __metadata:
   checksum: fce1497b3135a0198803f9f07464165e9eb83ed02ceb2273930a6f8a508951178d8cf4f0378e9d28300a2ed2bc49050995d2bd5f53ab716bb15ac84d58c6ef74
   languageName: node
   linkType: hard
+
+"lottery-backend@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "lottery-backend@workspace:."
+  dependencies:
+    "@ethersproject/abi": ^5.4.7
+    "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/providers": ^5.4.7
+    "@nomicfoundation/hardhat-chai-matchers": ^1.0.0
+    "@nomicfoundation/hardhat-network-helpers": ^1.0.0
+    "@nomicfoundation/hardhat-toolbox": ^2.0.0
+    "@nomiclabs/hardhat-ethers": ^2.0.0
+    "@nomiclabs/hardhat-etherscan": ^3.0.0
+    "@openzeppelin/contracts": ^4.7.3
+    "@typechain/ethers-v5": ^10.1.0
+    "@typechain/hardhat": ^6.1.2
+    "@types/chai": ^4.2.0
+    "@types/mocha": ^9.1.0
+    "@types/node": ">=12.0.0"
+    chai: ^4.2.0
+    dotenv: ^16.0.3
+    ethers: ^5.4.7
+    hardhat: ^2.11.1
+    hardhat-gas-reporter: ^1.0.8
+    mocha: ^10.1.0
+    solidity-coverage: ^0.8.0
+    ts-node: ">=8.0.0"
+    typechain: ^8.1.0
+    typescript: ">=4.5.0"
+  languageName: unknown
+  linkType: soft
 
 "loupe@npm:^2.3.1":
   version: 2.3.6
@@ -5305,13 +5305,6 @@ __metadata:
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
   checksum: b676f8c040cdc5b12723ad2f91414d267605b26419d5c821ff03befa817ddd10e238d22b25d604920340fd73efd8ba795465a0377c4adf45a4a41e4234e42dc4
-  languageName: node
-  linkType: hard
-
-"random-words@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "random-words@npm:1.2.0"
-  checksum: e2222057c963d49acc872c0b89c852a6de8a21c8114c102cf193f6a00ab78d346c6fdd2fe33222e30e1958ddb98bbe57fafc32aa2f69c3c13ca7425268f88798
   languageName: node
   linkType: hard
 
@@ -6673,8 +6666,8 @@ __metadata:
   linkType: hard
 
 "web3-utils@npm:^1.3.6":
-  version: 1.8.1
-  resolution: "web3-utils@npm:1.8.1"
+  version: 1.8.0
+  resolution: "web3-utils@npm:1.8.0"
   dependencies:
     bn.js: ^5.2.1
     ethereum-bloom-filters: ^1.0.6
@@ -6683,7 +6676,7 @@ __metadata:
     number-to-bn: 1.7.0
     randombytes: ^2.1.0
     utf8: 3.0.0
-  checksum: 08bb2df9cd19672f034bb82a27b857e0571b836a620f83de2214377457c6e52446e8dedcf916f8f10a13c86b5a02674dd4f45c60c45698b388368601cce9cf5e
+  checksum: 9ac6b8be14fd1feb8f6744d97f94a043716f360035f07de5a6ab414b25838922ac06e09141af39f66fbf3e76de5f1c3e07807929adf754a28ac2159e32dacedf
   languageName: node
   linkType: hard
 

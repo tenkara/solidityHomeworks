@@ -1,5 +1,5 @@
 {
-  "name": "lottery-backend",
+  "name": "lesson20",
   "packageManager": "yarn@3.2.4",
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",

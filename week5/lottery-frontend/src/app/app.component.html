@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" style="background-color:black;">
+      <h2>Token Lottery dApp</h2>
+    </div>
+    <div class="col-md-5" *ngIf="account">
+      <p>Account: {{ account }}</p>
+      <p>Balance: {{ etherBalance }} ethers</p>
+      <p>Lottery: {{ lotteryContractAddress }}</p>
+    </div>
+    <div class="col-md-8">
+      <div class="pull-right">
+        <p></p>
+        <button (click)="connectWallet()" type="button" class="btn btn-primary"> Sign-In</button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-4" style="background-color:black;">
+      <h3>Menu</h3>
+      <hr>
+      <!-- For later iterations -->
+      <!-- <ul class="menuItems">
+        <li *ngFor="let menuItem of menuItems">
+          <button
+            [class.selected]="menuItem === selectedMenuItem"
+            type="button"
+            (click)="onSelect(menuItem)"
+          >
+            <span class="badge">{{ menuItem.id }}</span>
+            <span class="name">{{ menuItem.name }}</span>
+          </button>
+        </li>
+      </ul> -->
+      <ul class="menuItems">
+        <li>
+          <button type="button" (click)="checkState()">
+            <span class="badge">1</span>
+            <span class="name">Check Lottery Status</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="checkState()">
+            <span class="badge">2</span>
+            <span class="name">Open Bets</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-md-7" style="background-color:black;">
+      <h3>Details</h3>
+      <hr>
+      <div *ngIf="menuSelected">
+            <p>Lottery State is : {{ lotteryState }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
