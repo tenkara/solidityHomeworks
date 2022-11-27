@@ -15,22 +15,38 @@
       </div>
     </div>
   </div>
- <hr>
+  <hr>
   <div class="row">
     <div class="col-md-4" style="background-color:black;">
       <h3>Menu</h3>
       <hr>
-      <ol>
-        <h4><li> <a href="#">Check status</a> </li></h4>
-        <h4><li> <a href="#">Open Bets</a> </li> </h4>
-        <h4><li> <a href="#">Top up Account Tokens</a> </li></h4>
-        <h4> <li><a href="#">Bet with Account</a></li></h4>
-        <h4> <li><a href="#">Close Bet</a></li></h4>
-        <h4> <li><a href="#">Check Player Prize</a></li></h4>
-        <h4> <li><a href="#">Withdraw</a></li></h4>
-        <h4> <li><a href="#">Burn Tokens</a></li></h4>
-        <h4> <li><a href="#">Exit</a></li></h4>
-      </ol>
+      <!-- For later iterations -->
+      <!-- <ul class="menuItems">
+        <li *ngFor="let menuItem of menuItems">
+          <button
+            [class.selected]="menuItem === selectedMenuItem"
+            type="button"
+            (click)="onSelect(menuItem)"
+          >
+            <span class="badge">{{ menuItem.id }}</span>
+            <span class="name">{{ menuItem.name }}</span>
+          </button>
+        </li>
+      </ul> -->
+      <ul class="menuItems">
+        <li>
+          <button type="button" (click)="checkState()">
+            <span class="badge">1</span>
+            <span class="name">Check Lottery Status</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="checkState()">
+            <span class="badge">2</span>
+            <span class="name">Open Bets</span>
+          </button>
+        </li>
+      </ul>
     </div>
     <div class="col-md-1">
 
@@ -38,7 +54,10 @@
     <div class="col-md-7" style="background-color:black;">
       <h3>Details</h3>
       <hr>
+      <div *ngIf="menuSelected">
+            <p>Lottery State is : {{ lotteryState }}</p>
+        </div>
+      </div>
 
     </div>
   </div>
-</div>
