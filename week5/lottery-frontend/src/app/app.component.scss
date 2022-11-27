@@ -2,7 +2,7 @@
   margin: 0 0 2em 0;
   list-style-type: none;
   padding: 0;
-  width: 15em;
+  width: 17em;
 }
 
 .menuItems li {
@@ -62,4 +62,19 @@
 
 .menuItems .name {
   align-self: center;
+}
+
+.menuItems .form-control {
+  flex: 1;
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  margin: .5em;
+  padding: 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: stretch;
+  height: 1.8em;
+  width: 5em;
 }

@@ -4,16 +4,18 @@
       <h2>G6 Token Lottery dApp</h2>
     </div>
     <div class="col-md-7" style="background-color:#1c1b1b;">
-    <div *ngIf="account">
-      <p>Account: {{ account }}</p>
-      <p>Balance: {{ etherBalance }} ethers</p>
-      <p>Lottery: {{ lotteryContractAddress }}</p>
-    </div>
+      <div *ngIf="account">
+        <p>Account: {{ account }}</p>
+        <p>Balance: {{ etherBalance }} ethers</p>
+        <p>Lottery: {{ lotteryContractAddress }}</p>
+      </div>
     </div>
     <div class="col-md-1">
       <div class="pull-right">
         <p></p>
+        <div *ngIf="menuSelected==0">
         <button (click)="connectWallet()" type="button" class="btn btn-primary"> Sign-In</button>
+        </div>
       </div>
     </div>
   </div>
@@ -43,7 +45,7 @@
           </button>
         </li>
         <li>
-          <input #betDuration type="number" min="100" [max]="5000" placeholder="100" class="menuItem input-sm">
+          <input #betDuration type="number" min="100" [max]="5000" placeholder="100 sec" class="form-control">
           <button (click)="openBets(betDuration.value)" type="button">
             <span class="badge"></span>
             <span class="name">Open Bets</span>
@@ -118,7 +120,7 @@
       </div>
       <div *ngIf="menuSelected==3">
         <p>Todo: Top up your account with tokens</p>
-    </div>
+      </div>
       <div *ngIf="menuSelected==4">
         <p>Todo: Bet with your account</p>
       </div>
@@ -137,5 +139,5 @@
       <div *ngIf="menuSelected==9">
         <p>Todo: Exit the lottery</p>
       </div>
+    </div>
   </div>
-</div>

@@ -35,12 +35,12 @@ export class AppComponent implements OnInit {
   lotteryContractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
   lotteryState: string | undefined; // whether lottery is open or closed
-  menuSelected?: number;
+  menuSelected?: number = 0; // For menu options
   lastBlockMinedDtTm?: string;
   lotterCloseTm?: string;
 
-  checkStateSelected: boolean = false; // Toggle Details panel display on html
-  openBetsSelected: boolean = false;
+  // checkStateSelected: boolean = false; // Toggle Details panel display on html
+  // openBetsSelected: boolean = false;
 
   constructor(private http: HttpClient) {
     console.log('AppComponent constructor');
@@ -72,17 +72,18 @@ export class AppComponent implements OnInit {
         // Get the ether balance
         this.etherBalance = ethers.utils.formatEther(
           await this.signer.getBalance()
-        );
-        console.log('etherBalance', this.etherBalance.toString());
+          );
+          console.log('etherBalance', this.etherBalance.toString());
 
-        // Connect to the deployed lottery contract
-        this.lotteryContract = new ethers.Contract(
-          this.lotteryContractAddress,
-          lotteryJson.abi,
-          this.signer
-        );
-        console.log('lotteryContract', this.lotteryContract);
-        console.log('latest block', await this.provider.getBlockNumber());
+          // Connect to the deployed lottery contract
+          this.lotteryContract = new ethers.Contract(
+            this.lotteryContractAddress,
+            lotteryJson.abi,
+            this.signer
+            );
+            console.log('lotteryContract', this.lotteryContract);
+            console.log('latest block', await this.provider.getBlockNumber());
+            this.menuSelected = -1; // Hide the sign-in button
       } catch (error) {
         console.log(error);
       }
