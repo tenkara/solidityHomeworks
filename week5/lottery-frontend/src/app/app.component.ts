@@ -34,6 +34,9 @@ export class AppComponent implements OnInit {
   // Set this address to the address of the deployed contract
   lotteryContractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
+  // Initialize the accounts array
+  accounts?: SignerWithAddress[];
+
   lotteryState: string | undefined; // whether lottery is open or closed
   menuSelected?: number = 0; // For menu options
   lastBlockMinedDtTm?: string;
@@ -72,18 +75,18 @@ export class AppComponent implements OnInit {
         // Get the ether balance
         this.etherBalance = ethers.utils.formatEther(
           await this.signer.getBalance()
-          );
-          console.log('etherBalance', this.etherBalance.toString());
+        );
+        console.log('etherBalance', this.etherBalance.toString());
 
-          // Connect to the deployed lottery contract
-          this.lotteryContract = new ethers.Contract(
-            this.lotteryContractAddress,
-            lotteryJson.abi,
-            this.signer
-            );
-            console.log('lotteryContract', this.lotteryContract);
-            console.log('latest block', await this.provider.getBlockNumber());
-            this.menuSelected = -1; // Hide the sign-in button
+        // Connect to the deployed lottery contract
+        this.lotteryContract = new ethers.Contract(
+          this.lotteryContractAddress,
+          lotteryJson.abi,
+          this.signer
+        );
+        console.log('lotteryContract', this.lotteryContract);
+        console.log('latest block', await this.provider.getBlockNumber());
+        this.menuSelected = -1; // Hide the sign-in button
       } catch (error) {
         console.log(error);
       }
@@ -106,8 +109,14 @@ export class AppComponent implements OnInit {
     const currentBlockDate = new Date(this.currentBlock?.timestamp * 1000);
     const closingTime = await this.lotteryContract?.['betsClosingTime']();
     const closingTimeDate = new Date(closingTime.toNumber() * 1000);
-    this.lastBlockMinedDtTm = currentBlockDate.toLocaleString() + ':' + currentBlockDate.toLocaleTimeString();
-    this.lotterCloseTm = closingTimeDate.toLocaleString() + ':' + closingTimeDate.toLocaleTimeString();
+    this.lastBlockMinedDtTm =
+      currentBlockDate.toLocaleString() +
+      ':' +
+      currentBlockDate.toLocaleTimeString();
+    this.lotterCloseTm =
+      closingTimeDate.toLocaleString() +
+      ':' +
+      closingTimeDate.toLocaleTimeString();
     console.log(
       `The last block was mined at ${currentBlockDate.toLocaleDateString()} : ${currentBlockDate.toLocaleTimeString()}\n`
     );
@@ -133,6 +142,17 @@ export class AppComponent implements OnInit {
     } else {
       console.log(`Bets are already open`);
     }
+  }
+  onBuyTokens(menuSelected: number) {
+    this.menuSelected = menuSelected;
+  }
+
+  async buyTokens(index: string, amount: string) {
+    const tx = await this.lotteryContract?.connect(accounts[Number(index)]).purchaseTokens({
+      value: ethers.utils.parseEther(amount).div(TOKEN_RATIO),
+    });
+    const receipt = await tx.wait();
+    console.log(`Tokens bought (${receipt.transactionHash})\n`);
   }
 
   todo(menuSelected: number) {
