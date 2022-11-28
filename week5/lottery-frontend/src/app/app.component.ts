@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber, Signer, ethers } from 'ethers';
 import lotteryJson from '../assets/Lottery.json';
 import { MenuItem } from './menuItem';
 import { MENUITEMS } from './menu-items';
-//import * as tokenJson  from '../assets/LotteryToken.json';
+import { environment } from 'src/environments/environment';
+import tokenJson  from '../assets/LotteryToken.json';
 
 declare global {
   interface Window {
@@ -25,22 +26,29 @@ export class AppComponent implements OnInit {
 
   // Instance variables for the lottery contract
   provider: ethers.providers.Web3Provider | undefined;
-  account: ethers.Wallet | undefined;
+  connectedAccount: ethers.Wallet | undefined;
   signer: ethers.Signer | undefined;
   etherBalance: string | undefined;
   lotteryContract: ethers.Contract | undefined;
+  tokenContract?: ethers.Contract ;
   currentBlock: any;
 
   // Set this address to the address of the deployed contract
-  lotteryContractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+  lotteryContractAddress = '0x5fbdb2315678afecb367f032d93f642f64180aa3';
 
   // Initialize the accounts array
-  accounts?: SignerWithAddress[];
+  signers: Signer[] = new Array(7);
+  mnemonic = environment.LOCAL_MNEMONIC;
 
   lotteryState: string | undefined; // whether lottery is open or closed
   menuSelected?: number = 0; // For menu options
   lastBlockMinedDtTm?: string;
   lotterCloseTm?: string;
+  txSuccess?: boolean;
+
+  prizeAmount: string | undefined;
+  currentAddress: string | undefined;
+  transactionHash: string | undefined;
 
   // checkStateSelected: boolean = false; // Toggle Details panel display on html
   // openBetsSelected: boolean = false;
@@ -57,6 +65,24 @@ export class AppComponent implements OnInit {
     this.selectedMenuItem = menuItem;
   }
 
+  async initAccounts(provider: ethers.providers.Web3Provider) {
+    // Preserve the immutability of the Signers; ensure proper initialization while cycling through the accounts
+    const basepathstr = "m/44'/60'/0'/0/";
+
+    // Cycle through the accounts and initialize the signers
+    for (let index = 0; index < 7; index++) {
+      this.signers[index] = ethers.Wallet.fromMnemonic(
+        environment.LOCAL_MNEMONIC ?? '',
+        basepathstr + index.toString()
+      ).connect(provider);
+      console.log(
+        `Account${index}: ${await this.signers[
+          index
+        ].getAddress()}  Balance: ${await this.signers[index].getBalance()} wei`
+      );
+    }
+  } // end initAccounts
+
   // Connect to MetaMask
   async connectWallet() {
     console.log('connectWallet');
@@ -64,9 +90,15 @@ export class AppComponent implements OnInit {
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
     if (window.ethereum) {
       try {
+        // Initialize accounts
+        this.initAccounts(this.provider);
+
         // Get the account address
-        this.account = await this.provider.send('eth_requestAccounts', []);
-        console.log('account', this.account);
+        this.connectedAccount = await this.provider.send(
+          'eth_requestAccounts',
+          []
+        );
+        console.log('account', this.connectedAccount);
 
         // Get the first signer and address
         this.signer = this.provider.getSigner(0);
@@ -86,7 +118,16 @@ export class AppComponent implements OnInit {
         );
         console.log('lotteryContract', this.lotteryContract);
         console.log('latest block', await this.provider.getBlockNumber());
+
+        // Connect to the deployed lottery contract
+        this.tokenContract = new ethers.Contract(
+          this.lotteryContractAddress,
+          tokenJson.abi,
+          this.signer
+        );
+
         this.menuSelected = -1; // Hide the sign-in button
+
       } catch (error) {
         console.log(error);
       }
@@ -148,11 +189,59 @@ export class AppComponent implements OnInit {
   }
 
   async buyTokens(index: string, amount: string) {
-    const tx = await this.lotteryContract?.connect(accounts[Number(index)]).purchaseTokens({
-      value: ethers.utils.parseEther(amount).div(TOKEN_RATIO),
-    });
+    this.menuSelected = 3;
+    const TOKEN_RATIO = 1;
+    try {
+      console.log(
+        `Buying ${amount} tokens for account ${await this.signers[
+          Number(index)
+        ].getAddress()}`
+      );
+      const tx = await this.lotteryContract
+        ?.connect(this.signers[Number(index)])
+        ['purchaseTokens']({
+          value: ethers.utils.parseEther(amount).div(TOKEN_RATIO),
+        });
+      const receipt = await tx.wait();
+      console.log(`Tokens bought (${receipt.transactionHash})\n`);
+
+      this.txSuccess = true;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async checkPrize(address: string) {
+    const prizeAmt = await this.lotteryContract?.['checkPrize'](address);
+    console.log(`Account ${address} has ${prizeAmt}\n`);
+    this.currentAddress = address;
+    this.prizeAmount = prizeAmt;
+
+  }
+
+  async withdraw(index: string, amount: string){
+    this.transactionHash = '';
+    const tx = await this.lotteryContract?.connect(this.signers[Number(index)])['withdraw'](amount);
     const receipt = await tx.wait();
-    console.log(`Tokens bought (${receipt.transactionHash})\n`);
+    console.log(`Withdrew winnings (${receipt.transactionHash})\n`);
+    this.transactionHash = receipt.transactionHash;
+    console.log('withdrawing tokens');
+  }
+
+  async burnTokens(index: string, amount: string){
+      this.transactionHash = '';
+      const tx = await this.lotteryContract?.connect(this.signers[Number(index)])['returnTokens'](amount);
+      const receipt = await tx.wait();
+      console.log(`Burned tokens (${receipt.transactionHash})\n`);
+      console.log('returning tokens');
+      this.transactionHash = receipt.transactionHash;
+  }
+
+  async bet(index: string, amount: string) {
+    const allowTx = await this.lotteryContract?.connect(this.signers[Number(index)])['approve'](this.lotteryContract?.address, ethers.constants.MaxUint256);
+    await allowTx.wait();
+    const tx = await this.lotteryContract?.connect(this.signers[Number(index)])['betMany'](amount);
+    const receipt = await tx.wait();
+    console.log(`Bets placed (${receipt.transactionHash})\n`);
   }
 
   todo(menuSelected: number) {

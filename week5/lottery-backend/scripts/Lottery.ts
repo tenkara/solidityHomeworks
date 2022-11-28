@@ -3,9 +3,11 @@ import * as readline from "readline";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { Lottery, LotteryToken } from "../typechain-types";
 
+
 let contract: Lottery;
 let token: LotteryToken;
 let accounts: SignerWithAddress[];
+let provider: ethers.providers.Provider;
 
 const BET_PRICE = 1;
 const BET_FEE = 0.2;
@@ -38,6 +40,10 @@ async function initContracts() {
 
 async function initAccounts() {
   accounts = await ethers.getSigners();
+  for(let i = 0; i < accounts.length; i++) {
+    console.log(`Account ${i}: ${await accounts[i].getAddress()}`);
+    console.log('Provider: ', ethers.providers.Provider.name);
+  }
 }
 
 async function mainMenu(rl: readline.Interface) {
