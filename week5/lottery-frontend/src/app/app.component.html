@@ -110,21 +110,18 @@
         </div>
       </div>
       <div *ngIf="menuSelected==2">
-        <div class="form-group row">
-          <label for="duration">Select duration (in seconds):</label>
-          <div class="col-sm-3">
-            <input #duration type="number" min="0" [max]="10000" placeholder="100" class="form-control">
+        <div *ngIf="lotteryState=='closed'">
+          <div class="form-group row">
+            <label for="duration">Select duration (in seconds):</label>
+            <div class="col-sm-3">
+              <input #duration type="number" min="0" [max]="10000" placeholder="100" class="form-control">
+            </div>
           </div>
+          <button (click)="openBets(duration.value)" type="submit" class="btn btn-primary">Submit</button>
         </div>
-        <button (click)="openBets(duration.value)" type="submit" class="btn btn-primary">Submit</button>
-        <div *ngIf="lotteryState=='open'; else closed">
+        <div *ngIf="lotteryState=='open'">
           <p>The lottery is Open.</p>
-          <p>The last block was mined at {{ lastBlockMinedDtTm }}</p>
-          <p>Lottery should close at {{ lotterCloseTm }}</p>
         </div>
-        <ng-template #closed>
-          <p>The lottery is ... Check Lottery Status</p>
-        </ng-template>
       </div>
       <div *ngIf="menuSelected==3">
         <div class="form-group row">
@@ -141,13 +138,9 @@
         </div>
         <button (click)="buyTokens(acctIndex.value, tokenAmnt.value)" type="submit"
           class="btn btn-primary">Submit</button>
-        <div *ngIf="txSuccess; else txFail">
-          <p>Token bought in Tx Hash: </p>
+        <div *ngIf="txSuccess">
+          <p>{{ tokenAmnt.value }} Tokens bought and the Tx Hash is : {{ transactionHash }} </p>
         </div>
-        <ng-template #txFail>
-          <p>The lottery is Closed.</p>
-        </ng-template>
-
       </div>
     </div>
     <div *ngIf="menuSelected==4">

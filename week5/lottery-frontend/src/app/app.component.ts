@@ -185,7 +185,8 @@ export class AppComponent implements OnInit {
         this.currentBlock.timestamp + Number(duration)
       );
       const receipt = await tx.wait();
-      console.log(`Bets opened (${receipt.transactionHash})`);
+      this.transactionHash = receipt.transactionHash;
+      console.log(`Bets opened and Tx hash is ${this.transactionHash}`);
     } else {
       console.log(`Bets are already open`);
     }
@@ -213,7 +214,8 @@ export class AppComponent implements OnInit {
           value: ethers.utils.parseEther(amount).div(TOKEN_RATIO),
         });
       const receipt = await tx.wait();
-      console.log(`Tokens bought (${receipt.transactionHash})\n`);
+      this.transactionHash = receipt.transactionHash;
+      console.log(`Tokens bought (${this.transactionHash})\n`);
 
       this.txSuccess = true;
     } catch (error) {
