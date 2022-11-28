@@ -45,8 +45,7 @@
           </button>
         </li>
         <li>
-          <input #betDuration type="number" min="100" [max]="5000" placeholder="100 sec" class="form-control">
-          <button (click)="openBets(betDuration.value)" type="button">
+          <button (click)="onOpenBets(2)" type="button">
             <span class="badge"></span>
             <span class="name">Open Bets</span>
           </button>
@@ -105,17 +104,26 @@
       <hr>
       <div *ngIf="menuSelected==1">
         <p>Lottery State is : {{ lotteryState }}</p>
-        <div *ngIf="lotteryState">
+        <div *ngIf="lotteryState=='open'">
           <p>The last block was mined at {{ lastBlockMinedDtTm }}</p>
           <p>Lottery should close at {{ lotterCloseTm }}</p>
         </div>
       </div>
       <div *ngIf="menuSelected==2">
-        <div *ngIf="lotteryState; else closed">
+        <div class="form-group row">
+          <label for="duration">Select duration (in seconds):</label>
+          <div class="col-sm-3">
+            <input #duration type="number" min="0" [max]="10000" placeholder="100" class="form-control">
+          </div>
+        </div>
+        <button (click)="openBets(duration.value)" type="submit" class="btn btn-primary">Submit</button>
+        <div *ngIf="lotteryState=='open'; else closed">
           <p>The lottery is Open.</p>
+          <p>The last block was mined at {{ lastBlockMinedDtTm }}</p>
+          <p>Lottery should close at {{ lotterCloseTm }}</p>
         </div>
         <ng-template #closed>
-          <p>The lottery is Closed.</p>
+          <p>The lottery is ... Check Lottery Status</p>
         </ng-template>
       </div>
       <div *ngIf="menuSelected==3">
@@ -132,74 +140,70 @@
           </div>
         </div>
         <button (click)="buyTokens(acctIndex.value, tokenAmnt.value)" type="submit"
-        class="btn btn-primary">Submit</button>
+          class="btn btn-primary">Submit</button>
         <div *ngIf="txSuccess; else txFail">
-            <p>Token bought in Tx Hash: </p>
-          </div>
-          <ng-template #txFail>
-            <p>The lottery is Closed.</p>
-          </ng-template>
+          <p>Token bought in Tx Hash: </p>
+        </div>
+        <ng-template #txFail>
+          <p>The lottery is Closed.</p>
+        </ng-template>
 
-          </div>
       </div>
-      <div *ngIf="menuSelected==4">
-        <p>Todo: Bet with your account</p>
-      </div>
-      <div *ngIf="menuSelected==5">
-        <p>Todo: Close the bets</p>
-      </div>
-      <div *ngIf="menuSelected==6">
-        <p>Check Prize : </p>
-        <label for="acctIndex">Account to lookup:</label>
-          <div class="col-sm-3">
-            <input #acctIndex type="number" min="0" [max]="10" placeholder="0" class="form-control">
-          </div>
-        <button
-        (click)="checkPrize(acctIndex.value)"
-        type="button"
-       class="btn btn-success btn-sm px-4 mx-2"
-        >Check Prize
-    </button>
-    <p>The prize amount for {{ currentAddress }} is : {{ prizeAmount }}</p>
     </div>
-      <div *ngIf="menuSelected==7">
-        <p>Withdraw your prize</p>
-        <div class="form-group row">
-          <label for="acctIndex">Account Index to use:</label>
-          <div class="col-sm-3">
-            <input #acctIndex type="number" min="0" [max]="10" placeholder="0" class="form-control">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="withdrawAmnt">Amount to withdraw:</label>
-          <div class="col-sm-3">
-            <input #withdrawAmnt type="number" min="0" [max]="1000000" placeholder="1" class="form-control">
-          </div>
-        </div>
-        <button (click)="withdraw(acctIndex.value, withdrawAmnt.value)" type="submit"
-          class="btn btn-primary">Submit</button>
-          <p>Withdraw confirmed {{ transactionHash }}</p>
+    <div *ngIf="menuSelected==4">
+      <p>Todo: Bet with your account</p>
+    </div>
+    <div *ngIf="menuSelected==5">
+      <p>Todo: Close the bets</p>
+    </div>
+    <div *ngIf="menuSelected==6">
+      <p>Check Prize : </p>
+      <label for="acctIndex">Account to lookup:</label>
+      <div class="col-sm-3">
+        <input #acctIndex type="number" min="0" [max]="10" placeholder="0" class="form-control">
       </div>
-      <div *ngIf="menuSelected==8">
-        <p>Todo: Burn your tokens</p>
-        <div class="form-group row">
-          <label for="acctIndex">Account Index to use:</label>
-          <div class="col-sm-3">
-            <input #acctIndex type="number" min="0" [max]="10" placeholder="0" class="form-control">
-          </div>
+      <button (click)="checkPrize(acctIndex.value)" type="button" class="btn btn-success btn-sm px-4 mx-2">Check Prize
+      </button>
+      <p>The prize amount for {{ currentAddress }} is : {{ prizeAmount }}</p>
+    </div>
+    <div *ngIf="menuSelected==7">
+      <p>Withdraw your prize</p>
+      <div class="form-group row">
+        <label for="acctIndex">Account Index to use:</label>
+        <div class="col-sm-3">
+          <input #acctIndex type="number" min="0" [max]="10" placeholder="0" class="form-control">
         </div>
-        <div class="form-group row">
-          <label for="withdrawAmnt">Number of tokens to burn:</label>
-          <div class="col-sm-3">
-            <input #burnAmnt type="number" min="0" [max]="1000000" placeholder="1" class="form-control">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="withdrawAmnt">Amount to withdraw:</label>
+        <div class="col-sm-3">
+          <input #withdrawAmnt type="number" min="0" [max]="1000000" placeholder="1" class="form-control">
         </div>
-        <button (click)="burnTokens(acctIndex.value, burnAmnt.value)" type="submit"
-          class="btn btn-primary">Submit</button>
-          <p>Burn confirmed {{ transactionHash }}</p>
       </div>
-      <div *ngIf="menuSelected==9">
-        <p>See you later!</p>
+      <button (click)="withdraw(acctIndex.value, withdrawAmnt.value)" type="submit"
+        class="btn btn-primary">Submit</button>
+      <p>Withdraw confirmed {{ transactionHash }}</p>
+    </div>
+    <div *ngIf="menuSelected==8">
+      <p>Todo: Burn your tokens</p>
+      <div class="form-group row">
+        <label for="acctIndex">Account Index to use:</label>
+        <div class="col-sm-3">
+          <input #acctIndex type="number" min="0" [max]="10" placeholder="0" class="form-control">
+        </div>
       </div>
+      <div class="form-group row">
+        <label for="withdrawAmnt">Number of tokens to burn:</label>
+        <div class="col-sm-3">
+          <input #burnAmnt type="number" min="0" [max]="1000000" placeholder="1" class="form-control">
+        </div>
+      </div>
+      <button (click)="burnTokens(acctIndex.value, burnAmnt.value)" type="submit"
+        class="btn btn-primary">Submit</button>
+      <p>Burn confirmed {{ transactionHash }}</p>
+    </div>
+    <div *ngIf="menuSelected==9">
+      <p>See you later!</p>
     </div>
   </div>
+</div>

@@ -167,11 +167,17 @@ export class AppComponent implements OnInit {
     // this.checkStateSelected = false;
   }
 
+ // Simple listener to callback openBets
+  onOpenBets(menuSelected: number) {
+    this.menuSelected = menuSelected;
+  }
+
   // Reuse from the class except we are implementing this in the frontend
-  // To be Continued
-  async openBets(...duration: string[]) {
-    this.menuSelected = 2;
-    if (this.menuSelected == 2 && !this.lotteryState) {
+  async openBets(duration: string) {
+    try {
+      this.menuSelected = 2;
+      console.log('duration', duration, 'Number', Number(duration));
+      if (this.menuSelected == 2 && (this.lotteryState=='closed')) {
       // We are opening the bets
       // this.openBetsSelected = true;
       this.currentBlock = await this.provider?.getBlock('latest');
@@ -183,7 +189,11 @@ export class AppComponent implements OnInit {
     } else {
       console.log(`Bets are already open`);
     }
+    } catch (error) {
+      console.log(error);
+    }
   }
+  // Simple listener to callback buyTokens
   onBuyTokens(menuSelected: number) {
     this.menuSelected = menuSelected;
   }
