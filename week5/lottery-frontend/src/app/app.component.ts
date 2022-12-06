@@ -5,7 +5,7 @@ import lotteryJson from '../assets/Lottery.json';
 import { MenuItem } from './menuItem';
 import { MENUITEMS } from './menu-items';
 import { environment } from 'src/environments/environment';
-import tokenJson  from '../assets/LotteryToken.json';
+import tokenJson from '../assets/LotteryToken.json';
 
 declare global {
   interface Window {
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   signer: ethers.Signer | undefined;
   etherBalance: string | undefined;
   lotteryContract: ethers.Contract | undefined;
-  tokenContract?: ethers.Contract ;
+  tokenContract?: ethers.Contract;
   currentBlock: any;
 
   // Set this address to the address of the deployed contract
@@ -127,7 +127,6 @@ export class AppComponent implements OnInit {
         );
 
         this.menuSelected = -1; // Hide the sign-in button
-
       } catch (error) {
         console.log(error);
       }
@@ -167,7 +166,7 @@ export class AppComponent implements OnInit {
     // this.checkStateSelected = false;
   }
 
- // Simple listener to callback openBets
+  // Simple listener to callback openBets
   onOpenBets(menuSelected: number) {
     this.menuSelected = menuSelected;
   }
@@ -177,19 +176,63 @@ export class AppComponent implements OnInit {
     try {
       this.menuSelected = 2;
       console.log('duration', duration, 'Number', Number(duration));
-      if (this.menuSelected == 2 && (this.lotteryState=='closed')) {
-      // We are opening the bets
-      // this.openBetsSelected = true;
-      this.currentBlock = await this.provider?.getBlock('latest');
-      const tx = await this.lotteryContract?.['openBets'](
-        this.currentBlock.timestamp + Number(duration)
-      );
-      const receipt = await tx.wait();
-      this.transactionHash = receipt.transactionHash;
-      console.log(`Bets opened and Tx hash is ${this.transactionHash}`);
-    } else {
-      console.log(`Bets are already open`);
-    }
+      if (this.menuSelected == 2 && this.lotteryState == 'closed') {
+        // We are opening the bets
+        // this.openBetsSelected = true;
+        this.currentBlock = await this.provider?.getBlock('latest');
+        console.log('currentBlock', this.currentBlock);
+        const currentBlockDate = new Date(this.currentBlock?.timestamp * 1000);
+        // const closingTime = await this.lotteryContract?.['betsClosingTime']();
+        const closingTime = await this.lotteryContract?.['betsClosingTime']();
+        const closingTimeDate = new Date(closingTime.toNumber() * 1000);
+        this.lastBlockMinedDtTm =
+          currentBlockDate.toLocaleString() +
+          ':' +
+          currentBlockDate.toLocaleTimeString();
+        this.lotterCloseTm =
+          closingTimeDate.toLocaleString() +
+          ':' +
+          closingTimeDate.toLocaleTimeString();
+        console.log(
+          `The last block was mined at ${currentBlockDate.toLocaleDateString()} : ${currentBlockDate.toLocaleTimeString()}\n`
+        );
+        console.log(
+          `lottery should close at  ${closingTimeDate.toLocaleDateString()} : ${closingTimeDate.toLocaleTimeString()}\n`
+        );
+        console.log(
+          'currentBlockTimestamp',
+          this.currentBlock.timestamp );
+        console.log('lastBlockMinedDtTm', this.lastBlockMinedDtTm);
+        console.log(
+          'argument to openBets',
+          this.currentBlock.timestamp + Number(duration)
+        );
+        console.log(
+          'closingTime',
+          this.currentBlock.timestamp + Number(duration)
+        );
+        console.log(
+          'closingDateInLocale',
+          new Date(
+            (this.currentBlock.timestamp * 1000) + (Number(duration))
+          ).toLocaleDateString()
+        );
+        console.log(
+          'closingTimeInLocale',
+          new Date(
+            (this.currentBlock.timestamp * 1000) + (Number(duration))
+          ).toLocaleTimeString()
+        );
+
+        const tx = await this.lotteryContract?.['openBets'](
+          this.currentBlock.timestamp + Number(duration)
+        );
+        const receipt = await tx.wait();
+        this.transactionHash = receipt.transactionHash;
+        console.log(`Bets opened and Tx hash is ${this.transactionHash}`);
+      } else {
+        console.log(`Bets are already open`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -227,31 +270,38 @@ export class AppComponent implements OnInit {
     console.log(`Account ${address} has ${prizeAmt}\n`);
     this.currentAddress = address;
     this.prizeAmount = prizeAmt;
-
   }
 
-  async withdraw(index: string, amount: string){
+  async withdraw(index: string, amount: string) {
     this.transactionHash = '';
-    const tx = await this.lotteryContract?.connect(this.signers[Number(index)])['withdraw'](amount);
+    const tx = await this.lotteryContract
+      ?.connect(this.signers[Number(index)])
+      ['withdraw'](amount);
     const receipt = await tx.wait();
     console.log(`Withdrew winnings (${receipt.transactionHash})\n`);
     this.transactionHash = receipt.transactionHash;
     console.log('withdrawing tokens');
   }
 
-  async burnTokens(index: string, amount: string){
-      this.transactionHash = '';
-      const tx = await this.lotteryContract?.connect(this.signers[Number(index)])['returnTokens'](amount);
-      const receipt = await tx.wait();
-      console.log(`Burned tokens (${receipt.transactionHash})\n`);
-      console.log('returning tokens');
-      this.transactionHash = receipt.transactionHash;
+  async burnTokens(index: string, amount: string) {
+    this.transactionHash = '';
+    const tx = await this.lotteryContract
+      ?.connect(this.signers[Number(index)])
+      ['returnTokens'](amount);
+    const receipt = await tx.wait();
+    console.log(`Burned tokens (${receipt.transactionHash})\n`);
+    console.log('returning tokens');
+    this.transactionHash = receipt.transactionHash;
   }
 
   async bet(index: string, amount: string) {
-    const allowTx = await this.lotteryContract?.connect(this.signers[Number(index)])['approve'](this.lotteryContract?.address, ethers.constants.MaxUint256);
+    const allowTx = await this.lotteryContract
+      ?.connect(this.signers[Number(index)])
+      ['approve'](this.lotteryContract?.address, ethers.constants.MaxUint256);
     await allowTx.wait();
-    const tx = await this.lotteryContract?.connect(this.signers[Number(index)])['betMany'](amount);
+    const tx = await this.lotteryContract
+      ?.connect(this.signers[Number(index)])
+      ['betMany'](amount);
     const receipt = await tx.wait();
     console.log(`Bets placed (${receipt.transactionHash})\n`);
   }
