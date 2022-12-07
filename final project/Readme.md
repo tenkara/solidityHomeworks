@@ -4,7 +4,7 @@
 3. Owner Create EHR screen (Lean)
 4. Owner Authorize EHR to HCP screen (Lean)
 5. HCP Sign-in screen (Raj)
-6. HCP patient info screen (open)
+6. HCP patient info screen (Hali)
 7. Exit function on front-end screen (just leave it out for now. Refresh the web page instead)
 8. Back-end script with end-point for Owner sign-in (Raj)
 9. Back-end script with end-point for Create EHR screen (Ken)
