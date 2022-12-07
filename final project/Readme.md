@@ -1,8 +1,8 @@
 ## Iteration 1 tasks and contributors -
 1. Front-end and Back-end templates, Repo and config set up and integration, merge changes, build and release (Raj)
 2. Owner Sign-in screen (Raj)
-3. Owner Create EHR screen (open)
-4. Owner Authorize EHR to HCP screen (open)
+3. Owner Create EHR screen (Lean)
+4. Owner Authorize EHR to HCP screen (Lean)
 5. HCP Sign-in screen (Raj)
 6. HCP patient info screen (open)
 7. Exit function on front-end screen (just leave it out for now. Refresh the web page instead)
