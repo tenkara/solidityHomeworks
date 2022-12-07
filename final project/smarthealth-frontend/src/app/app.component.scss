@@ -1,0 +1,25 @@
+.form-control {
+    flex: 1;
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: rgb(68, 48, 48);
+    margin: 1em;
+    padding: 0.5;
+    border-radius: 1px;
+    display: flex;
+    align-items: stretch;
+    height: 2em;
+    width: 10em;
+    color:rgb(55, 66, 75)
+  }
+
+  .h6 {
+    color: aliceblue;
+  }
+ p {
+    color: aqua
+ }
+ label {
+    color: aqua;
+ }
