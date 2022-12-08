@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -49,7 +48,6 @@ export class AppComponent implements OnInit {
 
       this.ownerMenuSelected = -1; // Hide the sign-in button
       this.hcpMenuSelected = -1; // Hide the sign-in button
-
     } catch (error) {
       console.log(error);
     }
@@ -78,5 +76,9 @@ export class AppComponent implements OnInit {
   onHcpExit(menuSelected: number) {
     this.hcpMenuSelected = menuSelected;
     console.log(`todo ${menuSelected}`);
+  }
+
+  submitPatientInfo(patientName: string, dob: string) {
+    console.log(`patient: ${patientName} , dob: ${dob} `);
   }
 }
