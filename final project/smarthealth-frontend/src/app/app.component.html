@@ -5,10 +5,13 @@
     </div>
     <div class="col-md-7" style="background-color:#1c1b1b;">
       <div *ngIf="roleSelected==0">
-        <p>Hello {{ ownerName }} Welcome!</p>
+        <p>Hello {{ signedRole }}, &nbsp;  welcome!</p>
       </div>
       <div *ngIf="roleSelected==1">
-        <p>Hello {{ hcpName }} Welcome! {{ hcpAddress }}</p>
+        <p>Hello {{ signedRole }},   &nbsp; &nbsp;  Welcome!</p>
+      </div>
+      <div *ngIf="roleSelected==-1">
+        <p>Hello {{ signedRole }} user,  Good Bye!</p>
       </div>
     </div>
     <div class="col-md-1">
