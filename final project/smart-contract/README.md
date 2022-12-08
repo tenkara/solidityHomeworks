@@ -14,12 +14,15 @@ Create an EHR (constructor) send the following information as a bytes 32 array w
         
         
 authorizeProvider([providerName, informationAuthorized, reason])
+
 Note - First iteration assumes only one authorized provider
 
 getPatientSummary() - must be patient to use
+
 getPatientVitals() - must be patient to use
 
 getPatientSummaryHCP([providerName]) - must be authorized to use
+
 getPatientVitalsHCP([providerName]) - must be authorized to use
 
 
