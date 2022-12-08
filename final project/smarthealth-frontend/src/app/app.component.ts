@@ -113,6 +113,7 @@ export class AppComponent implements OnInit {
   // Simple listener to callback on owner sign-out menu item
   onOwnerExit(menuSelected: number) {
     this.ownerMenuSelected = menuSelected;
+    this.roleSelected = -1;
   }
 
   // Simple listener to callback on HCP Access patient info menu item
@@ -122,6 +123,12 @@ export class AppComponent implements OnInit {
 
   onHcpExit(menuSelected: number) {
     this.hcpMenuSelected = menuSelected;
+    this.roleSelected = -1
     console.log(`todo ${menuSelected}`);
   }
+
+  submitPatientInfo(patientName: string, dob: string) {
+    console.log(`patient: ${patientName} , dob: ${dob} `);
+  }
+
 }
