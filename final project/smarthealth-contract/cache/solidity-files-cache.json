@@ -1,0 +1,40 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/gabe/encode/solidityHomeworks/final project/smart-contract/contracts/SmartHealth.sol": {
+      "lastModificationDate": 1670459818658,
+      "contentHash": "142ea64dc3027a9bac2fe219c6bcb944",
+      "sourceName": "contracts/SmartHealth.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "SmartHealth"
+      ]
+    }
+  }
+}
