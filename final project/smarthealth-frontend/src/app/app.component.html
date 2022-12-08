@@ -1,4 +1,4 @@
-<div class="all">
+<!-- <div class="all"> -->
 <div class="container" >
   <div class="row">
     <div class="col-md-4" style="background-color:black;">
@@ -59,88 +59,74 @@
           <h6 class="h6">Health Summary</h6>
           <br>
 
-
-          <div class="form-group row align-items-center">
-            <div class="col">
-            <label for="ownerName">Name</label>
-          </div>
-          <div class="col">
-            <input #ownerName type="text" placeholder="John Smith" class="form-control">
-          </div>
-         
-          </div>
-          
-          <div class="form-group row align-items-center">
-            <div class="col">
-            <label for="other">Age</label>
-          </div>
-            <div class="col">
-              <input #other type="text" placeholder="25" class="form-control">
+          <form action="" class="form-horizontal">
+            <div class="form-group row">
+              <label class="control-label col-sm-3" for="acctIndex">Name</label>
+              <div class="col-sm-3">
+                <input #acctIndex type="string" placeholder="John Smith" class="form-control">
+              </div>
             </div>
-          </div>
-          <div class="form-group row align-items-center">
-            <div class="col">
-            <label for="other">Birth Sex</label>
-          </div>
-            <div class="col">
-              <input #other type="text" placeholder="Male" class="form-control">
+            <div class="form-group row">
+              <label class="control-label col-sm-3" for="other">Age</label>
+              <div class="col-sm-3">
+                <input #other type="text" placeholder="25" class="form-control">
+              </div>
             </div>
-          </div>
-          <div class="form-group row row align-items-center">
-            <div class="col">
-            <label for="other">Height</label>
-          </div>
-            <div class="col">
-              <input #other type="text" placeholder="70" class="form-control">
+            <div class="form-group row">
+              <label class="control-label col-sm-3" for="other">Birth Sex</label>
+              <div class="col-sm-3">
+                <input #other type="text" placeholder="Male" class="form-control">
+              </div>
             </div>
-          </div>
-
-            <div class="form-group row row align-items-center">
-              <div class="col">
-              <label for="other">Weight</label>
+            <div class="form-group row">
+              <label class="control-label col-sm-3" for="other">Height</label>
+              <div class="col-sm-3">
+                <input #other type="text" placeholder="70" class="form-control">
+              </div>
             </div>
-              <div class="col">
+            <div class="form-group row">
+              <label class="control-label col-sm-3" for="other">Weight</label>
+              <div class="col-sm-3">
                 <input #other type="text" placeholder="150" class="form-control">
               </div>
+            </div>
+           
+            </form>
+       <div>
+
+
+       
+       
           
           <div><br><br>
               <h6 class="h6">Vitals</h6>
          <br>
-              <div class="form-group row row align-items-center">
-                <div class="col">
-            <label for="ownerName">Heart Rate</label>
-          </div>
-            <div class="col">
-              <input #ownerName type="text" placeholder="75bpm" class="form-control">
+         <form action="" class="form-horizontal">
+          <div class="form-group row">
+            <label class="control-label col-sm-3" for="other">Heart Rate</label>
+            <div class="col-sm-3">
+              <input #acctIndex type="string" placeholder="75 bpm" class="form-control">
             </div>
           </div>
-          <div class="form-group row row align-items-center">
-            <div class="col">
-            <label for="ownerName">Blood Pressure</label>
-          </div>
-            <div class="col">
-              <input #ownerName type="text" placeholder="120/80 mmHg" class="form-control">
+          <div class="form-group row">
+            <label class="control-label col-sm-3" for="other">Blood Pressure</label>
+            <div class="col-sm-3">
+              <input #other type="text" placeholder="25" class="form-control">
             </div>
           </div>
-           
-          <div class="form-group row row align-items-center">
-            <div class="col">
-            <label for="ownerName">Saturation</label>
-          </div>
-            <div class="col">
-              <input #ownerName type="text" placeholder="98 %" class="form-control">
+          <div class="form-group row">
+            <label class="control-label col-sm-3" for="other">Saturation</label>
+            <div class="col-sm-3">
+              <input #other type="text" placeholder="98%" class="form-control">
             </div>
           </div>
-          
-          
-          <div class="form-group row row align-items-center">
-            <div class="col">
-              <label for="ownerName">Temperature</label>
-            </div>
-            <div class="col">
-              <input #ownerName type="text" placeholder="99.5 F" class="form-control">
+          <div class="form-group row">
+            <label class="control-label col-sm-3" for="other">Temperature</label>
+            <div class="col-sm-3">
+              <input #other type="text" placeholder="99.5 F" class="form-control">
             </div>
           </div>
+          </form>
           <br>
           
           <div class="container text-center">
@@ -164,43 +150,46 @@
         <div *ngIf="ownerMenuSelected==2">
           
 
-          <div class="form-group row row align-items-center">
-            <div class="col">
-            <p for="ownerName">HCP Name</p>
+          <form action="" class="form-horizontal">
+            <div class="form-group row">
+              <label class="control-label col-sm-3" for="other">HCP Name</label>
+              <div class="col-sm-3">
+                <input #ownerName type="text" placeholder="Summit Medical Clinic" class="form-control">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="control-label col-sm-3" for="other">Information to Authorize</label>
+              <div class="col-sm-3">
+                <select class="form-select-bg-size: 25px" aria-label="Default select example" >
+                  <option selected>Vitals</option>
+                  <option value="1">Analitics1</option>
+                  <option value="2">Analitics2</option>
+                  <option value="3">Analitics3</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+            <label class="control-label col-sm-3" for="other">Reason</label>
+            <div class="col-sm-3">
+              <input #ownerName type="text" placeholder="PCP Referral" class="form-control">
+              
+            </div>
           </div>
-          <div class="col">
-            <input #ownerName type="text" placeholder="Summit Medical Clinic" class="form-control">
-          </div>
-        </div>
+           
+            </form>
 
-        <div class="form-group row row align-items-center">
-          <div class="col">
-          <p for="ownerName">Information to Authorize</p>
-        </div>
-        <div class="col ">
-          <div class="col">
-            
-            <select class="form-select-bg-size: 22px" aria-label="Default select example" >
-              <option selected>Vitals</option>
-              <option value="1">Analitics1</option>
-              <option value="2">Analitics2</option>
-              <option value="3">Analitics3</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group row row align-items-center">
-        <div class="col">
-        <p for="ownerName">HCP Name</p>
-      </div>
-      <div class="col">
-        <input #ownerName type="text" placeholder="PCP Referral" class="form-control">
-      </div>
-    </div>
-    <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
-
-
+            <div class="container text-center">
+              <div class="row">
+                <div class="col">
+                 </div>
+                <div class="col">
+                </div>
+                
+                <div class="col">
+                  <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
+                </div>
+              </div>
+            </div>
 
           </div>
 
@@ -255,4 +244,5 @@
     <!-- Repeat the above for HCP -->
   </div>
 </div>
-</div>
+<!-- </div> -->
+
