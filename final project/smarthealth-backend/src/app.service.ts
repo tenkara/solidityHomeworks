@@ -1,15 +1,14 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { Address } from 'cluster';
-import { BigNumber, ethers, Signer } from 'ethers';
+import { BigNumber, ethers, Signer, Wallet } from 'ethers';
 import {
   isBalanceZero,
   getProvider,
   convertToBytes32Array,
 } from './utils/util';
 import { SmartHealth__factory } from 'typechain-types';
-
-// import * as dotenv from "dotenv";
+require('dotenv').config();
 
 export class ehrDTO {
   name: string;
@@ -31,9 +30,9 @@ export class rolePlayDTO {
 
 export class authorizeDTO {}
 
-interface Signers {
-  patient: Signer;
-  hcp: Signer;
+interface Wallets {
+  patient: Wallet;
+  hcp: Wallet;
 }
 
 @Injectable()
@@ -44,15 +43,13 @@ export class AppService {
   ehrContractOwnerAddress: string;
   signedInRole: string;
   signedInName: string;
-  signers: Signers;
+  signers: Wallets = { patient: null, hcp: null };
 
   constructor() {
     const BASE_STRING_PATH = "m/44'/60'/0'/0/";
-
     const provider = getProvider({
       ALCHEMY_API_KEY: process.env.ALCHEMY_API_KEY,
     });
-
     // Initialise patient and hcp signers
     this.signers.patient = ethers.Wallet.fromMnemonic(
       process.env.MNEMONIC ?? '',
@@ -62,6 +59,13 @@ export class AppService {
       process.env.MNEMONIC ?? '',
       BASE_STRING_PATH + '2',
     ).connect(provider);
+  }
+
+  async checkSignersAddress() {
+    return {
+      patient: await this.signers.patient.getAddress(),
+      hcp: await this.signers.hcp.getAddress(),
+    };
   }
 
   // End point for owner, hcp, unknown sign in screen (Raj)

@@ -14,12 +14,16 @@ export class AppController {
   // @Get('signed-name/address?')
   // initializeAccounts(@Param ('address') address: string): Promise<{ result: string }> {
   //   return this.appService.initializeAccounts(address);
-  // } 
+  // }
+  @Get('precheck')
+  checkSignersAddress(): Promise<any> {
+    return this.appService.checkSignersAddress();
+  }
 
   @Get('signed-name/address?')
-  initializeAccounts(@Query ('address') address: string): Promise<any> {
+  initializeAccounts(@Query('address') address: string): Promise<any> {
     return this.appService.initializeAccounts(address);
-  } 
+  }
 
   // Todo: Get and Post methods for Owner, HCP sign up screens, and any backend services to test with SwaggerHub
 
