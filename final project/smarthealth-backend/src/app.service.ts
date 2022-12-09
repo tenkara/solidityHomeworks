@@ -2,6 +2,12 @@
 import { Injectable } from '@nestjs/common';
 import { Address } from 'cluster';
 import { BigNumber, ethers, Signer } from 'ethers';
+import {
+  isBalanceZero,
+  getProvider,
+  convertToBytes32Array,
+} from './utils/util';
+import { SmartHealth__factory } from 'typechain-types';
 
 // import * as dotenv from "dotenv";
 
@@ -20,86 +26,102 @@ export class ehrDTO {
 export class rolePlayDTO {
   role: string;
   name: string;
+  isOwner: boolean;
 }
 
-export class authorizeDTO {
+export class authorizeDTO {}
 
+interface Signers {
+  patient: Signer;
+  hcp: Signer;
 }
 
 @Injectable()
 export class AppService {
-  provider: ethers.providers.AlchemyProvider;
-
   // Electronic Health Record (EHR) contract variables
   ehrContractFactory: ethers.ContractFactory;
   ehrContract: ethers.Contract;
   ehrContractOwnerAddress: string;
   signedInRole: string;
   signedInName: string;
+  signers: Signers;
 
-  constructor() {}
+  constructor() {
+    const BASE_STRING_PATH = "m/44'/60'/0'/0/";
+
+    const provider = getProvider({
+      ALCHEMY_API_KEY: process.env.ALCHEMY_API_KEY,
+    });
+
+    // Initialise patient and hcp signers
+    this.signers.patient = ethers.Wallet.fromMnemonic(
+      process.env.MNEMONIC ?? '',
+      BASE_STRING_PATH + '1',
+    ).connect(provider);
+    this.signers.hcp = ethers.Wallet.fromMnemonic(
+      process.env.MNEMONIC ?? '',
+      BASE_STRING_PATH + '2',
+    ).connect(provider);
+  }
 
   // End point for owner, hcp, unknown sign in screen (Raj)
-  // Uses the BIP 44 standard for HD wallet derivation path to set up the accounts and their roles for the first iteration
-  async initializeAccounts(address: string) {
-  
-    // log the input address
-    console.log(`Address: ${address}`);
-    // set up a Provider
-    const provider = new ethers.providers.AlchemyProvider("goerli", process.env.ALCHEMY_API_KEY ?? "");
-    const network = await provider.getNetwork(); // For later iterations
-      
-   // Preserve the immutability of the Signers; ensure proper initialization while cycling through the accounts
-       const basepathstr = "m/44'/60'/0'/0/";
-       const signer: Signer[] = new Array(2); // For now we just use 2 accounts, owner and HCP
-   
-   // Cycle through the accounts and initialize the signers
-       for( let index = 0; index < 2; index++ ) {
-           signer[index] = (ethers.Wallet.fromMnemonic(process.env.MNEMONIC ?? "", basepathstr+index.toString())).connect(provider);
-           console.log(`Account${index}: ${await (signer[index]).getAddress()}  Balance: ${await (signer[index]).getBalance()} wei`); 
-       }
-
-    // Determine the account and associatee the roles with the accounts
-    // This enables role play of contract owner and HCP and to demonstrate the interaction between the two and the EHR contract
-    const ownerAddress = await signer[0].getAddress(); // Owner account for the first itereation
-    const hcpAddress = await signer[1].getAddress(); // HCP account for the first iteration
-
-    if (ownerAddress === address) {
-      this.signedInRole = "owner";
-    } else if (hcpAddress === address) {
-      this.signedInRole = "hcp";
-    } else {
-      this.signedInRole = "unknown";  
+  async initializeAccounts(address: string): Promise<rolePlayDTO> {
+    const ownerAddress = await this.signers.patient.getAddress();
+    const hcpAddress = await this.signers.hcp.getAddress();
+    // Return role determined by address
+    switch (address) {
+      case ownerAddress:
+        return {
+          name: process.env.OWNER_NAME ?? 'Default Patient Name',
+          role: 'owner',
+          isOwner: true,
+        };
+      case hcpAddress:
+        return {
+          name: process.env.HCP_NAME ?? 'Default HCP Name',
+          role: 'hcp',
+          isOwner: false,
+        };
+      default:
+        return { name: 'Unknown', role: 'Unknown', isOwner: false };
     }
-    
-    if (this.signedInRole === "owner") {
-      this.signedInName = process.env.OWNER_NAME ?? "";
-    } else if (this.signedInRole === "hcp") {
-      this.signedInName = process.env.HCP_NAME ?? "";
-    } else {
-      this.signedInName = "unknown";
-    }
-
-    return { result: this.signedInRole };
-    // return { rolePlayDTO: { role: this.signedInRole, name: this.signedInName } }; // For subsequent iterations
   }
-
 
   // End point to create a new EHR contract with data from the create EHR screen (Ken)
-  deployEHRContract(...args: any[]) {
-    let ehrContractAddress: string;
-    // Each patient owns and manages their own EHR contract to stay in compliance with HIPAA
-    try {
-    } catch (error) {}
-    return { ehrContractAddress };
+  async deployContract(data: string[]) {
+    let contract = null;
+    if (await isBalanceZero(this.signers.patient)) {
+      throw new Error('Not enough balance to deploy contract');
+    }
+    const contractFactory = new SmartHealth__factory(this.signers[1]);
+    contract = await contractFactory.deploy(convertToBytes32Array(data));
+    await contract.deployed();
+    return { address: contract.address, hash: contract.txHash };
   }
 
-  // End point to create EHR metadata (Ken)
+  // Patient create EHR data first time, contract deployment  (Ken)
   async create(req: ehrDTO) {
-    let txHash: string;
+    let contractAddress = null;
+    let txHash = null;
     try {
-    } catch (error) {}
-    return { txHash };
+      const data = [
+        req.name,
+        req.age.toString(),
+        req.sex,
+        req.weight.toString(),
+        req.heartRate.toString(),
+        req.bloodPressure,
+        req.oxygenSaturation.toString(),
+        req.temperature.toString(),
+      ];
+      await this.deployContract(data).then(({ address, hash }) => {
+        contractAddress = address;
+        txHash = hash;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    return { contractAddress, txHash };
   }
 
   // End point to authorize EHR metadata and details to HCP  (Ken)
