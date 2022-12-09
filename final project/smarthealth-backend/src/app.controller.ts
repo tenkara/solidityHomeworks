@@ -5,7 +5,12 @@ import { Query } from '@nestjs/common/decorators';
 import { Address } from 'cluster';
 import { ethers } from 'ethers';
 import { stringify } from 'querystring';
-import { AppService, ehrDTO, authorizeDTO, rolePlayDTO } from './app.service';
+import { AppService, rolePlayDTO } from './app.service';
+import { ApiOperation } from '@nestjs/swagger';
+import { CreateEHRDto } from './dto/ehr.dto';
+import { AuthorizeHCPDto } from './dto/hcp.dto';
+import { EHR } from './entities/ehr.entity';
+import { HCP } from './entities/hcp.entity';
 
 @Controller()
 export class AppController {
@@ -21,23 +26,37 @@ export class AppController {
     return this.appService.initializeAccounts(address);
   } 
 
-  // Todo: Get and Post methods for Owner, HCP sign up screens, and any backend services to test with SwaggerHub
+  @Get('check/role')
+  @ApiOperation({ summary: 'Check signer role by address' })
+  role(@Query('address') address: string): Promise<any> {
+    return this.appService.getRole(address);
+  }
 
-  // TODO: Back-end script with end-point for Create EHR screen (Ken)
   @Post('create')
-  create(@Body() body: ehrDTO): Promise<{ txHash: string }> {
+  @ApiOperation({ summary: 'Create EHR for a patient and deploying contract' })
+  create(
+    @Body() body: CreateEHRDto,
+  ): Promise<{ contractAddress: string; data: EHR }> {
     return this.appService.create(body);
   }
 
-  // TODO: Back-end script with end-point for Authorize EHR to HCP screen (Ken)
   @Post('authorize')
-  authorize(@Body() body: authorizeDTO): Promise<{ txHash: string }> {
+  @ApiOperation({ summary: "Authorize HCP to access patient's EHR" })
+  authorize(
+    @Body() body: AuthorizeHCPDto,
+  ): Promise<{ txHash: string; data: HCP }> {
     return this.appService.authorize(body);
   }
 
-  // TODO: Back-end script with end-point for HCP patient info screen (Ken)
-  @Get('view')
-  view(): Promise<any> {
-    return this.appService.view();
+  @Get('view/summary')
+  @ApiOperation({ summary: "View patient's summary" })
+  viewSummary(@Query('address') address: string): Promise<any> {
+    return this.appService.viewPatientSummary(address);
+  }
+
+  @Get('view/vitals')
+  @ApiOperation({ summary: "View patient's vitals" })
+  viewVitals(@Query('address') address: string): Promise<any> {
+    return this.appService.viewPatientVitals(address);
   }
 }
