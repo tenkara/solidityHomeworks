@@ -4,31 +4,24 @@ import { Address } from 'cluster';
 import { BigNumber, ethers, Signer, Wallet } from 'ethers';
 import {
   isBalanceZero,
-  getProvider,
   convertToBytes32Array,
+  smartHealthContract,
+  toStr,
+  getPatient,
+  getHCP,
 } from './utils/util';
 import { SmartHealth__factory } from 'typechain-types';
+import { CreateEHRDto } from './dto/ehr.dto';
+import { EHR } from './entities/ehr.entity';
+import { HCP } from './entities/hcp.entity';
+import { AuthorizeHCPDto } from './dto/hcp.dto';
 require('dotenv').config();
-
-export class ehrDTO {
-  name: string;
-  age: number;
-  sex: string;
-  height: number;
-  weight: number;
-  heartRate: number;
-  bloodPressure: string;
-  oxygenSaturation: number;
-  temperature: number;
-}
 
 export class rolePlayDTO {
   role: string;
   name: string;
   isOwner: boolean;
 }
-
-export class authorizeDTO {}
 
 interface Wallets {
   patient: Wallet;
@@ -37,50 +30,42 @@ interface Wallets {
 
 @Injectable()
 export class AppService {
-  // Electronic Health Record (EHR) contract variables
+  // Electronic Health RecoGrd (EHR) contract variables
   ehrContractFactory: ethers.ContractFactory;
   ehrContract: ethers.Contract;
   ehrContractOwnerAddress: string;
   signedInRole: string;
   signedInName: string;
   signers: Wallets = { patient: null, hcp: null };
+  ownerAddress: string;
+  hcpAddress: string;
 
   constructor() {
-    const BASE_STRING_PATH = "m/44'/60'/0'/0/";
-    const provider = getProvider({
-      ALCHEMY_API_KEY: process.env.ALCHEMY_API_KEY,
-    });
     // Initialise patient and hcp signers
-    this.signers.patient = ethers.Wallet.fromMnemonic(
-      process.env.MNEMONIC ?? '',
-      BASE_STRING_PATH + '1',
-    ).connect(provider);
-    this.signers.hcp = ethers.Wallet.fromMnemonic(
-      process.env.MNEMONIC ?? '',
-      BASE_STRING_PATH + '2',
-    ).connect(provider);
+    this.signers.patient = getPatient();
+    this.signers.hcp = getHCP();
+    this.ownerAddress = this.signers.patient.address;
+    this.hcpAddress = this.signers.hcp.address;
   }
 
   async checkSignersAddress() {
     return {
-      patient: await this.signers.patient.getAddress(),
-      hcp: await this.signers.hcp.getAddress(),
+      patient: await this.signers.patient.address,
+      hcp: await this.signers.hcp.address,
     };
   }
 
   // End point for owner, hcp, unknown sign in screen (Raj)
-  async initializeAccounts(address: string): Promise<rolePlayDTO> {
-    const ownerAddress = await this.signers.patient.getAddress();
-    const hcpAddress = await this.signers.hcp.getAddress();
+  async getRole(address: string): Promise<rolePlayDTO> {
     // Return role determined by address
     switch (address) {
-      case ownerAddress:
+      case this.ownerAddress:
         return {
           name: process.env.OWNER_NAME ?? 'Default Patient Name',
           role: 'owner',
           isOwner: true,
         };
-      case hcpAddress:
+      case this.hcpAddress:
         return {
           name: process.env.HCP_NAME ?? 'Default HCP Name',
           role: 'hcp',
@@ -97,22 +82,26 @@ export class AppService {
     if (await isBalanceZero(this.signers.patient)) {
       throw new Error('Not enough balance to deploy contract');
     }
-    const contractFactory = new SmartHealth__factory(this.signers[1]);
+    const contractFactory = new SmartHealth__factory(this.signers.patient);
     contract = await contractFactory.deploy(convertToBytes32Array(data));
     await contract.deployed();
     return { address: contract.address, hash: contract.txHash };
   }
 
   // Patient create EHR data first time, contract deployment  (Ken)
-  async create(req: ehrDTO) {
+  async create(req: CreateEHRDto): Promise<{
+    contractAddress: string;
+    data: EHR;
+  }> {
+    console.log(req);
     let contractAddress = null;
-    let txHash = null;
     try {
       const data = [
         req.name,
         req.age.toString(),
         req.sex,
         req.weight.toString(),
+        //req.height.toString(),
         req.heartRate.toString(),
         req.bloodPressure,
         req.oxygenSaturation.toString(),
@@ -120,39 +109,80 @@ export class AppService {
       ];
       await this.deployContract(data).then(({ address, hash }) => {
         contractAddress = address;
-        txHash = hash;
       });
     } catch (error) {
       console.log(error);
     }
-    return { contractAddress, txHash };
+    return { contractAddress, data: req };
   }
 
   // End point to authorize EHR metadata and details to HCP  (Ken)
-  async authorize(req: authorizeDTO) {
+  async authorize(
+    req: AuthorizeHCPDto,
+  ): Promise<{ txHash: string; data: HCP }> {
     let txHash: string;
     try {
-    } catch (error) {}
-    return { txHash };
+    } catch (error) {
+      console.error(error);
+    }
+    return { txHash, data: req };
   }
 
   // End point to view authorized EHR metadata and details  (Ken)
-  async view() {
-    const authorizedData: ehrDTO = {
-      name: 'Joe Smith',
-      age: 25,
-      sex: 'Male',
-      height: 70,
-      weight: 150,
-      heartRate: 75,
-      bloodPressure: '120/80',
-      oxygenSaturation: 98,
-      temperature: 99.5,
-    };
+  async viewPatientSummary(address: string): Promise<{ result: any }> {
+    let result = {};
     try {
+      let signer = this.proxyAccount(address);
+      await smartHealthContract()
+        .connect(signer)
+        .getPatientSummary()
+        .then((summary) => {
+          let { name, age, birthSex, weight } = summary;
+          result = {
+            name: toStr(name),
+            age: toStr(age),
+            birthSex: toStr(birthSex),
+            weight: toStr(weight),
+          };
+        });
     } catch (error) {
       console.log(error);
     }
-    return { authorizedData };
+    return { result };
   }
+
+  async viewPatientVitals(address: string): Promise<{ result: any }> {
+    let result = {};
+    try {
+      let signer = this.proxyAccount(address);
+      await smartHealthContract()
+        .connect(signer)
+        .getPatientVitals()
+        .then((vitals) => {
+          let { heartRate, bloodPressure, oxygenSat, temperature } = vitals;
+          result = {
+            heartRate: toStr(heartRate),
+            bloodPressure: toStr(bloodPressure),
+            oxygenSat: toStr(oxygenSat),
+            temperature: toStr(temperature),
+          };
+        });
+    } catch (error) {
+      console.log(error);
+    }
+    return { result };
+  }
+
+  // Function as an account selector, this SHOULD NOT be used in production. The front end should determine and
+  // redirect patient/hcp API to call the right endpoint instead. This will eventually be deprecated
+  proxyAccount = (address: string): Wallet => {
+    switch (address) {
+      case this.ownerAddress:
+        return this.signers.patient;
+      case this.hcpAddress:
+        return this.signers.hcp;
+      default:
+        throw new Error('Account does not exist');
+    }
+  };
 }
