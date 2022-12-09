@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ethers } from 'ethers';
+import { ParamType } from 'ethers/lib/utils';
 
+declare global {
+  interface Window {
+    ethereum: ethers.providers.ExternalProvider;
+    // ethereum?: Window;
+  }
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,7 +19,7 @@ export class AppComponent implements OnInit {
   title = 'SmartHealth';
 
   // Enable role selection and display the appropriate page
-  roleSelected?: number = 0; // 0: Patient, 1: HCP
+  roleSelected?: number = 3; // 0: Owner, 1: HCP, -1: unknown, 3: not selected (used for landing page empty display)
 
   // Owner sign-in page variables
   ownerName?: string;
@@ -30,6 +38,12 @@ export class AppComponent implements OnInit {
 
   // Current menu item selected from HCP menu
   hcpMenuSelected?: number = 0; // For menu options
+  provider?: ethers.providers.Web3Provider;
+  account?: ethers.Wallet;
+  signer?: ethers.providers.JsonRpcSigner;
+  address?: string; // Address of the current account signed in through MetaMask
+  signedName?: string; // Name of the current account signed in through MetaMask for later iterations
+  signedRole?: string; // Role of the current account signed in through MetaMask
 
   // Owner HCP access patient info page variables
 
@@ -44,10 +58,45 @@ export class AppComponent implements OnInit {
   async connectWallet() {
     try {
       console.log('connectWallet');
-      this.roleSelected = 1; // HCP role for now; TODO: set based on account selected
 
-      this.ownerMenuSelected = -1; // Hide the sign-in button
-      this.hcpMenuSelected = -1; // Hide the sign-in button
+      // Connect to the provider
+      this.provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      if (window.ethereum) {
+        // Get the account to use for interaction with Token and Ballot contracts
+        let accounts = await this.provider.send('eth_requestAccounts', []);
+        console.log(`accounts: ${accounts[0]}, ${accounts[1]}\n`);
+        this.signer = await this.provider.getSigner();
+        this.address = await this.signer.getAddress();
+        let queryParams = new HttpParams().append('address', this.address);
+        console.log(`account: ${accounts[0]}\n`);
+        console.log(`account: ${await this.signer.getAddress()}\n`);
+
+        this.http
+          .get<any>('http://localhost:3000/signed-name/address', {
+            params: queryParams,
+          })
+          .subscribe((ans) => {
+            this.signedRole = ans.result;
+            console.log(ans.result);
+            console.log(this.signedRole);
+            if (this.signedRole === 'owner') {
+              this.roleSelected = 0;
+              console.log('owner role', this.signedRole, this.roleSelected);
+            } else if (this.signedRole === 'hcp') {
+              this.roleSelected = 1;
+              console.log('hcp role', this.signedRole, this.roleSelected);
+            } else if (this.signedRole === 'unknown') {
+              this.roleSelected = -1;
+              console.log('unknown role');
+            }
+          });
+
+        this.ownerMenuSelected = -1; // Hide the sign-in button
+        this.hcpMenuSelected = -1; // Hide the sign-in button
+      } else {
+        console.log('Unable to process web3 request');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +115,7 @@ export class AppComponent implements OnInit {
   // Simple listener to callback on owner sign-out menu item
   onOwnerExit(menuSelected: number) {
     this.ownerMenuSelected = menuSelected;
+    this.roleSelected = -1;
   }
 
   // Simple listener to callback on HCP Access patient info menu item
@@ -75,6 +125,7 @@ export class AppComponent implements OnInit {
 
   onHcpExit(menuSelected: number) {
     this.hcpMenuSelected = menuSelected;
+    this.roleSelected = -1;
     console.log(`todo ${menuSelected}`);
   }
 

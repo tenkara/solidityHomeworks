@@ -1,181 +1,346 @@
-<!DOCTYPE html>
-<html>
-<body style="background-color:#1C1B1B;">
-  <div class="container" >
-    <div class="row">
-      <div class="col-md-4" style="background-color:black;">
-        <h2>SmartHealth</h2>
+<!-- Begin Landing page and Role play -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" style="background-color:black;">
+      <h2>SmartHealth</h2>
+    </div>
+    <div class="col-md-7" style="background-color:#1c1b1b;">
+      <div *ngIf="roleSelected==0">
+        <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
       </div>
-      <div class="col-md-7" style="background-color:black;">
-        <div *ngIf="roleSelected==0">
-          <p>Hello {{ ownerName }} Welcome!</p>
-        </div>
-        <div *ngIf="roleSelected==1">
-          <p>Hello {{ hcpName }} Welcome! {{ hcpAddress }}</p>
-        </div>
+      <div *ngIf="roleSelected==1">
+        <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
       </div>
-      <div class="col-md-1">
-        <div class="pull-right">
-          <p></p>
-          <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0">
-            <button (click)="connectWallet()" type="button" class="btn btn-primary"> Sign-In</button>
-          </div>
-        </div>
+      <div *ngIf="roleSelected==-1">
+        <p>Hello {{ signedRole }} user, good bye!</p>
       </div>
     </div>
-    <hr>
-    <div *ngIf="roleSelected==0">
-      <!-- Owner Menu and Details-->
-      <div class="row">
-        <div class="col-md-4" style="background-color:black;">
-          <h3>Menu</h3>
-          <hr>
-          <ul class="menuItems">
-            <li>
-              <button type="button" (click)="onCreateEHR(1)">
-                <span class="badge"></span>
-                <span class="name">Create Health Record</span>
-              </button>
-            </li>
-            <li>
-              <button type="button" (click)="onAuthorizeHCP(2)">
-                <span class="badge"></span>
-                <span class="name">Authorize Health Record</span>
-              </button>
-            </li>
-            <li>
-              <button type="button" (click)="onOwnerExit(3)">
-                <span class="badge"></span>
-                <span class="name">Exit</span>
-              </button>
-            </li>
-          </ul>
-        </div>
-  
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-7" style="background-color:black;">
-          <h3>Details</h3>
-          <hr>
-          <div *ngIf="ownerMenuSelected==1">
-            <p>Health Summary :</p>
-            <div class="form-group row">
-              <label for="ownerName">Name</label>
-              <div class="col-sm-3">
-                <input #ownerName type="text" placeholder="John Smith" class="form-control">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="other">Todo</label>
-              <div class="col-sm-3">
-                <input #other type="text" placeholder="Todo" class="form-control">
-              </div>
-            </div>
-          </div>
-  
-          <div *ngIf="ownerMenuSelected==2">
-            <div class="form-group row">
-              <label for="other">Todo</label>
-              <div class="col-sm-3">
-                <input #other type="text" placeholder="Todo" class="form-control">
-              </div>
-            </div>
-          </div>
-  
-          <div *ngIf="ownerMenuSelected==3">
-            <div class="form-group row">
-              <label for="other">Todo</label>
-              <div class="col-sm-3">
-                <input #other type="text" placeholder="Todo" class="form-control">
-              </div>
-            </div>
-          </div>
-  
+    <div class="col-md-1">
+      <div class="pull-right">
+        <p></p>
+        <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+          <button (click)="connectWallet()" type="button" class="btn btn-primary"> Sign-In</button>
         </div>
       </div>
-    </div>
-  
-    <div *ngIf="roleSelected==1">
-      <!-- HCP Menu and Details -->
-      <div class="row">
-        <div class="col-md-4" style="background-color:black;">
-          <h3>Menu</h3>
-          <hr>
-          <ul class="menuItems">
-            <li>
-              <button type="button" (click)="onAccessPatientInfo(1)">
-                <span class="badge"></span>
-                <span class="name">Access Patient Info</span>
-              </button>
-            </li>
-            <li>
-              <button type="button" (click)="onHcpExit(2)">
-                <span class="badge"></span>
-                <span class="name">Exit</span>
-              </button>
-            </li>
-          </ul>
-        </div>
-  
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-7" style="background-color:black;">
-          <hr>
-          <div *ngIf="hcpMenuSelected==1">
-            <form action="" class="form-horizontal">
-              <div class="hcp-form-group row">
-                <label class="control-label col-sm-3" for="patientName">Patient Name</label>
-                <div class="col-sm-3">
-                  <input #patientName type="text" placeholder="Joe Smith" class="form-control">
-                </div>
-              </div>
-                <div class="hcp-form-group row">
-                  <label class="control-label col-sm-3" for="dob">Date Of Birth</label>
-                  <div class="col-sm-3">
-                    <input #dob type="text" placeholder="12/05/2017" class="form-control">
-                  </div>
-                </div>
-                <button (click)="submitPatientInfo(patientName.value, dob.value)" type="submit"
-                class="submit-btn btn-primary">Submit</button>
-              </form>
-              <div style="margin-top:50px;">
-                <h3>Vitals</h3>
-                <div class="hcp-form-group row">
-                  <label class="control-label col-sm-3" for="heartRate">Heart Rate</label>
-                  <div class="col-sm-3">
-                    <input #heartRate type="text" placeholder="75 bpm" class="form-control">
-                  </div>
-                </div>
-                <div class="hcp-form-group row">
-                  <label class="control-label col-sm-3" for="bp">Blood Pressure</label>
-                  <div class="col-sm-3">
-                    <input #bp type="text" placeholder="120/80mm Hg" class="form-control">
-                  </div>
-                </div>
-                <div class="hcp-form-group row">
-                  <label class="control-label col-sm-3" for="oxygenSat">Oxygen Saturation</label>
-                  <div class="col-sm-3">
-                    <input #oxygenSat type="text" placeholder="98%" class="form-control">
-                  </div>
-                </div>
-                <div class="hcp-form-group row">
-                  <label class="control-label col-sm-3" for="temp">Temperature</label>
-                  <div class="col-sm-3">
-                    <input #temp type="text" placeholder="99.5F" class="form-control">
-                  </div>
-                </div>
-                <hr>
-              
-              </div>
-          </div>
-  
-        </div>
-      </div>
-  
-      <!-- Repeat the above for HCP -->
     </div>
   </div>
-</body>
-</html>
+  <hr>
+<!-- End Landing page and Role play -->
 
 
+<!-- Begin Owner Menu and Details -->
+
+  <div *ngIf="roleSelected==0">
+    <!-- Owner Menu and Details-->
+    <div class="row">
+      <div class="col-md-4" style="background-color:black;">
+        <h3>Menu</h3>
+        <hr>
+        <ul class="menuItems">
+          <li>
+            <button type="button" (click)="onCreateEHR(1)">
+              <span class="badge"></span>
+              <span class="name">Create Health Record</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" (click)="onAuthorizeHCP(2)">
+              <span class="badge"></span>
+              <span class="name">Authorize Health Record</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" (click)="onOwnerExit(3)">
+              <span class="badge"></span>
+              <span class="name">Exit</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-6" style="background-color:black;">
+        <h3>Details</h3>
+        <hr>
+        <div *ngIf="ownerMenuSelected==1">
+          <p></p>
+          <h4>Health Summary : </h4>
+
+          <br>
+          <form action="" class="form-horizontal">
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="acctIndex">Name</label>
+              <div class="col-sm-4">
+                <input #acctIndex type="string" placeholder="John Smith" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">Age</label>
+              <div class="col-sm-4">
+                <input #other type="text" placeholder="25" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">Birth Sex</label>
+              <div class="col-sm-4">
+                <input #other type="text" placeholder="Male" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">Height</label>
+              <div class="col-sm-4">
+                <input #other type="text" placeholder="70" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">Weight</label>
+              <div class="col-sm-4">
+                <input #other type="text" placeholder="150" class="form-control">
+              </div>
+            </div>
+          </form>
+
+          <div>
+            <br>
+            <br>
+            <h4>Vitals :</h4>
+            <br>
+            <form action="" class="form-horizontal">
+              <div class="form-group row">
+                <div class="col-md-1"></div>
+                <label class="control-label col-sm-4" for="other">Heart Rate</label>
+                <div class="col-sm-4">
+                  <input #acctIndex type="string" placeholder="75 bpm" class="form-control">
+                </div>
+                <div>
+                  <p></p>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-1"></div>
+                <label class="control-label col-sm-4" for="other">Blood Pressure</label>
+                <div class="col-sm-4">
+                  <input #other type="text" placeholder="25" class="form-control">
+                </div>
+              </div>
+              <div>
+                <p></p>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-1"></div>
+                <label class="control-label col-sm-4" for="other">Saturation</label>
+                <div class="col-sm-4">
+                  <input #other type="text" placeholder="98%" class="form-control">
+                </div>
+              </div>
+              <div>
+                <p></p>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-1"></div>
+                <label class="control-label col-sm-4" for="other">Temperature</label>
+                <div class="col-sm-4">
+                  <input #other type="text" placeholder="99.5 F" class="form-control">
+                </div>
+              </div>
+            </form>
+            <br>
+            <div>
+              <p></p>
+              <div class="form-group row">
+                <div class="col-md-5"></div>
+                <div class="col-sm-4">
+                  <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p></p>
+        </div>
+
+        <div *ngIf="ownerMenuSelected==2">
+          <form action="" class="form-horizontal">
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">HCP Name</label>
+              <div class="col-sm-4">
+                <input #ownerName type="text" placeholder="Summit Medical Clinic" class="form-control">
+              </div>
+            </div>
+            <p></p>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">Information to Authorize</label>
+              <div class="col-sm-4">
+                <select class="form-select-bg-size: 25px" aria-label="Default select example">
+                  <option selected>Vitals</option>
+                  <option value="1">Analitics1</option>
+                  <option value="2">Analitics2</option>
+                  <option value="3">Analitics3</option>
+                </select>
+              </div>
+            </div>
+            <p></p>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">Reason</label>
+              <div class="col-sm-4">
+                <input #ownerName type="text" placeholder="PCP Referral" class="form-control">
+              </div>
+            </div>
+          </form>
+          <p></p>
+          <div class="form-group row">
+            <div class="col-md-5"></div>
+            <div class="col-sm-4">
+              <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
+            </div>
+          </div>
+          <p></p>
+          <p></p>
+        </div>
+      </div>
+      <div *ngIf="ownerMenuSelected==3">
+        <div class="form-group row">
+          <label for="other">Todo</label>
+          <div class="col-sm-3">
+            <input #other type="text" placeholder="Todo" class="form-control">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<!-- End Owner Menu and Details -->
+
+
+  <!-- Begin HCP Menu and Details -->
+  <div *ngIf="roleSelected==1">
+
+    <div class="row">
+      <div class="col-md-4" style="background-color:black;">
+        <h3>Menu</h3>
+        <hr>
+        <ul class="menuItems">
+          <li>
+            <button type="button" (click)="onAccessPatientInfo(1)">
+              <span class="badge"></span>
+              <span class="name">Access Patient Info</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" (click)="onHcpExit(2)">
+              <span class="badge"></span>
+              <span class="name">Exit</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-6" style="background-color:black;">
+        <h3>Details</h3>
+        <hr>
+        <div *ngIf="hcpMenuSelected==1">
+          <form action="" class="form-horizontal">
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="patientName">Patient Name</label>
+              <div class="col-sm-4">
+                <input #patientName type="text" placeholder="Joe Smith" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="dob">Date Of Birth</label>
+              <div class="col-sm-4">
+                <input #dob type="text" placeholder="12/05/2017" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-4"></div>
+              <div class="col-sm-4">
+                <button (click)="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-primary">
+                  Submit</button>
+              </div>
+            </div>
+          </form>
+          <div style="margin-top:50px;">
+            <h4>Vitals </h4>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="heartRate">Heart Rate</label>
+              <div class="col-sm-3">
+                <input #heartRate type="text" placeholder="75 bpm" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="bp">Blood Pressure</label>
+              <div class="col-sm-3">
+                <input #bp type="text" placeholder="120/80mm Hg" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="oxygenSat">Oxygen Saturation</label>
+              <div class="col-sm-3">
+                <input #oxygenSat type="text" placeholder="98%" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="temp">Temperature</label>
+              <div class="col-sm-3">
+                <input #temp type="text" placeholder="99.5F" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p></p>
+          <br>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
+  <!-- End HCP menu and details -->
+</div>
