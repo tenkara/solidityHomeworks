@@ -16,17 +16,17 @@ export const isBalanceZero = async (signer: any) => {
 };
 
 export const getProvider = () => {
-  return ethers.getDefaultProvider('goerli', {
-    alchemy: process.env.ALCHEMY_API_KEY ?? '',
-    //etherscan: ETHERSCAN_API_KEY ?? '',
-  });
+  return new ethers.providers.AlchemyProvider(
+    'goerli',
+    process.env.ALCHEMY_API_KEY ?? '',
+  );
 };
 
 export const smartHealthContract = () => {
   return new ethers.ContractFactory(
     SmartHealth.abi,
     SmartHealth.bytecode,
-  ).attach(process.env.PATIENT_CONTRACT_ADDRESS);
+  ).attach(process.env.PATIENT_CONTRACT_ADDRESS ?? '');
 };
 
 export const toStr = (str) => {
@@ -37,12 +37,12 @@ export const toStr = (str) => {
 export const getPatient = () =>
   ethers.Wallet.fromMnemonic(
     process.env.MNEMONIC ?? '',
-    BASE_STRING_PATH + '1',
+    BASE_STRING_PATH + '0',
   ).connect(getProvider());
 
 // Initialise HCP
 export const getHCP = () =>
   ethers.Wallet.fromMnemonic(
     process.env.MNEMONIC ?? '',
-    BASE_STRING_PATH + '2',
+    BASE_STRING_PATH + '1',
   ).connect(getProvider());
