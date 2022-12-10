@@ -298,7 +298,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="heartRate">Heart Rate</label>
               <div class="col-sm-3">
-                <input #heartRate type="text" placeholder="75 bpm" class="form-control">
+                <div class="info"> {{ heartRate }} bpm</div>
               </div>
             </div>
             <div>
@@ -308,7 +308,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="bp">Blood Pressure</label>
               <div class="col-sm-3">
-                <input #bp type="text" placeholder="120/80mm Hg" class="form-control">
+                <div class="info"> {{ bloodPressure }} mm Hg</div>
               </div>
             </div>
             <div>
@@ -318,8 +318,8 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="oxygenSat">Oxygen Saturation</label>
               <div class="col-sm-3">
-                <input #oxygenSat type="text" placeholder="98%" class="form-control">
-              </div>
+                <div class="info"> {{ oxygenSaturation }} %</div>
+\              </div>
             </div>
             <div>
               <p></p>
@@ -328,7 +328,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="temp">Temperature</label>
               <div class="col-sm-3">
-                <input #temp type="text" placeholder="99.5F" class="form-control">
+                <div class="info"> {{ temperature }} F</div>
               </div>
             </div>
           </div>
