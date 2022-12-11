@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ethers } from 'ethers';
+import { encrypt } from 'eth-sig-util';
+import { bufferToHex } from 'ethereumjs-util';
 
 declare global {
   interface Window {
@@ -51,6 +53,8 @@ export class AppComponent implements OnInit {
   bloodPressure?: string;
   oxygenSaturation?: number;
   temperature?: number;
+  encryptionKeyDisplay: any;
+  encryptedMessage?: string;
 
   // Owner HCP access patient info page variables
 
@@ -117,6 +121,34 @@ export class AppComponent implements OnInit {
   // Simple listener to callback on owner authorize EHR to HCP menu item
   onAuthorizeHCP(menuSelected: number) {
     this.ownerMenuSelected = menuSelected;
+
+  }
+
+  async encryptEHR(ehrData: string) {
+    console.log('encrypt EHR');
+    this.ownerMenuSelected = 3;
+    try {
+       this.encryptionKeyDisplay = await window.ethereum.request?.({
+        method: 'eth_getEncryptionPublicKey',
+        params: [this.address],
+      });
+    console.log(this.encryptionKeyDisplay);
+    this.encryptedMessage = bufferToHex(
+      Buffer.from(
+        JSON.stringify(
+          encrypt({
+            publicKey: this.encryptionKeyDisplay,
+            data: ehrData,
+            version: 'x25519-xsalsa20-poly1305',
+      }),
+        ),
+    'utf8'
+    ))
+    } catch (error) {
+      console.log(error);
+    }
+
+
   }
 
   // Simple listener to callback on owner sign-out menu item
@@ -162,4 +194,10 @@ export class AppComponent implements OnInit {
     this.hcpMenuSelected = 1;
     console.log(`patient: ${patientName} , dob: ${dob} `);
   }
+
+  onTodo(menuSelected: number) {
+    this.ownerMenuSelected = menuSelected;
+    console.log('todo ' + menuSelected);
+  }
+
 }

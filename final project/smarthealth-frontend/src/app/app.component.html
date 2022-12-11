@@ -26,10 +26,10 @@
     </div>
   </div>
   <hr>
-<!-- End Landing page and Role play -->
+  <!-- End Landing page and Role play -->
 
 
-<!-- Begin Owner Menu and Details -->
+  <!-- Begin Owner Menu and Details -->
 
   <div *ngIf="roleSelected==0">
     <!-- Owner Menu and Details-->
@@ -51,7 +51,31 @@
             </button>
           </li>
           <li>
-            <button type="button" (click)="onOwnerExit(3)">
+            <button type="button" (click)="onTodo(3)">
+              <span class="badge"></span>
+              <span class="name">Encrypt Health Record</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" (click)="onTodo(4)">
+              <span class="badge"></span>
+              <span class="name">Decrypt Health Record</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" (click)="onTodo(5)">
+              <span class="badge"></span>
+              <span class="name">Encrypt EHR and send off-chain</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" (click)="onTodo(6)">
+              <span class="badge"></span>
+              <span class="name">Encrypt EHR and send on-chain</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" (click)="onOwnerExit(7)">
               <span class="badge"></span>
               <span class="name">Exit</span>
             </button>
@@ -218,20 +242,45 @@
           <p></p>
           <p></p>
         </div>
-      </div>
-      <div *ngIf="ownerMenuSelected==3">
-        <div class="form-group row">
-          <label for="other">Todo</label>
-          <div class="col-sm-3">
-            <input #other type="text" placeholder="Todo" class="form-control">
-          </div>
+
+        <div *ngIf="ownerMenuSelected==3">
+          <form action="" class="form-horizontal">
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="ehrData">Health Record: </label>
+              <div class="col-sm-4">
+                <input #ehrData type="text" placeholder="Summary:{Name:Joe Smith}(Age:25}" class="form-control">
+              </div>
+            </div>
+            <p></p>
+            <div class="form-group row">
+              <div class="col-md-5"></div>
+              <div class="col-sm-4">
+                <button (click)="encryptEHR(ehrData.value)" type="button" class="btn btn-primary"> Encrypt </button>
+              </div>
+            </div>
+
+            <p></p>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <div class="col-sm-4">
+                Encryption key: {{ encryptionKeyDisplay }}
+              </div>
+              <p></p>
+              <div class="col-sm-4">
+                Encrypted text: {{ encryptedMessage }}
+              </div>
+            </div>
+          </form>
         </div>
       </div>
+
 
     </div>
   </div>
 
-<!-- End Owner Menu and Details -->
+
+  <!-- End Owner Menu and Details -->
 
 
   <!-- Begin HCP Menu and Details -->
@@ -287,7 +336,8 @@
             <div class="form-group row">
               <div class="col-md-4"></div>
               <div class="col-sm-4">
-                <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-primary">
+                <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit"
+                  class="btn btn-primary">
                   Submit</button>
               </div>
             </div>
