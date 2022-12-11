@@ -1,4 +1,4 @@
-# Web3, Blockchain, Solidity classwork and homeworks from the Oct - Dec 2022 EthDenver Encode Bootcamp :emoji
+# Web3, Blockchain, Solidity classwork and homeworks from the Oct - Dec 2022 EthDenver Encode Bootcamp :joy: (https://github.com/tenkara/solidityHomeworks)
 ### Contains homeworks and the final Capstone project from the bootcamp
 
 ### Week 1 - Primarily in Remix exercising basics of Solidity, create, deploy, interact and transfer using HelloWorld smart contract
@@ -22,7 +22,8 @@
 2. Thought I was going to do the project by myself but found overwhelming interest from a lot of the classmates  
 3. Laid out the WSD iterations and worked with everyone who wanted to contribute in their own way. It is awesome!
 
-## SmartHealth WSD 1 (Dec 5 - Dec 11):
+
+## SmartHealth WSD 1 (Dec 5 - Dec 11):(https://github.com/tenkara/solidityHomeworks/tree/main/final%20project)
 
    1. Front-end and Back-end templates, Repo and config set up and integration, merge changes, build and release (Raj)
    2. Owner Sign-in screen (Raj)
@@ -38,7 +39,9 @@
    12. Back-end script with end-point for HCP patient info screen (Ken)
    13. Solidity Smart Contract with functions to Create a EHR contract, Store data from screen 3c via 3i, View data in the contract (keeping it fairly straightforward to begin with) (Gabe)
    14. Testing / QA / Anything else missing from above - All interested parties who want to run the app in their environment after the build and provide/use feedback to fix and increment from there.(Jorge)
-## SmartHealth WSD 2 (Dec 12 - Dec 15):
+
+
+## SmartHealth WSD 2 (Dec 12 - Dec 15):(https://github.com/tenkara/solidityHomeworks/tree/main/final%20project)
 
    1. Product Integration, Build and Release (Raj)
    2. SmartHealth Website (Raj)
@@ -64,7 +67,7 @@
 
 ### How to fix Angular / Bootstrap issues with environment setup for issues you may face in doing i2 tasks:
 
-### while in the smarthealth-frontend directory in a terminal 
+### While in the smarthealth-frontend directory in a terminal 
 * yarn add or npm install these modules -
   * crypto-browserify stream-browserify assert stream-http https-browserify os-browserify buffer
 * Add this in the "CompilerOptions": {[...]} section of tsconfig.json
