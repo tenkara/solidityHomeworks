@@ -51,32 +51,40 @@ export class AppService {
   }
   // constructor() {}
 
-  
   // End point for owner, hcp, unknown sign in screen (Raj)
   // Uses the BIP 44 standard for HD wallet derivation path to set up the accounts and their roles for the first iteration
   async initializeAccounts(address: string) {
-    
     // log the input address
     console.log(`Address: ${address}`);
     // set up a Provider
-    const provider = new ethers.providers.AlchemyProvider("goerli", process.env.ALCHEMY_API_KEY ?? "");
+    const provider = new ethers.providers.AlchemyProvider(
+      'goerli',
+      process.env.ALCHEMY_API_KEY ?? '',
+    );
     const network = await provider.getNetwork(); // For later iterations
-    
+
     // Preserve the immutability of the Signers; ensure proper initialization while cycling through the accounts
     const basepathstr = "m/44'/60'/0'/0/";
     const signer: Signer[] = new Array(2); // For now we just use 2 accounts, owner and HCP
-    
+
     // Cycle through the accounts and initialize the signers
-    for( let index = 0; index < 2; index++ ) {
-      signer[index] = (ethers.Wallet.fromMnemonic(process.env.MNEMONIC ?? "", basepathstr+index.toString())).connect(provider);
-      console.log(`Account${index}: ${await (signer[index]).getAddress()}  Balance: ${await (signer[index]).getBalance()} wei`); 
+    for (let index = 0; index < 2; index++) {
+      signer[index] = ethers.Wallet.fromMnemonic(
+        process.env.MNEMONIC ?? '',
+        basepathstr + index.toString(),
+      ).connect(provider);
+      console.log(
+        `Account${index}: ${await signer[
+          index
+        ].getAddress()}  Balance: ${await signer[index].getBalance()} wei`,
+      );
     }
-    
+
     // Determine the account and associatee the roles with the accounts
     // This enables role play of contract owner and HCP and to demonstrate the interaction between the two and the EHR contract
     const ownerAddress = await signer[0].getAddress(); // Owner account for the first itereation
     const hcpAddress = await signer[1].getAddress(); // HCP account for the first iteration
-    
+
     if (ownerAddress === address) {
       this.signedInRole = "owner";
     } else if (hcpAddress === address) {
@@ -84,7 +92,7 @@ export class AppService {
     } else {
       this.signedInRole = "unknown";  
     }
-    
+
     if (this.signedInRole === "owner") {
       this.signedInName = process.env.OWNER_NAME ?? "";
     } else if (this.signedInRole === "hcp") {
@@ -92,11 +100,11 @@ export class AppService {
     } else {
       this.signedInName = "unknown";
     }
-    
+
     return { result: this.signedInRole };
     // return { rolePlayDTO: { role: this.signedInRole, name: this.signedInName } }; // For subsequent iterations
   }
-  
+
   async checkSignersAddress() {
     return {
       patient: await this.signers.patient.address,
@@ -121,7 +129,7 @@ export class AppService {
         };
       default:
         return { name: 'Unknown', role: 'Unknown', isOwner: false };
-      }
+    }
   }
 
   // End point to create a new EHR contract with data from the create EHR screen (Ken)
@@ -156,7 +164,7 @@ export class AppService {
         req.oxygenSaturation.toString(),
         req.temperature.toString(),
       ];
-      await this.deployContract(data).then(({ address, hash }) => {
+      await this.deployContract(data).then(({ address }) => {
         contractAddress = address;
       });
     } catch (error) {
@@ -171,6 +179,13 @@ export class AppService {
   ): Promise<{ txHash: string; data: HCP }> {
     let txHash: string;
     try {
+      const data = [req.name, req.auth, req.reason];
+      const tx = await smartHealthContract()
+        .connect(this.signers.patient)
+        .authorizeProvider(convertToBytes32Array(data));
+      await tx.wait().then(({ transactionHash }) => {
+        txHash = transactionHash;
+      });
     } catch (error) {
       console.error(error);
     }
@@ -181,12 +196,12 @@ export class AppService {
   async viewPatientSummary(address: string): Promise<{ result: any }> {
     let result = {};
     try {
-      let signer = this.proxyAccount(address);
+      const signer = this.proxyAccount(address);
       await smartHealthContract()
         .connect(signer)
         .getPatientSummary()
         .then((summary) => {
-          let { name, age, birthSex, weight } = summary;
+          const { name, age, birthSex, weight } = summary;
           result = {
             name: toStr(name),
             age: toStr(age),
@@ -203,12 +218,12 @@ export class AppService {
   async viewPatientVitals(address: string): Promise<{ result: any }> {
     let result = {};
     try {
-      let signer = this.proxyAccount(address);
+      const signer = this.proxyAccount(address);
       await smartHealthContract()
         .connect(signer)
         .getPatientVitals()
         .then((vitals) => {
-          let { heartRate, bloodPressure, oxygenSat, temperature } = vitals;
+          const { heartRate, bloodPressure, oxygenSat, temperature } = vitals;
           result = {
             heartRate: toStr(heartRate),
             bloodPressure: toStr(bloodPressure),
