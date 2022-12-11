@@ -134,19 +134,18 @@ export class AppComponent implements OnInit {
       this.dob? this.dob : 'dob'
     );
 
-
     try {
-      // Need the right endpoint for hcp to view patient vitals
-      // this.http
-      //   .get<any>('http://localhost:3000/view/vitals', {
-      //     params: queryParams,
-      //   })
-      //   .subscribe((ans) => {
-      //     this.heartRate = ans.result.heartRate;
-      //     this.bloodPressure = ans.result.bloodPressure;
-      //     this.oxygenSaturation = ans.result.oxygenSat;
-      //     this.temperature = ans.result.temperature;
-      //   });
+     // Need the right endpoint for hcp to view patient vitals
+      this.http
+        .get<any>('http://localhost:3000/view/vitals', {
+          params: queryParams,
+        })
+        .subscribe((ans) => {
+          this.heartRate = ans.result.heartRate;
+          this.bloodPressure = ans.result.bloodPressure;
+          this.oxygenSaturation = ans.result.oxygenSat;
+          this.temperature = ans.result.temperature;
+        });
     } catch (error) {
       console.log(error);
     }
