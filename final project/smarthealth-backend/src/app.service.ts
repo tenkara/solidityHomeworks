@@ -171,6 +171,13 @@ export class AppService {
   ): Promise<{ txHash: string; data: HCP }> {
     let txHash: string;
     try {
+      const data = [req.name, req.auth, req.reason];
+      const tx = await smartHealthContract()
+        .connect(this.signers.patient)
+        .authorizeProvider(convertToBytes32Array(data));
+      await tx.wait().then(({ transactionHash }) => {
+        txHash = transactionHash;
+      });
     } catch (error) {
       console.error(error);
     }
@@ -181,12 +188,12 @@ export class AppService {
   async viewPatientSummary(address: string): Promise<{ result: any }> {
     let result = {};
     try {
-      let signer = this.proxyAccount(address);
+      const signer = this.proxyAccount(address);
       await smartHealthContract()
         .connect(signer)
         .getPatientSummary()
         .then((summary) => {
-          let { name, age, birthSex, weight } = summary;
+          const { name, age, birthSex, weight } = summary;
           result = {
             name: toStr(name),
             age: toStr(age),
@@ -203,12 +210,12 @@ export class AppService {
   async viewPatientVitals(address: string): Promise<{ result: any }> {
     let result = {};
     try {
-      let signer = this.proxyAccount(address);
+      const signer = this.proxyAccount(address);
       await smartHealthContract()
         .connect(signer)
         .getPatientVitals()
         .then((vitals) => {
-          let { heartRate, bloodPressure, oxygenSat, temperature } = vitals;
+          const { heartRate, bloodPressure, oxygenSat, temperature } = vitals;
           result = {
             heartRate: toStr(heartRate),
             bloodPressure: toStr(bloodPressure),
