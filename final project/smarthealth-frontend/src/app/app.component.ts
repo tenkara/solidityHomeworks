@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ethers } from 'ethers';
 import { ParamType } from 'ethers/lib/utils';
-import { Form, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Form, FormBuilder, FormControl, FormControlState, FormGroup, FormGroupName, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { formatDate } from '@angular/common';
+import { ValueFromArray } from 'rxjs';
+import { __values } from 'tslib';
 
 declare global {
   interface Window {
@@ -10,6 +13,7 @@ declare global {
     // ethereum?: Window;
   }
 }
+
 
 @Component({
   selector: 'app-root',
@@ -49,13 +53,22 @@ export class AppComponent implements OnInit {
 
   // Owner HCP access patient info page variables
 
+  name: string | undefined;
+  age: number | undefined
+  sex?: string;
+  weight=1
+  heartRate?: number;
+  bloodPressure?: string;
+  oxygenSaturation?: number;
+  temperature?: number;
+
   //forms
   public sub = new FormGroup({
-    datosPaciente: new FormGroup({
+    data: new FormGroup({
     name: new FormControl("") , 
     age: new FormControl(""),
     sex: new FormControl(""),
-    height: new FormControl(""),
+    // height: new FormControl(""),
     weight: new FormControl(""),
     heartRate: new FormControl(""),
     bloodPressure: new FormControl(""),
@@ -63,6 +76,7 @@ export class AppComponent implements OnInit {
     temperature: new FormControl(""),
     })
   })
+ 
 
 
   constructor(private http: HttpClient) {
@@ -118,15 +132,18 @@ export class AppComponent implements OnInit {
     }
   }
 
- async submit(body: FormGroup) {
+ submit(body: [FormGroup]) {
    console.log(body)
-   console.log()
+    
     this.http
-    .post<any>('http://localhost:3000/create', { body: FormGroup})
-    .subscribe((ans) => {
-      console.log(body);
-    });
-  }
+    .post<any>('http://localhost:3000/create',  {
+      data :this.sub.value.data
+    }) .subscribe(()=> {body})
+    
+    }
+
+       
+  
     // 
   // Simple listener to callback on owner create EHR menu item
   onCreateEHR(menuSelected: number) {

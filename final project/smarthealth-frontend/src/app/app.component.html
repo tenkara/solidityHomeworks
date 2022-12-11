@@ -59,32 +59,32 @@
           <h6 class="h6">Health Summary</h6>
           <br>
 
-          <form [formGroup]="sub" action="" class="form-horizontal">
-            <div formGroupName="datosPaciente" class="form-group row">
+          <form [formGroup]="sub" (ngSubmit)="(sub.value)" action="" class="form-horizontal">
+            <div formGroupName="data" class="form-group row">
               <label class="control-label col-sm-3" for="other">Name</label>
               <div class="col-sm-3">
                 <input formControlName="name" #other type="string" placeholder="John Smith" class="form-control">
               </div>
             </div>
-            <div formGroupName="datosPaciente" class="form-group row">
+            <div formGroupName="data" class="form-group row">
               <label class="control-label col-sm-3" for="other">Age</label>
               <div class="col-sm-3">
-                <input formControlName="age" #other type="text" placeholder="25" class="form-control">
+                <input formControlName="age" #other type="number" placeholder="25" class="form-control">
               </div>
             </div>
-            <div formGroupName="datosPaciente" class="form-group row">
+            <div formGroupName="data" class="form-group row">
               <label class="control-label col-sm-3" for="other">Birth Sex</label>
               <div class="col-sm-3">
                 <input formControlName="sex" #other type="text" placeholder="Male" class="form-control">
               </div>
             </div>
-            <div formGroupName="datosPaciente" class="form-group row">
-              <label class="control-label col-sm-3" for="other">Height</label>
+            <div formGroupName="data" class="form-group row">
+              <!-- <label class="control-label col-sm-3" for="other">Height</label> -->
               <div class="col-sm-3">
-                <input formControlName="height" #other type="text" placeholder="70" class="form-control">
+                <!-- <input formControlName="height" #other type="text" placeholder="70" class="form-control"> -->
               </div>
             </div>
-            <div formGroupName="datosPaciente" class="form-group row">
+            <div formGroupName="data" class="form-group row">
               <label class="control-label col-sm-3" for="other">Weight</label>
               <div class="col-sm-3">
                 <input formControlName="weight" #other type="text" placeholder="150" class="form-control">
@@ -94,36 +94,37 @@
             </form>
        <div>
 
-<form action="" method="post"></form>
+
        
        
           
           <div><br><br>
               <h6 class="h6">Vitals</h6>
          <br>
-         <form  [formGroup]="sub" action=""  class="form-horizontal">
-          <div formGroupName="datosPaciente" class="form-group row">
+         <form  [formGroup]="sub"  action=""  class="form-horizontal">
+       
+          <div formGroupName="data" class="form-group row">
             <label class="control-label col-sm-3" for="other">Heart Rate</label>
             <div class="col-sm-3">
-              <!-- <select  formControlName="name"> -->
+             
               <input formControlName="heartRate" #other type="number" placeholder=75 class="form-control">
-              <!-- <option *ngFor="let datos of pacients">{{datos.name}}</option> -->
-            <!-- </select> -->
+              
+      
             </div>
           </div>
-          <div formGroupName="datosPaciente" class="form-group row">
+          <div formGroupName="data" class="form-group row">
             <label class="control-label col-sm-3" for="other">Blood Pressure</label>
             <div class="col-sm-3">
               <input formControlName="bloodPressure" #other type="text" placeholder="25" class="form-control">
             </div>
           </div>
-          <div formGroupName="datosPaciente" class="form-group row">
+          <div formGroupName="data" class="form-group row">
             <label class="control-label col-sm-3" for="other">Saturation</label>
             <div class="col-sm-3">
               <input formControlName="oxygenSaturation" #other type="text" placeholder="98%" class="form-control">
             </div>
           </div>
-          <div formGroupName="datosPaciente" class="form-group row">
+          <div formGroupName="data" class="form-group row">
             <label class="control-label col-sm-3" for="other">Temperature</label>
             <div class="col-sm-3">
               <input formControlName="temperature" #other type="text" placeholder="99.5 F" class="form-control">
@@ -141,11 +142,15 @@
               <div class="col">
               </div>
               <div class="col">
-                <button (click)="submit(sub)" type="button" class="btn btn-primary"> Submit</button>
+                <button (click)="submit([sub])" type="button" class="btn btn-primary"> Submit</button>
+                <!-- <button (click)="submit(sub)" type="button" class="btn btn-primary"> Submit</button> -->
+                
               </div>
             </div>
           </div>
-
+<pre>
+  {{sub.value | json}}
+</pre>
           
           </div>
         </div>
