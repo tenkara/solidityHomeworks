@@ -1,4 +1,5 @@
-# Web3, Blockchain, Solidity classwork and homeworks from the Oct - Dec 2022 EthDenver Encode Bootcamp :joy: (https://github.com/tenkara/solidityHomeworks)
+# Web3, Blockchain, Solidity classwork and homeworks from the Oct - Dec 2022 EthDenver Encode Bootcamp :joy: 
+(https://github.com/tenkara/solidityHomeworks)
 ### Contains homeworks and the final Capstone project from the bootcamp
 
 ### Week 1 - Primarily in Remix exercising basics of Solidity, create, deploy, interact and transfer using HelloWorld smart contract
@@ -23,7 +24,8 @@
 3. Laid out the WSD iterations and worked with everyone who wanted to contribute in their own way. It is awesome!
 
 
-## SmartHealth WSD 1 (Dec 5 - Dec 11):(https://github.com/tenkara/solidityHomeworks/tree/main/final%20project)
+## SmartHealth WSD 1 (Dec 5 - Dec 11):
+(https://github.com/tenkara/solidityHomeworks/tree/main/final%20project)
 
    1. Front-end and Back-end templates, Repo and config set up and integration, merge changes, build and release (Raj)
    2. Owner Sign-in screen (Raj)
@@ -41,7 +43,8 @@
    14. Testing / QA / Anything else missing from above - All interested parties who want to run the app in their environment after the build and provide/use feedback to fix and increment from there.(Jorge)
 
 
-## SmartHealth WSD 2 (Dec 12 - Dec 15):(https://github.com/tenkara/solidityHomeworks/tree/main/final%20project)
+## SmartHealth WSD 2 (Dec 12 - Dec 15):
+(https://github.com/tenkara/solidityHomeworks/tree/main/final%20project)
 
    1. Product Integration, Build and Release (Raj)
    2. SmartHealth Website (Raj)
