@@ -53,30 +53,21 @@ export class AppComponent implements OnInit {
 
   // Owner HCP access patient info page variables
 
-  name: string | undefined;
-  age: number | undefined
-  sex?: string;
-  weight=1
-  heartRate?: number;
-  bloodPressure?: string;
-  oxygenSaturation?: number;
-  temperature?: number;
-
-  //forms
-  public sub = new FormGroup({
+  //Forms
+  sub = new FormGroup({
     data: new FormGroup({
-    name: new FormControl("") , 
-    age: new FormControl(""),
-    sex: new FormControl(""),
-    // height: new FormControl(""),
-    weight: new FormControl(""),
-    heartRate: new FormControl(""),
-    bloodPressure: new FormControl(""),
-    oxygenSaturation: new FormControl(""),
-    temperature: new FormControl(""),
+      name: new FormControl(""),
+      age: new FormControl(),
+      sex: new FormControl(""),
+      // height: new FormControl(""),
+      weight: new FormControl(),
+      heartRate: new FormControl(),
+      bloodPressure: new FormControl(""),
+      oxygenSaturation: new FormControl(""),
+      temperature: new FormControl(""),
     })
   })
- 
+
 
 
   constructor(private http: HttpClient) {
@@ -84,7 +75,7 @@ export class AppComponent implements OnInit {
   }
 
   // For later iterations using lifecycle hooks
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   // Connect to MetaMask and sign-in with one of the roles
   async connectWallet() {
@@ -105,7 +96,7 @@ export class AppComponent implements OnInit {
         console.log(`account: ${await this.signer.getAddress()}\n`);
 
         this.http
-          .get<any>('http://localhost:3000/signed-name/address', {params: queryParams})
+          .get<any>('http://localhost:3000/signed-name/address', { params: queryParams })
           .subscribe((ans) => {
             this.signedRole = ans.result;
             console.log(ans.result);
@@ -132,19 +123,18 @@ export class AppComponent implements OnInit {
     }
   }
 
- submit(body: [FormGroup]) {
-   console.log(body)
-    
-    this.http
-    .post<any>('http://localhost:3000/create',  {
-      data :this.sub.value.data
-    }) .subscribe(()=> {body})
-    
-    }
+  submit(data: FormGroup) {
+    console.log(data)
 
-       
-  
-    // 
+    this.http
+      .post<any>('http://localhost:3000/create', {
+        name: (this.sub.value.data?.name), age: (this.sub.value.data?.age), sex: (this.sub.value.data?.sex), weight: (this.sub.value.data?.weight), heartRate: (this.sub.value.data?.weight), bloodPressure: (this.sub.value.data?.weight), oxygenSaturation: (this.sub.value.data?.weight), temperature: (this.sub.value.data?.weight)
+
+      }).subscribe((ans) => {
+      })
+  }
+
+
   // Simple listener to callback on owner create EHR menu item
   onCreateEHR(menuSelected: number) {
     this.ownerMenuSelected = menuSelected;

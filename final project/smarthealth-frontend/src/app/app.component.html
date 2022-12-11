@@ -59,7 +59,7 @@
           <h6 class="h6">Health Summary</h6>
           <br>
 
-          <form [formGroup]="sub" (ngSubmit)="(sub.value)" action="" class="form-horizontal">
+          <form [formGroup]="sub" action="" method="" class="form-horizontal">
             <div formGroupName="data" class="form-group row">
               <label class="control-label col-sm-3" for="other">Name</label>
               <div class="col-sm-3">
@@ -87,7 +87,7 @@
             <div formGroupName="data" class="form-group row">
               <label class="control-label col-sm-3" for="other">Weight</label>
               <div class="col-sm-3">
-                <input formControlName="weight" #other type="text" placeholder="150" class="form-control">
+                <input formControlName="weight" #other type="number" placeholder="150" class="form-control">
               </div>
             </div>
            
@@ -115,19 +115,19 @@
           <div formGroupName="data" class="form-group row">
             <label class="control-label col-sm-3" for="other">Blood Pressure</label>
             <div class="col-sm-3">
-              <input formControlName="bloodPressure" #other type="text" placeholder="25" class="form-control">
+              <input formControlName="bloodPressure" #other type="number" placeholder="25" class="form-control">
             </div>
           </div>
           <div formGroupName="data" class="form-group row">
             <label class="control-label col-sm-3" for="other">Saturation</label>
             <div class="col-sm-3">
-              <input formControlName="oxygenSaturation" #other type="text" placeholder="98%" class="form-control">
+              <input formControlName="oxygenSaturation" #other type="number" placeholder="98%" class="form-control">
             </div>
           </div>
           <div formGroupName="data" class="form-group row">
             <label class="control-label col-sm-3" for="other">Temperature</label>
             <div class="col-sm-3">
-              <input formControlName="temperature" #other type="text" placeholder="99.5 F" class="form-control">
+              <input formControlName="temperature" #other type="number" placeholder="99.5 F" class="form-control">
             </div>
           </div>
           </form>
@@ -142,9 +142,10 @@
               <div class="col">
               </div>
               <div class="col">
-                <button (click)="submit([sub])" type="button" class="btn btn-primary"> Submit</button>
-                <!-- <button (click)="submit(sub)" type="button" class="btn btn-primary"> Submit</button> -->
+                         <button (click)="submit(sub)" type="button" class="btn btn-primary"> Submit</button>
                 
+              
+               
               </div>
             </div>
           </div>
