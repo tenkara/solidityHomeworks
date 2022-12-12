@@ -1,3 +1,23 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa');
+
+#smarthealth-header {
+  background-image: url(../assets/darkmode.jpg);
+  // width: 100%;
+  background-repeat: no-repeat;
+  font-family: "Comfortaa";
+}
+
+.smart {
+  color: #174ACE;
+  font-size: 1.5em;
+}
+
+.health {
+  color: #EE0909;
+  font-size: 1.5em;
+}
+
 .info{
   background-color: lightgrey;
   width: 3x;
