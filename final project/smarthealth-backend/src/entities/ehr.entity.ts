@@ -13,8 +13,8 @@ export class EHR {
   })
   sex: string;
 
-  //   @ApiProperty({ example: 70, description: 'Height of the patient' })
-  //   height: number;
+    @ApiProperty({ example: 70, description: 'Height of the patient' })
+    height: number;
 
   @ApiProperty({ example: 150, description: 'Weight of the patient' })
   weight: number;

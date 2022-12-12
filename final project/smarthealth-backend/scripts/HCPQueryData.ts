@@ -51,21 +51,21 @@ async function main() {
   const tokenContract = tokenContractFactory.attach(contractAddress);
 
   //Get Patient info:
-  const patientData = await tokenContract.getPatientVitalsHCP(
-    convertObjectByte32({ hcpName: HCP_NAME })
-  );
+  // const patientData = await tokenContract.getPatientVitalsHCP(
+  //   convertObjectByte32({ hcpName: HCP_NAME })
+  // );
 
   //Get Patient vitals:
-  const patientVitals = await tokenContract.getPatientSummaryHCP(
-    convertObjectByte32({ hcpName: HCP_NAME })
-  );
+  // const patientVitals = await tokenContract.getPatientSummaryHCP(
+  //   convertObjectByte32({ hcpName: HCP_NAME })
+  // );
 
   //Display Patient's Info:
   console.log(
     `Display patient info for: ${deployer.address} as requested by ${HCP_NAME}`
   );
-  DisplayPatientData(patientData);
-  DisplayPatientVital(patientVitals);
+  // DisplayPatientData(patientData);
+  // DisplayPatientVital(patientVitals);
 }
 
 main().catch((error) => {

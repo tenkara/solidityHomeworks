@@ -42,14 +42,14 @@ async function main() {
     infoToAuth: "Patient authorization",
     reason: "primary care doctor",
   };
-  const authTx = await smartHealthContract.authorizeProvider(
-    convertObjectByte32(providerData),
-    {
-      gasLimit: 6000000,
-    }
-  );
-  const receipt = await authTx.wait();
-  console.log(`Hash of tx authorization = ${receipt.transactionHash}`);
+  // const authTx = await smartHealthContract.authorizeProvider(
+  //   convertObjectByte32(providerData),
+  //   {
+  //     gasLimit: 6000000,
+  //   }
+  // );
+  // const receipt = await authTx.wait();
+  // console.log(`Hash of tx authorization = ${receipt.transactionHash}`);
   console.log(
     `Patient has authorized a health care provider with name ${HCP_NAME1}.`
   );
