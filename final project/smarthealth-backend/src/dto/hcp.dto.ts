@@ -17,7 +17,7 @@ export class AuthorizeHCPDto {
   readonly auth: string;
 
   @ApiProperty({
-    example: 'Allow access',
+    example: 'Preventive care',
     description: 'Reason to authorise',
   })
   @IsString()

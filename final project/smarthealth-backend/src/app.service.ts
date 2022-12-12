@@ -297,7 +297,7 @@ export class AppService {
         );
     }
   }
-
+  
   // Function as an account selector, this SHOULD NOT be used in production. The front end should determine and
   // redirect patient/hcp API to call the right endpoint instead. This will eventually be deprecated
   proxyAccount = (address: string): Wallet => {

@@ -43,7 +43,7 @@ contract SmartHealth {
     //send data in the order seen below
     constructor(bytes32[] memory patientInfo) {
         patientAddress = msg.sender;
-
+        
         // For each of the provided data points,
         // create a new PatientData object.
         //Data must be sent in the correct order to populate correctly
