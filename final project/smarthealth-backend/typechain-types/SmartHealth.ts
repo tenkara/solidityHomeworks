@@ -23,6 +23,20 @@ import type {
 } from "./common";
 
 export declare namespace SmartHealth {
+  export type ProviderDataStruct = {
+    hcpName: PromiseOrValue<BytesLike>;
+    infoToAuth: PromiseOrValue<BytesLike>;
+    reason: PromiseOrValue<BytesLike>;
+    authorised: PromiseOrValue<boolean>;
+  };
+
+  export type ProviderDataStructOutput = [string, string, string, boolean] & {
+    hcpName: string;
+    infoToAuth: string;
+    reason: string;
+    authorised: boolean;
+  };
+
   export type PatientSummaryStruct = {
     name: PromiseOrValue<BytesLike>;
     age: PromiseOrValue<BytesLike>;
@@ -62,16 +76,18 @@ export declare namespace SmartHealth {
 
 export interface SmartHealthInterface extends utils.Interface {
   functions: {
-    "authorizeProvider(bytes32[])": FunctionFragment;
+    "authorizeProvider(bytes32,bytes32,bytes32,address)": FunctionFragment;
+    "getHCPDetails(address)": FunctionFragment;
     "getPatientSummary()": FunctionFragment;
-    "getPatientSummaryHCP(bytes32[])": FunctionFragment;
+    "getPatientSummaryHCP(address)": FunctionFragment;
     "getPatientVitals()": FunctionFragment;
-    "getPatientVitalsHCP(bytes32[])": FunctionFragment;
+    "getPatientVitalsHCP(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "authorizeProvider"
+      | "getHCPDetails"
       | "getPatientSummary"
       | "getPatientSummaryHCP"
       | "getPatientVitals"
@@ -80,7 +96,16 @@ export interface SmartHealthInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "authorizeProvider",
-    values: [PromiseOrValue<BytesLike>[]]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getHCPDetails",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "getPatientSummary",
@@ -88,7 +113,7 @@ export interface SmartHealthInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getPatientSummaryHCP",
-    values: [PromiseOrValue<BytesLike>[]]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "getPatientVitals",
@@ -96,11 +121,15 @@ export interface SmartHealthInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getPatientVitalsHCP",
-    values: [PromiseOrValue<BytesLike>[]]
+    values: [PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "authorizeProvider",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getHCPDetails",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -151,16 +180,24 @@ export interface SmartHealth extends BaseContract {
 
   functions: {
     authorizeProvider(
-      providerInfo: PromiseOrValue<BytesLike>[],
+      hcpName: PromiseOrValue<BytesLike>,
+      infoToAuth: PromiseOrValue<BytesLike>,
+      reason: PromiseOrValue<BytesLike>,
+      hcpAddress: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    getHCPDetails(
+      hcpAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[SmartHealth.ProviderDataStructOutput]>;
 
     getPatientSummary(
       overrides?: CallOverrides
     ): Promise<[SmartHealth.PatientSummaryStructOutput]>;
 
     getPatientSummaryHCP(
-      requestorInfo: PromiseOrValue<BytesLike>[],
+      hcpAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[SmartHealth.PatientSummaryStructOutput]>;
 
@@ -169,22 +206,30 @@ export interface SmartHealth extends BaseContract {
     ): Promise<[SmartHealth.PatientVitalsStructOutput]>;
 
     getPatientVitalsHCP(
-      requestorInfo: PromiseOrValue<BytesLike>[],
+      hcpAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[SmartHealth.PatientVitalsStructOutput]>;
   };
 
   authorizeProvider(
-    providerInfo: PromiseOrValue<BytesLike>[],
+    hcpName: PromiseOrValue<BytesLike>,
+    infoToAuth: PromiseOrValue<BytesLike>,
+    reason: PromiseOrValue<BytesLike>,
+    hcpAddress: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  getHCPDetails(
+    hcpAddress: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<SmartHealth.ProviderDataStructOutput>;
 
   getPatientSummary(
     overrides?: CallOverrides
   ): Promise<SmartHealth.PatientSummaryStructOutput>;
 
   getPatientSummaryHCP(
-    requestorInfo: PromiseOrValue<BytesLike>[],
+    hcpAddress: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<SmartHealth.PatientSummaryStructOutput>;
 
@@ -193,22 +238,30 @@ export interface SmartHealth extends BaseContract {
   ): Promise<SmartHealth.PatientVitalsStructOutput>;
 
   getPatientVitalsHCP(
-    requestorInfo: PromiseOrValue<BytesLike>[],
+    hcpAddress: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<SmartHealth.PatientVitalsStructOutput>;
 
   callStatic: {
     authorizeProvider(
-      providerInfo: PromiseOrValue<BytesLike>[],
+      hcpName: PromiseOrValue<BytesLike>,
+      infoToAuth: PromiseOrValue<BytesLike>,
+      reason: PromiseOrValue<BytesLike>,
+      hcpAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    getHCPDetails(
+      hcpAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<SmartHealth.ProviderDataStructOutput>;
 
     getPatientSummary(
       overrides?: CallOverrides
     ): Promise<SmartHealth.PatientSummaryStructOutput>;
 
     getPatientSummaryHCP(
-      requestorInfo: PromiseOrValue<BytesLike>[],
+      hcpAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<SmartHealth.PatientSummaryStructOutput>;
 
@@ -217,7 +270,7 @@ export interface SmartHealth extends BaseContract {
     ): Promise<SmartHealth.PatientVitalsStructOutput>;
 
     getPatientVitalsHCP(
-      requestorInfo: PromiseOrValue<BytesLike>[],
+      hcpAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<SmartHealth.PatientVitalsStructOutput>;
   };
@@ -226,42 +279,58 @@ export interface SmartHealth extends BaseContract {
 
   estimateGas: {
     authorizeProvider(
-      providerInfo: PromiseOrValue<BytesLike>[],
+      hcpName: PromiseOrValue<BytesLike>,
+      infoToAuth: PromiseOrValue<BytesLike>,
+      reason: PromiseOrValue<BytesLike>,
+      hcpAddress: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    getHCPDetails(
+      hcpAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getPatientSummary(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPatientSummaryHCP(
-      requestorInfo: PromiseOrValue<BytesLike>[],
+      hcpAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getPatientVitals(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPatientVitalsHCP(
-      requestorInfo: PromiseOrValue<BytesLike>[],
+      hcpAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     authorizeProvider(
-      providerInfo: PromiseOrValue<BytesLike>[],
+      hcpName: PromiseOrValue<BytesLike>,
+      infoToAuth: PromiseOrValue<BytesLike>,
+      reason: PromiseOrValue<BytesLike>,
+      hcpAddress: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    getHCPDetails(
+      hcpAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getPatientSummary(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPatientSummaryHCP(
-      requestorInfo: PromiseOrValue<BytesLike>[],
+      hcpAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getPatientVitals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPatientVitalsHCP(
-      requestorInfo: PromiseOrValue<BytesLike>[],
+      hcpAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

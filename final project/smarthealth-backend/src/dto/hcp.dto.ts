@@ -3,7 +3,7 @@ import { IsString } from 'class-validator';
 
 export class AuthorizeHCPDto {
   @ApiProperty({
-    example: 'Elizabeth Hospital',
+    example: 'Elizabeth',
     description: 'Health Care Provider name',
   })
   @IsString()
@@ -17,7 +17,7 @@ export class AuthorizeHCPDto {
   readonly auth: string;
 
   @ApiProperty({
-    example: 'Allow access for treatment reference',
+    example: 'Allow access',
     description: 'Reason to authorise',
   })
   @IsString()
