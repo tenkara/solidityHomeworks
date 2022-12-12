@@ -1,27 +1,36 @@
-<!-- <div class="all"> -->
-<div class="container" >
+<!-- Begin Landing page and Role play -->
+
+<div class="container">
   <div class="row">
     <div class="col-md-4" style="background-color:black;">
       <h2>SmartHealth</h2>
     </div>
     <div class="col-md-7" style="background-color:#1c1b1b;">
       <div *ngIf="roleSelected==0">
-        <p>Hello {{ ownerName }} Welcome!</p>
+        <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
       </div>
       <div *ngIf="roleSelected==1">
-        <p>Hello {{ hcpName }} Welcome! {{ hcpAddress }}</p>
+        <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
+      </div>
+      <div *ngIf="roleSelected==-1">
+        <p>Hello {{ signedRole }} user, good bye!</p>
       </div>
     </div>
     <div class="col-md-1">
       <div class="pull-right">
         <p></p>
-        <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0">
+        <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
           <button (click)="connectWallet()" type="button" class="btn btn-primary"> Sign-In</button>
         </div>
       </div>
     </div>
   </div>
   <hr>
+  <!-- End Landing page and Role play -->
+
+
+  <!-- Begin Owner Menu and Details -->
+
   <div *ngIf="roleSelected==0">
     <!-- Owner Menu and Details-->
     <div class="row">
@@ -56,10 +65,10 @@
         <h3>Details</h3>
         <hr>
         <div *ngIf="ownerMenuSelected==1">
-          <h6 class="h6">Health Summary</h6>
+          <h4>Health Summary</h4>
           <br>
 
-          <form [formGroup]="sub" action="" method="" class="form-horizontal">
+          <form [formGroup]="sub" class="form-horizontal">
             <div formGroupName="data" class="form-group row">
               <label class="control-label col-sm-3" for="other">Name</label>
               <div class="col-sm-3">
@@ -90,87 +99,77 @@
                 <input formControlName="weight" #other type="number" placeholder="150" class="form-control">
               </div>
             </div>
-           
-            </form>
-       <div>
 
-
-       
-       
-          
-          <div><br><br>
-              <h6 class="h6">Vitals</h6>
-         <br>
-         <form  [formGroup]="sub"  action=""  class="form-horizontal">
-       
-          <div formGroupName="data" class="form-group row">
-            <label class="control-label col-sm-3" for="other">Heart Rate</label>
-            <div class="col-sm-3">
-             
-              <input formControlName="heartRate" #other type="number" placeholder=75 class="form-control">
-              
-      
-            </div>
-          </div>
-          <div formGroupName="data" class="form-group row">
-            <label class="control-label col-sm-3" for="other">Blood Pressure</label>
-            <div class="col-sm-3">
-              <input formControlName="bloodPressure" #other type="number" placeholder="25" class="form-control">
-            </div>
-          </div>
-          <div formGroupName="data" class="form-group row">
-            <label class="control-label col-sm-3" for="other">Saturation</label>
-            <div class="col-sm-3">
-              <input formControlName="oxygenSaturation" #other type="number" placeholder="98%" class="form-control">
-            </div>
-          </div>
-          <div formGroupName="data" class="form-group row">
-            <label class="control-label col-sm-3" for="other">Temperature</label>
-            <div class="col-sm-3">
-              <input formControlName="temperature" #other type="number" placeholder="99.5 F" class="form-control">
-            </div>
-          </div>
           </form>
-          <br>
-          
-          <div class="container text-center">
-            <div class="row">
-              <div class="col">
-               </div>
-              <div class="col">
-              </div>
-              <div class="col">
-              </div>
-              <div class="col">
-                         <button (click)="submit(sub)" type="button" class="btn btn-primary"> Submit</button>
-                
-              
-               
+          <div>
+
+            <div><br><br>
+              <h6 class="h6">Vitals</h6>
+              <br>
+              <form [formGroup]="sub" action="" class="form-horizontal">
+
+                <div formGroupName="data" class="form-group row">
+                  <label class="control-label col-sm-3" for="other">Heart Rate</label>
+                  <div class="col-sm-3">
+
+                    <input formControlName="heartRate" #other type="number" placeholder=75 class="form-control">
+
+
+                  </div>
+                </div>
+                <div formGroupName="data" class="form-group row">
+                  <label class="control-label col-sm-3" for="other">Blood Pressure</label>
+                  <div class="col-sm-3">
+                    <input formControlName="bloodPressure" #other type="number" placeholder="25" class="form-control">
+                  </div>
+                </div>
+                <div formGroupName="data" class="form-group row">
+                  <label class="control-label col-sm-3" for="other">Saturation</label>
+                  <div class="col-sm-3">
+                    <input formControlName="oxygenSaturation" #other type="number" placeholder="98%"
+                      class="form-control">
+                  </div>
+                </div>
+                <div formGroupName="data" class="form-group row">
+                  <label class="control-label col-sm-3" for="other">Temperature</label>
+                  <div class="col-sm-3">
+                    <input formControlName="temperature" #other type="number" placeholder="99.5 F" class="form-control">
+                  </div>
+                </div>
+              </form>
+              <br>
+
+              <div class="container text-center">
+                <div class="row">
+                  <div class="col">
+                  </div>
+                  <div class="col">
+                  </div>
+                  <div class="col">
+                  </div>
+                  <div class="col">
+                    <button (click)="submit(sub)" type="button" class="btn btn-primary"> Submit</button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-<pre>
-  {{sub.value | json}}
-</pre>
-          
           </div>
         </div>
-      </div>
         <div *ngIf="ownerMenuSelected==2">
-          
 
-          <form action="post" class="form-horizontal ">
-            <div class="form-group row ">
+
+          <form [formGroup]="sub2" class="form-horizontal ">
+            <div formGroupName="hcp" class="form-group row">
               <label class="control-label col-sm-3 " for="other">HCP Name</label>
               <div class="col-sm-3">
-                <input #ownerName type="text" placeholder="Summit Medical Clinic" class="form-control">
+                <input formControlName="HCPName" type="text" placeholder="Summit Medical Clinic" class="form-control">
               </div>
             </div>
             <div class="form-group row">
-              <label class="control-label col-sm-3 " for="other">Information to Authorize</label> 
-              <!-- align-items-center  (in the class) -->
-              <div class="col-sm-3">
-                <select class="form-select-bg-size: 25px" aria-label="Default select example" >
+              <label class="control-label col-sm-3 " for="other">Information to Authorize</label>
+
+              <div formGroupName="hcp" class="col-sm-3">
+                <select formControlName="vitals" class="form-select-bg-size: 25px" aria-label="Default select example">
                   <option selected>Vitals</option>
                   <option value="1">Analitics1</option>
                   <option value="2">Analitics2</option>
@@ -178,34 +177,31 @@
                 </select>
               </div>
             </div>
-            <div class="form-group row">
-            <label class="control-label col-sm-3" for="other">Reason</label>
-            <div class="col-sm-3">
-              <input #ownerName type="text" placeholder="PCP Referral" class="form-control">
-              
-            </div>
-          </div>
-           
-            </form>
+            <div formGroupName="hcp" class="form-group row">
+              <label class="control-label col-sm-3" for="other">Reason</label>
+              <div class="col-sm-3">
+                <input formControlName="reason" type="text" placeholder="PCP Referral" class="form-control">
 
-            <div class="container text-center">
-              <div class="row">
-                <div class="col">
-                 </div>
-                <div class="col">
-                </div>
-                
-                <div class="col">
-                  <!-- <button (click)="submit(ownerName.value)" type="button" class="btn btn-primary"> Submit</button> -->
-                </div>
               </div>
             </div>
 
+          </form>
+
+          <div class="container text-center">
+            <div class="row">
+              <div class="col">
+              </div>
+              <div class="col">
+              </div>
+
+              <div class="col">
+                <button (click)="submit2(sub2)" type="button" class="btn btn-primary"> Submit</button>
+              </div>
+            </div>
           </div>
 
+        </div>
 
-
-        
         <div *ngIf="ownerMenuSelected==3">
           <div class="form-group row">
             <label for="other">Todo</label>
@@ -219,8 +215,9 @@
     </div>
   </div>
 
+  <!-- Begin HCP Menu and Details -->
   <div *ngIf="roleSelected==1">
-    <!-- HCP Menu and Details -->
+
     <div class="row">
       <div class="col-md-4" style="background-color:black;">
         <h3>Menu</h3>
@@ -240,19 +237,92 @@
           </li>
         </ul>
       </div>
-    </div>
 
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-6" style="background-color:black;">
+        <h3>Details</h3>
+        <hr>
+        <div *ngIf="hcpMenuSelected==1">
+          <form action="" class="form-horizontal">
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="patientName">Patient Name</label>
+              <div class="col-sm-4">
+                <input #patientName type="text" placeholder="Joe Smith" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="dob">Date Of Birth</label>
+              <div class="col-sm-4">
+                <input #dob type="text" placeholder="12/05/2017" class="form-control">
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-4"></div>
+              <div class="col-sm-4">
+                <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit"
+                  class="btn btn-primary">
+                  Submit</button>
+              </div>
+            </div>
+          </form>
+          <div style="margin-top:50px;">
+            <h4>Vitals </h4>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="heartRate">Heart Rate</label>
+              <div class="col-sm-3">
+                <div class="info"> {{ heartRate }} bpm</div>
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="bp">Blood Pressure</label>
+              <div class="col-sm-3">
+                <div class="info"> {{ bloodPressure }} mm Hg</div>
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="oxygenSat">Oxygen Saturation</label>
+              <div class="col-sm-3">
+                <div class="info"> {{ oxygenSaturation }} %</div>
+              </div>
+            </div>
+            <div>
+              <p></p>
+            </div>
+            <div class="hcp-form-group row">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-3" for="temp">Temperature</label>
+              <div class="col-sm-3">
+                <div class="info"> {{ temperature }} F</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p></p>
+          <br>
+        </div>
+      </div>
+    </div>
     <div class="col-md-1">
     </div>
-
-    <div class="col-md-7" style="background-color:black;">
-      <h3>Details</h3>
-      <hr>
-    </div>
-
-
-    <!-- Repeat the above for HCP -->
   </div>
+  <!-- End HCP menu and details -->
 </div>
-<!-- </div> -->
-
