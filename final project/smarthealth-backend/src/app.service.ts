@@ -61,22 +61,22 @@ export class AppService {
     // set up a Provider
     const provider = new ethers.providers.AlchemyProvider("goerli", process.env.ALCHEMY_API_KEY ?? "");
     const network = await provider.getNetwork(); // For later iterations
-    
+
     // Preserve the immutability of the Signers; ensure proper initialization while cycling through the accounts
     const basepathstr = "m/44'/60'/0'/0/";
     const signer: Signer[] = new Array(2); // For now we just use 2 accounts, owner and HCP
-    
+
     // Cycle through the accounts and initialize the signers
     for( let index = 0; index < 2; index++ ) {
       signer[index] = (ethers.Wallet.fromMnemonic(process.env.MNEMONIC ?? "", basepathstr+index.toString())).connect(provider);
       console.log(`Account${index}: ${await (signer[index]).getAddress()}  Balance: ${await (signer[index]).getBalance()} wei`); 
     }
-    
+
     // Determine the account and associatee the roles with the accounts
     // This enables role play of contract owner and HCP and to demonstrate the interaction between the two and the EHR contract
     const ownerAddress = await signer[0].getAddress(); // Owner account for the first itereation
     const hcpAddress = await signer[1].getAddress(); // HCP account for the first iteration
-    
+
     if (ownerAddress === address) {
       this.signedInRole = "owner";
     } else if (hcpAddress === address) {
@@ -84,7 +84,7 @@ export class AppService {
     } else {
       this.signedInRole = "unknown";  
     }
-    
+
     if (this.signedInRole === "owner") {
       this.signedInName = process.env.OWNER_NAME ?? "";
     } else if (this.signedInRole === "hcp") {
@@ -92,11 +92,11 @@ export class AppService {
     } else {
       this.signedInName = "unknown";
     }
-    
+
     return { result: this.signedInRole };
     // return { rolePlayDTO: { role: this.signedInRole, name: this.signedInName } }; // For subsequent iterations
   }
-  
+
   async checkSignersAddress() {
     return {
       patient: await this.signers.patient.address,
@@ -121,7 +121,7 @@ export class AppService {
         };
       default:
         return { name: 'Unknown', role: 'Unknown', isOwner: false };
-      }
+    }
   }
 
   // End point to create a new EHR contract with data from the create EHR screen (Ken)
@@ -150,7 +150,7 @@ export class AppService {
         req.age.toString(),
         req.sex,
         req.weight.toString(),
-        //req.height.toString(),
+        req.height.toString(),
         req.heartRate.toString(),
         req.bloodPressure,
         req.oxygenSaturation.toString(),
@@ -193,12 +193,13 @@ export class AppService {
         .connect(signer)
         .getPatientSummary()
         .then((summary) => {
-          const { name, age, birthSex, weight } = summary;
+          const { name, age, birthSex, weight, height } = summary;
           result = {
             name: toStr(name),
             age: toStr(age),
             birthSex: toStr(birthSex),
             weight: toStr(weight),
+            height: toStr(height),
           };
         });
     } catch (error) {
