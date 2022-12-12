@@ -158,7 +158,7 @@ export class AppService {
         req.age.toString(),
         req.sex,
         req.weight.toString(),
-        //req.height.toString(),
+        req.height.toString(),
         req.heartRate.toString(),
         req.bloodPressure,
         req.oxygenSaturation.toString(),

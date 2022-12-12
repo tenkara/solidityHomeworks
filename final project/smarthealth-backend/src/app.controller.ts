@@ -19,12 +19,12 @@ export class AppController {
   // @Get('signed-name/address?')
   // initializeAccounts(@Param ('address') address: string): Promise<{ result: string }> {
   //   return this.appService.initializeAccounts(address);
-  // } 
+  // }
 
   @Get('signed-name/address?')
-  initializeAccounts(@Query ('address') address: string): Promise<any> {
+  initializeAccounts(@Query('address') address: string): Promise<any> {
     return this.appService.initializeAccounts(address);
-  } 
+  }
 
   @Get('check/role')
   @ApiOperation({ summary: 'Check signer role by address' })
