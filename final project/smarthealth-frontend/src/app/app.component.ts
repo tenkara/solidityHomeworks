@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ethers } from 'ethers';
-
 import { FormControl, FormGroup, } from '@angular/forms';
 
-import { __values } from 'tslib';
 
 declare global {
   interface Window {
     ethereum: ethers.providers.ExternalProvider;
-    // ethereum?: Window;
-  }
+   }
 }
 
 
@@ -39,6 +36,7 @@ export class AppComponent implements OnInit {
   age?: string;
   sex?: number;
   weight?: number;
+  height?:number
   heartRateEHR?: number;
   bloodPressureEHR?: string;
   oxygenSaturationEHR?: number;
@@ -79,7 +77,7 @@ export class AppComponent implements OnInit {
       name: new FormControl(""),
       age: new FormControl(),
       sex: new FormControl(""),
-      // height: new FormControl(""),
+      height: new FormControl(),
       weight: new FormControl(),
       heartRate: new FormControl(),
       bloodPressure: new FormControl(""),
@@ -150,21 +148,20 @@ export class AppComponent implements OnInit {
   }
 
 
-
   // Simple listener to callback on owner create EHR menu item
   onCreateEHR(menuSelected: number) {
     this.ownerMenuSelected = menuSelected;
   }
-  submit(data: FormGroup) {
+  submitCreate(data: FormGroup) {
     console.log(data)
 
     this.http
       .post<any>('http://localhost:3000/create', {
-        name: (this.sub.value.data?.name), age: (this.sub.value.data?.age), sex: (this.sub.value.data?.sex), weight: (this.sub.value.data?.weight), heartRate: (this.sub.value.data?.heartRate), bloodPressure: (this.sub.value.data?.bloodPressure), oxygenSaturation: (this.sub.value.data?.oxygenSaturation), temperature: (this.sub.value.data?.temperature)
+        name: (this.sub.value.data?.name), age: (this.sub.value.data?.age), sex: (this.sub.value.data?.sex), weight: (this.sub.value.data?.weight), height: (this.sub.value.data?.height), heartRate: (this.sub.value.data?.heartRate), bloodPressure: (this.sub.value.data?.bloodPressure), oxygenSaturation: (this.sub.value.data?.oxygenSaturation), temperature: (this.sub.value.data?.temperature)
 
       }).subscribe((ans) => {
-        this.contractAddress = ans.contractAddress; this.name = ans.data.name; this.age = ans.data.age; this.sex = ans.data.sex; this.weight = ans.data.weight; this.heartRateEHR = ans.data.heartRate; this.bloodPressureEHR = ans.data.bloodPressure; this.oxygenSaturationEHR = ans.data.oxygenSaturation; this.temperatureEHR = ans.data.temperature
-        console.log(this.name, this.contractAddress, this.sex, this.weight, this.heartRateEHR)
+        this.contractAddress = ans.contractAddress; this.name = ans.data.name; this.age = ans.data.age; this.sex = ans.data.sex; this.weight = ans.data.weight; this.height = ans.data.height; this.heartRateEHR = ans.data.heartRate; this.bloodPressureEHR = ans.data.bloodPressure; this.oxygenSaturationEHR = ans.data.oxygenSaturation; this.temperatureEHR = ans.data.temperature
+        console.log(this.name, this.contractAddress, this.sex, this.weight, this.height, this.heartRateEHR, this.bloodPressureEHR, this.oxygenSaturationEHR, this.temperatureEHR)
       })
   }
 
@@ -172,7 +169,7 @@ export class AppComponent implements OnInit {
   onAuthorizeHCP(menuSelected: number) {
     this.ownerMenuSelected = menuSelected;
   }
-  submit2(hcp: FormGroup) {
+  submitAuthorize(hcp: FormGroup) {
     console.log(this.sub2)
 
     this.http
@@ -181,7 +178,7 @@ export class AppComponent implements OnInit {
 
       }).subscribe((ans) => {
         this.HCPName = ans.name; this.vitals = ans.auth; this.reason = ans.reason
-        console.log(ans.name, ans.auth, ans.reason)
+        console.log(ans.data.name, ans.data.auth, ans.data.reason)
       })
   }
 

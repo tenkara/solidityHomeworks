@@ -99,6 +99,12 @@
                 <input formControlName="weight" #other type="number" placeholder="150" class="form-control">
               </div>
             </div>
+            <div formGroupName="data" class="form-group row">
+              <label class="control-label col-sm-3" for="other">Height</label>
+              <div class="col-sm-3">
+                <input formControlName="height" #other type="number" placeholder="170" class="form-control">
+              </div>
+            </div>
 
           </form>
           <div>
@@ -148,7 +154,7 @@
                   <div class="col">
                   </div>
                   <div class="col">
-                    <button (click)="submit(sub)" type="button" class="btn btn-primary"> Submit</button>
+                    <button (click)="submitCreate(sub)" type="button" class="btn btn-primary"> Submit</button>
                   </div>
                 </div>
               </div>
@@ -195,7 +201,7 @@
               </div>
 
               <div class="col">
-                <button (click)="submit2(sub2)" type="button" class="btn btn-primary"> Submit</button>
+                <button (click)="submitAuthorize(sub2)" type="button" class="btn btn-primary"> Submit</button>
               </div>
             </div>
           </div>
