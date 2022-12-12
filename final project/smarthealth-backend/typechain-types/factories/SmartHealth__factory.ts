@@ -2,244 +2,254 @@
 /* tslint:disable */
 /* eslint-disable */
 import {
-    Signer,
-    utils,
-    Contract,
-    ContractFactory,
-    BytesLike,
-    Overrides,
-  } from "ethers";
-  import type { Provider, TransactionRequest } from "@ethersproject/providers";
-  import type { PromiseOrValue } from "../common";
-  import type { SmartHealth, SmartHealthInterface } from "../SmartHealth";
-  
-  const _abi = [
-    {
-      inputs: [
-        {
-          internalType: "bytes32[]",
-          name: "patientInfo",
-          type: "bytes32[]",
-        },
-      ],
-      stateMutability: "nonpayable",
-      type: "constructor",
-    },
-    {
-      inputs: [
-        {
-          internalType: "bytes32[]",
-          name: "providerInfo",
-          type: "bytes32[]",
-        },
-      ],
-      name: "authorizeProvider",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "getPatientSummary",
-      outputs: [
-        {
-          components: [
-            {
-              internalType: "bytes32",
-              name: "name",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "age",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "birthSex",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "weight",
-              type: "bytes32",
-            },
-          ],
-          internalType: "struct SmartHealth.PatientSummary",
-          name: "",
-          type: "tuple",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "bytes32[]",
-          name: "requestorInfo",
-          type: "bytes32[]",
-        },
-      ],
-      name: "getPatientSummaryHCP",
-      outputs: [
-        {
-          components: [
-            {
-              internalType: "bytes32",
-              name: "name",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "age",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "birthSex",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "weight",
-              type: "bytes32",
-            },
-          ],
-          internalType: "struct SmartHealth.PatientSummary",
-          name: "",
-          type: "tuple",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "getPatientVitals",
-      outputs: [
-        {
-          components: [
-            {
-              internalType: "bytes32",
-              name: "heartRate",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "bloodPressure",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "oxygenSat",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "temperature",
-              type: "bytes32",
-            },
-          ],
-          internalType: "struct SmartHealth.PatientVitals",
-          name: "",
-          type: "tuple",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "bytes32[]",
-          name: "requestorInfo",
-          type: "bytes32[]",
-        },
-      ],
-      name: "getPatientVitalsHCP",
-      outputs: [
-        {
-          components: [
-            {
-              internalType: "bytes32",
-              name: "heartRate",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "bloodPressure",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "oxygenSat",
-              type: "bytes32",
-            },
-            {
-              internalType: "bytes32",
-              name: "temperature",
-              type: "bytes32",
-            },
-          ],
-          internalType: "struct SmartHealth.PatientVitals",
-          name: "",
-          type: "tuple",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-  ];
-  
-  const _bytecode =
-    "0x60806040523480156200001157600080fd5b5060405162000c3938038062000c39833981810160405281019062000037919062000381565b336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550806000815181106200008e576200008d620003d2565b5b602002602001015160026000018190555080600181518110620000b657620000b5620003d2565b5b602002602001015160026001018190555080600281518110620000de57620000dd620003d2565b5b6020026020010151600280018190555080600381518110620001055762000104620003d2565b5b6020026020010151600260030181905550806004815181106200012d576200012c620003d2565b5b602002602001015160066000018190555080600581518110620001555762000154620003d2565b5b6020026020010151600660010181905550806006815181106200017d576200017c620003d2565b5b602002602001015160066002018190555080600781518110620001a557620001a4620003d2565b5b60200260200101516006600301819055505062000401565b6000604051905090565b600080fd5b600080fd5b600080fd5b6000601f19601f8301169050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6200022182620001d6565b810181811067ffffffffffffffff82111715620002435762000242620001e7565b5b80604052505050565b600062000258620001bd565b905062000266828262000216565b919050565b600067ffffffffffffffff821115620002895762000288620001e7565b5b602082029050602081019050919050565b600080fd5b6000819050919050565b620002b4816200029f565b8114620002c057600080fd5b50565b600081519050620002d481620002a9565b92915050565b6000620002f1620002eb846200026b565b6200024c565b905080838252602082019050602084028301858111156200031757620003166200029a565b5b835b818110156200034457806200032f8882620002c3565b84526020840193505060208101905062000319565b5050509392505050565b600082601f830112620003665762000365620001d1565b5b815162000378848260208601620002da565b91505092915050565b6000602082840312156200039a5762000399620001c7565b5b600082015167ffffffffffffffff811115620003bb57620003ba620001cc565b5b620003c9848285016200034e565b91505092915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b61082880620004116000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c8063503a5f2f1461005c5780636f0a94931461007a578063a7c6b37b146100aa578063b690a8c5146100c8578063d6f069e3146100f8575b600080fd5b610064610114565b6040516100719190610556565b60405180910390f35b610094600480360381019061008f919061070a565b6101ae565b6040516100a19190610556565b60405180910390f35b6100b2610241565b6040516100bf91906107a8565b60405180910390f35b6100e260048036038101906100dd919061070a565b6102db565b6040516100ef91906107a8565b60405180910390f35b610112600480360381019061010d919061070a565b61036e565b005b61011c610480565b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461017457600080fd5b6006604051806080016040529081600082015481526020016001820154815260200160028201548152602001600382015481525050905090565b6101b6610480565b81806000815181106101cb576101ca6107c3565b5b6020026020010151600a6000815481106101e8576101e76107c3565b5b9060005260206000209060030201600001541461020457600080fd5b6006604051806080016040529081600082015481526020016001820154815260200160028201548152602001600382015481525050915050919050565b6102496104b4565b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146102a157600080fd5b6002604051806080016040529081600082015481526020016001820154815260200160028201548152602001600382015481525050905090565b6102e36104b4565b81806000815181106102f8576102f76107c3565b5b6020026020010151600a600081548110610315576103146107c3565b5b9060005260206000209060030201600001541461033157600080fd5b6002604051806080016040529081600082015481526020016001820154815260200160028201548152602001600382015481525050915050919050565b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146103c657600080fd5b600a6040518060600160405280836000815181106103e7576103e66107c3565b5b6020026020010151815260200183600181518110610408576104076107c3565b5b6020026020010151815260200183600281518110610429576104286107c3565b5b60200260200101518152509080600181540180825580915050600190039060005260206000209060030201600090919091909150600082015181600001556020820151816001015560408201518160020155505050565b6040518060800160405280600080191681526020016000801916815260200160008019168152602001600080191681525090565b6040518060800160405280600080191681526020016000801916815260200160008019168152602001600080191681525090565b6000819050919050565b6104fb816104e8565b82525050565b60808201600082015161051760008501826104f2565b50602082015161052a60208501826104f2565b50604082015161053d60408501826104f2565b50606082015161055060608501826104f2565b50505050565b600060808201905061056b6000830184610501565b92915050565b6000604051905090565b600080fd5b600080fd5b600080fd5b6000601f19601f8301169050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6105d38261058a565b810181811067ffffffffffffffff821117156105f2576105f161059b565b5b80604052505050565b6000610605610571565b905061061182826105ca565b919050565b600067ffffffffffffffff8211156106315761063061059b565b5b602082029050602081019050919050565b600080fd5b610650816104e8565b811461065b57600080fd5b50565b60008135905061066d81610647565b92915050565b600061068661068184610616565b6105fb565b905080838252602082019050602084028301858111156106a9576106a8610642565b5b835b818110156106d257806106be888261065e565b8452602084019350506020810190506106ab565b5050509392505050565b600082601f8301126106f1576106f0610585565b5b8135610701848260208601610673565b91505092915050565b6000602082840312156107205761071f61057b565b5b600082013567ffffffffffffffff81111561073e5761073d610580565b5b61074a848285016106dc565b91505092915050565b60808201600082015161076960008501826104f2565b50602082015161077c60208501826104f2565b50604082015161078f60408501826104f2565b5060608201516107a260608501826104f2565b50505050565b60006080820190506107bd6000830184610753565b92915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fdfea264697066735822122077c18df9ab55f0fa93bc49bf2c4cea03f0750335f01f4f3e789ac116cb33f36f64736f6c63430008110033";
-  
-  type SmartHealthConstructorParams =
-    | [signer?: Signer]
-    | ConstructorParameters<typeof ContractFactory>;
-  
-  const isSuperArgs = (
-    xs: SmartHealthConstructorParams
-  ): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
-  
-  export class SmartHealth__factory extends ContractFactory {
-    constructor(...args: SmartHealthConstructorParams) {
-      if (isSuperArgs(args)) {
-        super(...args);
-      } else {
-        super(_abi, _bytecode, args[0]);
-      }
-    }
-  
-    override deploy(
-      patientInfo: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<SmartHealth> {
-      return super.deploy(patientInfo, overrides || {}) as Promise<SmartHealth>;
-    }
-    override getDeployTransaction(
-      patientInfo: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): TransactionRequest {
-      return super.getDeployTransaction(patientInfo, overrides || {});
-    }
-    override attach(address: string): SmartHealth {
-      return super.attach(address) as SmartHealth;
-    }
-    override connect(signer: Signer): SmartHealth__factory {
-      return super.connect(signer) as SmartHealth__factory;
-    }
-  
-    static readonly bytecode = _bytecode;
-    static readonly abi = _abi;
-    static createInterface(): SmartHealthInterface {
-      return new utils.Interface(_abi) as SmartHealthInterface;
-    }
-    static connect(
-      address: string,
-      signerOrProvider: Signer | Provider
-    ): SmartHealth {
-      return new Contract(address, _abi, signerOrProvider) as SmartHealth;
+  Signer,
+  utils,
+  Contract,
+  ContractFactory,
+  BytesLike,
+  Overrides,
+} from "ethers";
+import type { Provider, TransactionRequest } from "@ethersproject/providers";
+import type { PromiseOrValue } from "../common";
+import type { SmartHealth, SmartHealthInterface } from "../SmartHealth";
+
+const _abi = [
+  {
+    inputs: [
+      {
+        internalType: "bytes32[]",
+        name: "patientInfo",
+        type: "bytes32[]",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32[]",
+        name: "providerInfo",
+        type: "bytes32[]",
+      },
+    ],
+    name: "authorizeProvider",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPatientSummary",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "name",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "age",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "birthSex",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "weight",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "height",
+            type: "bytes32",
+          },
+        ],
+        internalType: "struct SmartHealth.PatientSummary",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32[]",
+        name: "requestorInfo",
+        type: "bytes32[]",
+      },
+    ],
+    name: "getPatientSummaryHCP",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "name",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "age",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "birthSex",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "weight",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "height",
+            type: "bytes32",
+          },
+        ],
+        internalType: "struct SmartHealth.PatientSummary",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPatientVitals",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "heartRate",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "bloodPressure",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "oxygenSat",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "temperature",
+            type: "bytes32",
+          },
+        ],
+        internalType: "struct SmartHealth.PatientVitals",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32[]",
+        name: "requestorInfo",
+        type: "bytes32[]",
+      },
+    ],
+    name: "getPatientVitalsHCP",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "heartRate",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "bloodPressure",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "oxygenSat",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes32",
+            name: "temperature",
+            type: "bytes32",
+          },
+        ],
+        internalType: "struct SmartHealth.PatientVitals",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
+const _bytecode =
+  "0x608060405234801561001057600080fd5b5060405161079338038061079383398101604081905261002f9161019b565b600080546001600160a01b03191633178155815182919061005257610052610258565b60200260200101516002600001819055508060018151811061007657610076610258565b60200260200101516002600101819055508060028151811061009a5761009a610258565b60200260200101516002800181905550806003815181106100bd576100bd610258565b6020026020010151600260030181905550806004815181106100e1576100e1610258565b60200260200101516002600401819055508060058151811061010557610105610258565b60200260200101516007600001819055508060068151811061012957610129610258565b60200260200101516007600101819055508060078151811061014d5761014d610258565b60200260200101516007600201819055508060088151811061017157610171610258565b6020908102919091010151600a555061026e565b634e487b7160e01b600052604160045260246000fd5b600060208083850312156101ae57600080fd5b82516001600160401b03808211156101c557600080fd5b818501915085601f8301126101d957600080fd5b8151818111156101eb576101eb610185565b8060051b604051601f19603f8301168101818110858211171561021057610210610185565b60405291825284820192508381018501918883111561022e57600080fd5b938501935b8285101561024c57845184529385019392850192610233565b98975050505050505050565b634e487b7160e01b600052603260045260246000fd5b6105168061027d6000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c8063503a5f2f1461005c5780636f0a9493146100a0578063a7c6b37b146100b3578063b690a8c5146100fd578063d6f069e314610110575b600080fd5b610064610125565b60405161009791908151815260208083015190820152604080830151908201526060918201519181019190915260800190565b60405180910390f35b6100646100ae36600461040c565b61018d565b6100bb61022d565b6040516100979190600060a082019050825182526020830151602083015260408301516040830152606083015160608301526080830151608083015292915050565b6100bb61010b36600461040c565b610281565b61012361011e36600461040c565b61030d565b005b6040805160808101825260008082526020820181905291810182905260608101919091526000546001600160a01b0316331461016057600080fd5b50604080516080810182526007548152600854602082015260095491810191909152600a54606082015290565b60408051608081018252600080825260208201819052918101829052606081019190915281806000815181106101c5576101c56104ca565b6020026020010151600b6000815481106101e1576101e16104ca565b906000526020600020906003020160000154146101fd57600080fd5b5050604080516080810182526007548152600854602082015260095491810191909152600a546060820152919050565b6102356103c8565b6000546001600160a01b0316331461024c57600080fd5b506040805160a08101825260025481526003546020820152600454918101919091526005546060820152600654608082015290565b6102896103c8565b818060008151811061029d5761029d6104ca565b6020026020010151600b6000815481106102b9576102b96104ca565b906000526020600020906003020160000154146102d557600080fd5b50506040805160a081018252600254815260035460208201526004549181019190915260055460608201526006546080820152919050565b6000546001600160a01b0316331461032457600080fd5b600b604051806060016040528083600081518110610344576103446104ca565b6020026020010151815260200183600181518110610364576103646104ca565b6020026020010151815260200183600281518110610384576103846104ca565b602090810291909101810151909152825460018181018555600094855293829020835160039092020190815590820151928101929092556040015160029091015550565b6040805160a08101825260008082526020820181905291810182905260608101829052608081019190915290565b634e487b7160e01b600052604160045260246000fd5b6000602080838503121561041f57600080fd5b823567ffffffffffffffff8082111561043757600080fd5b818501915085601f83011261044b57600080fd5b81358181111561045d5761045d6103f6565b8060051b604051601f19603f83011681018181108582111715610482576104826103f6565b6040529182528482019250838101850191888311156104a057600080fd5b938501935b828510156104be578435845293850193928501926104a5565b98975050505050505050565b634e487b7160e01b600052603260045260246000fdfea2646970667358221220941949a253d59f6629df9dddad4404deecb4a7691a69f2bb73bc01b00d96ae7f64736f6c63430008090033";
+
+type SmartHealthConstructorParams =
+  | [signer?: Signer]
+  | ConstructorParameters<typeof ContractFactory>;
+
+const isSuperArgs = (
+  xs: SmartHealthConstructorParams
+): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
+
+export class SmartHealth__factory extends ContractFactory {
+  constructor(...args: SmartHealthConstructorParams) {
+    if (isSuperArgs(args)) {
+      super(...args);
+    } else {
+      super(_abi, _bytecode, args[0]);
     }
   }
+
+  override deploy(
+    patientInfo: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<SmartHealth> {
+    return super.deploy(patientInfo, overrides || {}) as Promise<SmartHealth>;
+  }
+  override getDeployTransaction(
+    patientInfo: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): TransactionRequest {
+    return super.getDeployTransaction(patientInfo, overrides || {});
+  }
+  override attach(address: string): SmartHealth {
+    return super.attach(address) as SmartHealth;
+  }
+  override connect(signer: Signer): SmartHealth__factory {
+    return super.connect(signer) as SmartHealth__factory;
+  }
+
+  static readonly bytecode = _bytecode;
+  static readonly abi = _abi;
+  static createInterface(): SmartHealthInterface {
+    return new utils.Interface(_abi) as SmartHealthInterface;
+  }
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): SmartHealth {
+    return new Contract(address, _abi, signerOrProvider) as SmartHealth;
+  }
+}

@@ -10,6 +10,7 @@ contract SmartHealth {
         bytes32 age;  // patient age
         bytes32 birthSex; // sex assigned at birth
         bytes32 weight;   // weight in pounds
+        bytes32 height;
     }
 
     struct PatientVitals{
