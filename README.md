@@ -19,9 +19,9 @@
 
 ### Week 6 - Blockchain scaling, Layer 2 examples, Solidity advanced content, ECDSA, DeFi, Upgradeability Patterns, iPFS web3 storage, Smart contract security and toolbox.
 ### Week 7 - Ideation and Sponsor week - Metis, Livepeer, ENS, AltLayer
-1. I presented my capstone project idea in the class - ** SmartHealth ** - Building Smart Healthcare using Blockchain and Web3 
-2. Thought I was going to do the project by myself but found overwhelming interest from a lot of the classmates  
-3. Laid out the WSD iterations and worked with everyone who wanted to contribute in their own way. It is awesome!
+1. I presented this idea in the class for the final project - ** SmartHealth ** - Building Smart Healthcare using Blockchain and Web3 
+2. Found overwhelming interest from a lot of the classmates  
+3. Laid out the WSD iterations right away and got to work
 
 
 ## SmartHealth WSD 1 (Dec 5 - Dec 11):
@@ -42,7 +42,7 @@
    13. Solidity Smart Contract with functions to Create a EHR contract, Store data from screen 3c via 3i, View data in the contract (keeping it fairly straightforward to begin with) (Gabe)
    14. Testing / QA / Anything else missing from above - All interested parties who want to run the app in their environment after the build and provide/use feedback to fix and increment from there.(Jorge)
 
-
+### Week 8 - Final project presentations and more sponsor presentations
 ## SmartHealth WSD 2 (Dec 12 - Dec 15):
 (https://github.com/tenkara/solidityHomeworks/tree/main/final%20project)
 
