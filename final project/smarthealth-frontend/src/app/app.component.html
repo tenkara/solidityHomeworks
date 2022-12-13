@@ -1,31 +1,84 @@
 <!-- Begin Landing page and Role play -->
 
-<div class="container">
-  <div class="row" id="smarthealth-header">
-    <div class="col-md-4">
-      <h2><strong class="smart">Smart</strong><strong class="health">Health</strong></h2>
+<nav class="navbar navbar-expand-lg navbar-light bg-light"  id="smarthealth-header">
+  <div class="container-fluid">
+    <div class="title">
+      <h1><strong class="smart">Smart</strong><strong class="health">Health</strong></h1>
+    </div>  
+    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+            <a class="nav-link active" id="active" aria-current="page" href="#">Home</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+            <a class="nav-link" href="#">Features</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+            <a class="nav-link" href="#">Team</a>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="col-md-7" style="background-color:#1c1b1b;">
-      <div *ngIf="roleSelected==0">
-        <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
-      </div>
-      <div *ngIf="roleSelected==1">
-        <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
-      </div>
-      <div *ngIf="roleSelected==-1">
-        <p>Hello {{ signedRole }} user, good bye!</p>
-      </div>
+    <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+      <button (click)="connectWallet()" type="button" class="btn btn-outline-primary" id="btn"> Sign In</button>
     </div>
-    <div class="col-md-1">
-      <div class="pull-right">
-        <p></p>
-        <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
-          <button (click)="connectWallet()" type="button" class="btn btn-primary"> Sign-In</button>
-        </div>
-      </div>
+    <div *ngIf="roleSelected==0" class="greeting">
+      <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
+    </div>
+    <div *ngIf="roleSelected==1" class="greeting">
+      <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
+    </div>
+    <div *ngIf="roleSelected==-1" class="greeting">
+      <p>Hello {{ signedRole }} user, good bye!</p>
     </div>
   </div>
-  <hr>
+</nav>
+
+<div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1" class="content">
+    <h2 class="heading">Your Healthcare Information Managed and Authorized by You</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h3>Why SmartHealth?</h3>
+          <p>Healthcare data breaches hit all-time high in 2021, impacting 45M people and continues to grow as health systems and hospitals are under unprecedented stress from the pandemic. </p>
+          <button  class="btn btn-outline-primary" id="content-btn">Learn More</button>
+        </div>
+        <div class="col">
+          <h3>How Does SmartHealth Help Humanity?</h3>
+          <p>Leverages Blockchain technology to give the control back to you
+            Secure login, creation and management of your own Electronic Health Record
+            Need-to-know information provided by you to an authorized party</p>
+            <button  class="btn btn-outline-primary" id="content-btn">Learn More</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h3>What is SmartHealth?</h3>
+          <p>SmartHealth provides a secure platform using blockchain technology for exchanging Electronic Health Records authorized by the patient to specific helathcare providers.</p>
+          <button  class="btn btn-outline-primary" id="content-btn">Learn More</button>
+        </div>
+        <div class="col">
+          <h3>Working Software Demo</h3>
+          <p>
+            <strong>Front-end:</strong> Angular, Bootstrap, Typescript
+            Integration with Metamask for Registration and Log in
+            EHR/PHR data creation, update, transfer capabilities 
+            <br>
+            <strong>Back-end:</strong> Nestjs with node, testnet, Solidity, Typescipt
+            Smart Contracts and scripts to support the front-end capabilities
+            Integration with external Oracle - PriceMedic (Bonus)</p>
+        </div>
+      </div>
+  </div>
+  
 <!-- End Landing page and Role play -->
 
 
@@ -343,4 +396,4 @@
     </div>
   </div>
   <!-- End HCP menu and details -->
-</div>
+<!-- </div> -->

@@ -1,21 +1,102 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa');
 
 #smarthealth-header {
-  background-image: url(../assets/darkmode.jpg);
-  // width: 100%;
+  background-image: url(../assets/background.jpg);
+  width: 100%;
+  height: 8em;
+  background-position: center;
+  background-size: cover;
   background-repeat: no-repeat;
   font-family: "Comfortaa";
+  margin-bottom: 2.5em;
+  padding: 1em;
+}
+
+
+#btn {
+  margin-top: 0.5em;
+  margin-right: 2.5em;
+  font-family: "Comfortaa";
+  font-size: 1em;
+}
+
+#content-btn {
+  width: 8em;
+}
+
+#active {
+  color: #ee0909c9;
+}
+
+h2 {
+  font-size: 2.2em;
+}
+
+h3 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+p {
+  font-size: 0.9em;
+}
+
+.content {
+  width: 100%;
+  font-family: "Comfortaa";
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  text-align: left;
+  align-content: center;
+  
+}
+
+.col {
+  padding-top: 4em;
+  padding-right: 6.5em;
+  padding-left: 6.5em;
+}
+
+.title {
+margin-top: 1em;
+margin-right: 4em;
+width: auto;
+ }
+
+.greeting {
+  margin-top: 1.5em;
+  padding-right: 1em;
+  font-family: "Comfortaa";
+  font-size: 1.3em;
+}
+
+.nav-item {
+  margin-top: 1.3em;
+  font-family: "Comfortaa";
+  font-size: 1.1em;
+  padding-right: 0.9em;
 }
 
 .smart {
   color: #174ACE;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 
 .health {
   color: #EE0909;
-  font-size: 1.5em;
+  font-size: 1em;
+}
+
+.nav-link {
+  color: #174ACE;
+}
+
+.btn {
+  width: 100%;
 }
 
 .info{
