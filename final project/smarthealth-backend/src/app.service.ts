@@ -162,7 +162,7 @@ export class AppService {
       req.oxygenSaturation.toString(),
       req.temperature.toString(),
     ];
-    return await this.deployContract(data).then(({ address, hash }) => {
+    return await this.deployContract(data).then(({ address }) => {
       this.contractAddress = address;
       return { contractAddress: address, data: req };
     });
