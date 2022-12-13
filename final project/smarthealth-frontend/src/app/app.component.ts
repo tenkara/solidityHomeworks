@@ -198,7 +198,6 @@ export class AppComponent implements OnInit {
 
     this.http
       .post<any>('http://localhost:3000/authorize', {
-        contractAddress: this.contractAddress,
         name: this.sub2.value.hcp?.HCPName,
         auth: this.sub2.value.hcp?.vitals,
         reason: this.sub2.value.hcp?.reason,
@@ -221,9 +220,7 @@ export class AppComponent implements OnInit {
   async onAccessPatientInfo(menuSelected: number) {
     this.hcpMenuSelected = menuSelected;
 
-    let queryParams = new HttpParams()
-      .append('address', this.address)
-      .append('contractAddress', this.contractAddress);
+    let queryParams = new HttpParams().append('address', this.address);
 
     try {
       // Need the right endpoint for hcp to view patient vitals
