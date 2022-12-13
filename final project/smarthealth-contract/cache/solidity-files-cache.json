@@ -1,0 +1,40 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\Raj\\devel\\solidityHomeworks\\final project\\smarthealth-contract\\contracts\\SmartHealth.sol": {
+      "lastModificationDate": 1670856728253,
+      "contentHash": "bc98b4d77db5f5b5698e1f0bef7267b6",
+      "sourceName": "contracts/SmartHealth.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 100
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "SmartHealth"
+      ]
+    }
+  }
+}
