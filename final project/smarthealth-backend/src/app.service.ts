@@ -258,10 +258,13 @@ export class AppService {
     }
   }
 
-  async viewPatientVitals(address: string): Promise<{ result: any }> {
+  async viewPatientVitals(
+    address: string,
+    contractAddress: string,
+  ): Promise<{ result: any }> {
     const signer = this.proxyAccount(address);
     if (signer == this.signers.patient) {
-      return await smartHealthContract()
+      return await smartHealthContract(contractAddress)
         .connect(signer)
         .getPatientVitals()
         .then(
@@ -297,7 +300,7 @@ export class AppService {
         );
     }
   }
-  
+
   // Function as an account selector, this SHOULD NOT be used in production. The front end should determine and
   // redirect patient/hcp API to call the right endpoint instead. This will eventually be deprecated
   proxyAccount = (address: string): Wallet => {

@@ -22,11 +22,11 @@ export const getProvider = () => {
   );
 };
 
-export const smartHealthContract = () => {
+export const smartHealthContract = (address: string = null) => {
   return new ethers.ContractFactory(
     SmartHealth.abi,
     SmartHealth.bytecode,
-  ).attach(process.env.PATIENT_CONTRACT_ADDRESS ?? '');
+  ).attach(address ? address : process.env.PATIENT_CONTRACT_ADDRESS);
 };
 
 export const toStr = (str) => {

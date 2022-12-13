@@ -56,8 +56,11 @@ export class AppController {
 
   @Get('view/vitals')
   @ApiOperation({ summary: "View patient's vitals" })
-  viewVitals(@Query('address') address: string): Promise<any> {
-    return this.appService.viewPatientVitals(address);
+  viewVitals(
+    @Query('address') address: string,
+    @Query('contractAddress') contractAddress: string,
+  ): Promise<any> {
+    return this.appService.viewPatientVitals(address, contractAddress);
   }
 
   @Get('view/hcp')

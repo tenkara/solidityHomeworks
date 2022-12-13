@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   ownerMenuSelected?: number = 0; // For menu options
 
   // Owner create EHR page variables
-  contractAddress?: string;
+  contractAddress: string = '';
   name?: string;
   age?: string;
   sex?: number;
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
   provider?: ethers.providers.Web3Provider;
   account?: ethers.Wallet;
   signer?: ethers.providers.JsonRpcSigner;
-  address?: string; // Address of the current account signed in through MetaMask
+  address: string = ''; // Address of the current account signed in through MetaMask
   signedName?: string; // Name of the current account signed in through MetaMask for later iterations
   signedRole?: string; // Role of the current account signed in through MetaMask
 
@@ -198,6 +198,7 @@ export class AppComponent implements OnInit {
 
     this.http
       .post<any>('http://localhost:3000/authorize', {
+        contractAddress: this.contractAddress,
         name: this.sub2.value.hcp?.HCPName,
         auth: this.sub2.value.hcp?.vitals,
         reason: this.sub2.value.hcp?.reason,
@@ -220,17 +221,9 @@ export class AppComponent implements OnInit {
   async onAccessPatientInfo(menuSelected: number) {
     this.hcpMenuSelected = menuSelected;
 
-    // 0x3298aA0DC339aBCDc42Db8120163aa0DeeC26bFD contract address from /create
-    // let queryParams = new HttpParams().append(
-    //   this.patientName ? this.patientName : 'patientName',
-    //   this.dob ? this.dob : 'dob'
-    // );
-    this.provider = new ethers.providers.Web3Provider(window.ethereum);
-    this.signer = await this.provider.getSigner();
-    this.address = await this.signer.getAddress();
-    console.log(`address xx: ${await this.signer.getAddress()}\n`);
-    // const address = this.address || '';
-    let queryParams = new HttpParams().append('address', this.address);
+    let queryParams = new HttpParams()
+      .append('address', this.address)
+      .append('contractAddress', this.contractAddress);
 
     try {
       // Need the right endpoint for hcp to view patient vitals
