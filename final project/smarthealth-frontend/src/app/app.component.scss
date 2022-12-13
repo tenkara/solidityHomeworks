@@ -3,19 +3,19 @@
 #smarthealth-header {
   background-image: url(../assets/background.jpg);
   width: 100%;
-  height: 8em;
+  height: 7em;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Comfortaa";
   margin-bottom: 2.5em;
-  padding: 1em;
+  // padding: 1em;
 }
 
 
 #btn {
   margin-top: 0.5em;
-  margin-right: 2.5em;
+  margin-right: 3em;
   font-family: "Comfortaa";
   font-size: 1em;
 }
@@ -28,17 +28,48 @@
   color: #ee0909c9;
 }
 
+
+h1 {
+  font-family: "Comfortaa";
+  font-size: 2.3em;
+  word-spacing: 0.2em;
+}
+
+
 h2 {
-  font-size: 2.2em;
+  font-family: "Comfortaa";
+  font-size: 1.7em;
 }
 
 h3 {
-  font-size: 1.3em;
+  font-size: 1.2em;
   font-weight: 600;
+  font-family: "Comfortaa";
+  letter-spacing: 0.02em;
 }
+
+h4 {
+  font-family: "Comfortaa";
+  letter-spacing: 0.02em;
+  font-size: 1.3em;
+}
+
 
 p {
   font-size: 0.9em;
+  line-height: 1.5em;
+  letter-spacing: 0.02em;
+}
+
+input {
+  font-family: "Comfortaa";
+  letter-spacing: 0.02em;
+}
+
+
+label {
+  font-family: "Comfortaa";
+  letter-spacing: 0.02em;
 }
 
 .content {
@@ -70,6 +101,7 @@ width: auto;
 .greeting {
   margin-top: 1.5em;
   padding-right: 1em;
+  width: 20%;
   font-family: "Comfortaa";
   font-size: 1.3em;
 }
@@ -95,6 +127,10 @@ width: auto;
   color: #174ACE;
 }
 
+nav {
+  padding: 2em;
+}
+
 .btn {
   width: 100%;
 }
@@ -109,8 +145,8 @@ width: auto;
 .menuItems {
   margin: 0 0 2em 0;
   list-style-type: none;
-  padding: 0;
-  width: 15em;
+  font-family: "Comfortaa";
+  width: 25em;
 }
 
 .menuItems li {
@@ -124,15 +160,15 @@ width: auto;
   left: 0;
   background-color: #EEE;
   margin: .5em;
-  padding: 0;
-  border-radius: 4px;
+  padding: 1em;
+  border-radius: 6px;
   display: flex;
   align-items: stretch;
   height: 1.8em;
 }
 
 .menuItems button:hover {
-  color: #2c3a41;
+  color: #174ACE;
   background-color: #e6e6e6;
   left: .1em;
 }
@@ -159,12 +195,15 @@ width: auto;
 
 .menuItems .badge {
   display: inline-block;
-  font-size: small;
+  // font-size: small;
   color: white;
   padding: 0.8em 0.7em 0 0.7em;
-  background-color: #405061;
-  line-height: 1em;
-  margin-right: .8em;
+  background-color: #3a57a073;
+  line-height: 45px;
+  height: 2.75em;
+  margin-left: -1.4em;
+  margin-right: 1em;
+  margin-top: -1.4em;
   border-radius: 4px 0 0 4px;
 }
 

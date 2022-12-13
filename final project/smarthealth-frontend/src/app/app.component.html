@@ -5,10 +5,6 @@
     <div class="title">
       <h1><strong class="smart">Smart</strong><strong class="health">Health</strong></h1>
     </div>  
-    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button> -->
-    <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
@@ -36,14 +32,15 @@
     <div *ngIf="roleSelected==1" class="greeting">
       <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
     </div>
-    <div *ngIf="roleSelected==-1" class="greeting">
-      <p>Hello {{ signedRole }} user, good bye!</p>
-    </div>
-  </div>
+    <!-- <div *ngIf="roleSelected==-1" class="greeting">
+      <p>Good bye  {{ signedRole }}!</p>
+    </div> -->
 </nav>
 
+<br>
+
 <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1" class="content">
-    <h2 class="heading">Your Healthcare Information Managed and Authorized by You</h2>
+    <h1 class="heading">Your Healthcare Information Managed And Authorized By You</h1>
     <div class="container">
       <div class="row">
         <div class="col">
@@ -74,10 +71,11 @@
             <br>
             <strong>Back-end:</strong> Nestjs with node, testnet, Solidity, Typescipt
             Smart Contracts and scripts to support the front-end capabilities
-            Integration with external Oracle - PriceMedic (Bonus)</p>
+            Integration with external Oracle - PriceMedic</p>
         </div>
       </div>
   </div>
+</div>
   
 <!-- End Landing page and Role play -->
 
@@ -87,8 +85,8 @@
   <div *ngIf="roleSelected==0">
     <!-- Owner Menu and Details-->
     <div class="row">
-      <div class="col-md-4" style="background-color:black;">
-        <h3>Menu</h3>
+      <div class="col">
+        <h2>Menu</h2>
         <hr>
         <ul class="menuItems">
           <li>
@@ -114,8 +112,8 @@
 
       <div class="col-md-1">
       </div>
-      <div class="col-md-6" style="background-color:black;">
-        <h3>Details</h3>
+      <div class="col">
+        <h2>Details</h2>
         <hr>
         <div *ngIf="ownerMenuSelected==1">
           <p></p>
@@ -222,7 +220,7 @@
               <div class="form-group row">
                 <div class="col-md-5"></div>
                 <div class="col-sm-4">
-                  <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
+                  <button (click)="{}" type="button" class="btn btn-outline-primary"> Submit</button>
                 </div>
               </div>
             </div>
@@ -265,7 +263,7 @@
           <div class="form-group row">
             <div class="col-md-5"></div>
             <div class="col-sm-4">
-              <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
+              <button (click)="{}" type="button" class="btn btn-outline-primary"> Submit</button>
             </div>
           </div>
           <p></p>
@@ -291,8 +289,8 @@
   <div *ngIf="roleSelected==1">
 
     <div class="row">
-      <div class="col-md-4" style="background-color:black;">
-        <h3>Menu</h3>
+      <div class="col">
+        <h2>Menu</h2>
         <hr>
         <ul class="menuItems">
           <li>
@@ -312,8 +310,8 @@
 
       <div class="col-md-1">
       </div>
-      <div class="col-md-6" style="background-color:black;">
-        <h3>Details</h3>
+      <div class="col">
+        <h2>Details</h2>
         <hr>
         <div *ngIf="hcpMenuSelected==1">
           <form action="" class="form-horizontal">
@@ -340,7 +338,7 @@
             <div class="form-group row">
               <div class="col-md-4"></div>
               <div class="col-sm-4">
-                <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-primary">
+                <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-outline-primary">
                   Submit</button>
               </div>
             </div>
