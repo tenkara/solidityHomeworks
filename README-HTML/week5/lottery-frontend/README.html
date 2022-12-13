@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Too much fighting with Angular 15 and had to reinstall front end from scratch with Angular 14</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h2 id="too-much-fighting-with-angular-15-and-had-to-reinstall-front-end-from-scratch-with-angular-14">Too much fighting with Angular 15 and had to reinstall front end from scratch with Angular 14</h2>
+<p>Here is my cheatsheet for the front-end (lesson 15)</p>
+<ul>
+<li>ng new lottery-frontend</li>
+<li>Yes to Angular routing</li>
+<li>Select SCSS for stylesheet</li>
+<li>cd ./lottery-frontend</li>
+<li>ng serve (to test the setup)</li>
+<li>exit (ctrl-c)</li>
+<li>npm install ethers or yarn add ethers</li>
+<li>yarn add bootstrap bootstrap-icons</li>
+<li>yarn add @popperjs/core</li>
+<li>yarn add @ng-bootstrap/ng-bootstrap</li>
+<li>In angular.json be sure to have these lines -</li>
+<li>
+<pre><code>       &quot;styles&quot;: [
+</code></pre>
+</li>
+<li>
+<pre><code>         &quot;node_modules/bootstrap/scss/bootstrap.scss&quot;,
+</code></pre>
+</li>
+<li>
+<pre><code>         &quot;node_modules/bootstrap-icons/font/bootstrap-icons.css&quot;,
+</code></pre>
+</li>
+<li>
+<pre><code>         &quot;src/styles.scss&quot;
+</code></pre>
+</li>
+<li>
+<pre><code>       ],
+</code></pre>
+</li>
+<li>
+<pre><code>       &quot;scripts&quot;: [
+</code></pre>
+</li>
+<li>
+<pre><code>         &quot;node_modules/bootstrap/dist/js/bootstrap.bundle.min.js&quot;
+</code></pre>
+</li>
+<li>
+<pre><code>       ]
+</code></pre>
+</li>
+<li>...</li>
+<li>In app.module.ts be sure to include NgbModule like this -</li>
+<li>import { NgbModule } from '@ng-bootstrap/ng-bootstrap';</li>
+<li>@NgModule({</li>
+<li>declarations: [</li>
+<li>AppComponent</li>
+<li>],</li>
+<li>imports: [</li>
+<li>BrowserModule,</li>
+<li>AppRoutingModule,</li>
+<li>NgbModule</li>
+<li>],</li>
+<li>...</li>
+<li>Make sure the following lines are added to tsconfig.json</li>
+<li>&quot;compilerOptions&quot;: {</li>
+<li>&quot;resolveJsonModule&quot;: true,</li>
+<li>&quot;esModuleInterop&quot;: true,</li>
+<li>&quot;allowSyntheticDefaultImports&quot;: true,</li>
+<li>...</li>
+</ul>
+<h2 id="instructions-to-setup-metamask-to-work-with-local-hardhat-network-running-the-lottery-contract">Instructions to setup metamask to work with local Hardhat network running the Lottery contract</h2>
+<ul>
+<li>Follow the instructions in the Readme file in the lottery-backend</li>
+<li>Import ether from one or more accounts using the account's private key (which should be available from [windows] Terminal 1) to setup metamask account(s) for localhost port 8545, chain id 31337.</li>
+<li>Specifically, the RPC URL should be <a href="http://127.0.0.1:8545">http://127.0.0.1:8545</a> and Chain ID should be set to 31337.</li>
+<li>Follow the code in the app.component.ts to connect to Metamask using a Web3Provider.</li>
+</ul>
+
+        
+        
+    </body>
+    </html>
