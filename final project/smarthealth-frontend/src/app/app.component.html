@@ -26,10 +26,10 @@
     </div>
   </div>
   <hr>
-<!-- End Landing page and Role play -->
+  <!-- End Landing page and Role play -->
 
 
-<!-- Begin Owner Menu and Details -->
+  <!-- Begin Owner Menu and Details -->
 
   <div *ngIf="roleSelected==0">
     <!-- Owner Menu and Details-->
@@ -69,129 +69,119 @@
           <h4>Health Summary : </h4>
 
           <br>
-          <form action="" class="form-horizontal">
-            <div class="form-group row">
-              <div class="col-md-1"></div>
-              <label class="control-label col-sm-4" for="acctIndex">Name</label>
-              <div class="col-sm-4">
-                <input #acctIndex type="string" placeholder="John Smith" class="form-control">
-              </div>
-            </div>
-            <div>
-              <p></p>
-            </div>
-            <div class="form-group row">
-              <div class="col-md-1"></div>
-              <label class="control-label col-sm-4" for="other">Age</label>
-              <div class="col-sm-4">
-                <input #other type="text" placeholder="25" class="form-control">
-              </div>
-            </div>
-            <div>
-              <p></p>
-            </div>
-            <div class="form-group row">
-              <div class="col-md-1"></div>
-              <label class="control-label col-sm-4" for="other">Birth Sex</label>
-              <div class="col-sm-4">
-                <input #other type="text" placeholder="Male" class="form-control">
-              </div>
-            </div>
-            <div>
-              <p></p>
-            </div>
-            <div class="form-group row">
-              <div class="col-md-1"></div>
-              <label class="control-label col-sm-4" for="other">Height</label>
-              <div class="col-sm-4">
-                <input #other type="text" placeholder="70" class="form-control">
-              </div>
-            </div>
-            <div>
-              <p></p>
-            </div>
-            <div class="form-group row">
-              <div class="col-md-1"></div>
-              <label class="control-label col-sm-4" for="other">Weight</label>
-              <div class="col-sm-4">
-                <input #other type="text" placeholder="150" class="form-control">
-              </div>
-            </div>
-          </form>
 
+          <form [formGroup]="sub" class="form-horizontal">
+            <div formGroupName="data" class="form-group row">
+              <label class="control-label col-sm-3" for="other">Name</label>
+              <div class="col-sm-3">
+                <input formControlName="name" #other type="string" placeholder="John Smith" class="form-control">
+              </div>
+            </div>
+            <div formGroupName="data" class="form-group row">
+              <label class="control-label col-sm-3" for="other">Age</label>
+              <div class="col-sm-3">
+                <input formControlName="age" #other type="number" placeholder="25" class="form-control">
+              </div>
+            </div>
+            <div formGroupName="data" class="form-group row">
+              <label class="control-label col-sm-3" for="other">Birth Sex</label>
+              <div class="col-sm-3">
+                <input formControlName="sex" #other type="text" placeholder="Male" class="form-control">
+              </div>
+            </div>
+            <div formGroupName="data" class="form-group row">
+              <!-- <label class="control-label col-sm-3" for="other">Height</label> -->
+              <div class="col-sm-3">
+                <!-- <input formControlName="height" #other type="text" placeholder="70" class="form-control"> -->
+              </div>
+            </div>
+            <div formGroupName="data" class="form-group row">
+              <label class="control-label col-sm-3" for="other">Weight</label>
+              <div class="col-sm-3">
+                <input formControlName="weight" #other type="number" placeholder="150" class="form-control">
+              </div>
+            </div>
+            <div formGroupName="data" class="form-group row">
+              <label class="control-label col-sm-3" for="other">Height</label>
+              <div class="col-sm-3">
+                <input formControlName="height" #other type="number" placeholder="170" class="form-control">
+              </div>
+            </div>
+
+          </form>
           <div>
-            <br>
-            <br>
-            <h4>Vitals :</h4>
-            <br>
-            <form action="" class="form-horizontal">
-              <div class="form-group row">
-                <div class="col-md-1"></div>
-                <label class="control-label col-sm-4" for="other">Heart Rate</label>
-                <div class="col-sm-4">
-                  <input #acctIndex type="string" placeholder="75 bpm" class="form-control">
+            <!-- Begin Leandro's changes -->
+            <div><br><br>
+              <h6 class="h6">Vitals</h6>
+              <br>
+              <form [formGroup]="sub" action="" class="form-horizontal">
+
+                <div formGroupName="data" class="form-group row">
+                  <label class="control-label col-sm-3" for="other">Heart Rate</label>
+                  <div class="col-sm-3">
+
+                    <input formControlName="heartRate" #other type="number" placeholder=75 class="form-control">
+
+
+                  </div>
                 </div>
-                <div>
-                  <p></p>
+                <div formGroupName="data" class="form-group row">
+                  <label class="control-label col-sm-3" for="other">Blood Pressure</label>
+                  <div class="col-sm-3">
+                    <input formControlName="bloodPressure" #other type="number" placeholder="25" class="form-control">
+                  </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-md-1"></div>
-                <label class="control-label col-sm-4" for="other">Blood Pressure</label>
-                <div class="col-sm-4">
-                  <input #other type="text" placeholder="25" class="form-control">
+                <div formGroupName="data" class="form-group row">
+                  <label class="control-label col-sm-3" for="other">Saturation</label>
+                  <div class="col-sm-3">
+                    <input formControlName="oxygenSaturation" #other type="number" placeholder="98%"
+                      class="form-control">
+                  </div>
                 </div>
-              </div>
-              <div>
-                <p></p>
-              </div>
-              <div class="form-group row">
-                <div class="col-md-1"></div>
-                <label class="control-label col-sm-4" for="other">Saturation</label>
-                <div class="col-sm-4">
-                  <input #other type="text" placeholder="98%" class="form-control">
+                <div formGroupName="data" class="form-group row">
+                  <label class="control-label col-sm-3" for="other">Temperature</label>
+                  <div class="col-sm-3">
+                    <input formControlName="temperature" #other type="number" placeholder="99.5 F" class="form-control">
+                  </div>
                 </div>
-              </div>
-              <div>
-                <p></p>
-              </div>
-              <div class="form-group row">
-                <div class="col-md-1"></div>
-                <label class="control-label col-sm-4" for="other">Temperature</label>
-                <div class="col-sm-4">
-                  <input #other type="text" placeholder="99.5 F" class="form-control">
-                </div>
-              </div>
-            </form>
-            <br>
-            <div>
-              <p></p>
-              <div class="form-group row">
-                <div class="col-md-5"></div>
-                <div class="col-sm-4">
-                  <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
+              </form>
+              <br>
+
+              <div class="container text-center">
+                <div class="row">
+                  <div class="col">
+                  </div>
+                  <div class="col">
+                  </div>
+                  <div class="col">
+                  </div>
+                  <div class="col">
+                    <button (click)="submitCreate(sub)" type="button" class="btn btn-primary"> Submit</button>
+                  </div>
                 </div>
               </div>
+
+              <!-- End Leandro's changes -->
             </div>
           </div>
           <p></p>
         </div>
 
         <div *ngIf="ownerMenuSelected==2">
-          <form action="" class="form-horizontal">
-            <div class="form-group row">
-              <div class="col-md-1"></div>
-              <label class="control-label col-sm-4" for="other">HCP Name</label>
-              <div class="col-sm-4">
-                <input #ownerName type="text" placeholder="Summit Medical Clinic" class="form-control">
+
+          <!-- Begin Leandro's changes -->
+          <form [formGroup]="sub2" class="form-horizontal ">
+            <div formGroupName="hcp" class="form-group row">
+              <label class="control-label col-sm-3 " for="other">HCP Name</label>
+              <div class="col-sm-3">
+                <input formControlName="HCPName" type="text" placeholder="Summit Medical Clinic" class="form-control">
               </div>
             </div>
-            <p></p>
             <div class="form-group row">
-              <div class="col-md-1"></div>
-              <label class="control-label col-sm-4" for="other">Information to Authorize</label>
-              <div class="col-sm-4">
-                <select class="form-select-bg-size: 25px" aria-label="Default select example">
+              <label class="control-label col-sm-3 " for="other">Information to Authorize</label>
+
+              <div formGroupName="hcp" class="col-sm-3">
+                <select formControlName="vitals" class="form-select-bg-size: 25px" aria-label="Default select example">
                   <option selected>Vitals</option>
                   <option value="1">Analitics1</option>
                   <option value="2">Analitics2</option>
@@ -199,39 +189,46 @@
                 </select>
               </div>
             </div>
-            <p></p>
-            <div class="form-group row">
-              <div class="col-md-1"></div>
-              <label class="control-label col-sm-4" for="other">Reason</label>
-              <div class="col-sm-4">
-                <input #ownerName type="text" placeholder="PCP Referral" class="form-control">
+            <div formGroupName="hcp" class="form-group row">
+              <label class="control-label col-sm-3" for="other">Reason</label>
+              <div class="col-sm-3">
+                <input formControlName="reason" type="text" placeholder="PCP Referral" class="form-control">
+
               </div>
             </div>
+
           </form>
-          <p></p>
+
+          <div class="container text-center">
+            <div class="row">
+              <div class="col">
+              </div>
+              <div class="col">
+              </div>
+
+              <div class="col">
+                <button (click)="submitAuthorize(sub2)" type="button" class="btn btn-primary"> Submit</button>
+              </div>
+              <!-- end Leandro's changes  -->
+            </div>
+            <p></p>
+            <p></p>
+          </div>
+        </div>
+        <div *ngIf="ownerMenuSelected==3">
           <div class="form-group row">
-            <div class="col-md-5"></div>
-            <div class="col-sm-4">
-              <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
+            <label for="other">Todo</label>
+            <div class="col-sm-3">
+              <input #other type="text" placeholder="Todo" class="form-control">
             </div>
           </div>
-          <p></p>
-          <p></p>
         </div>
-      </div>
-      <div *ngIf="ownerMenuSelected==3">
-        <div class="form-group row">
-          <label for="other">Todo</label>
-          <div class="col-sm-3">
-            <input #other type="text" placeholder="Todo" class="form-control">
-          </div>
-        </div>
-      </div>
 
+      </div>
     </div>
   </div>
 
-<!-- End Owner Menu and Details -->
+  <!-- End Owner Menu and Details -->
 
 
   <!-- Begin HCP Menu and Details -->
@@ -287,7 +284,10 @@
             <div class="form-group row">
               <div class="col-md-4"></div>
               <div class="col-sm-4">
-                <button (click)="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-primary">
+                <!-- <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit"
+                  class="btn btn-primary"> -->
+                <button (click)="submitPatientInfo(patientName.value, dob.value)" type="submit"
+                  class="btn btn-primary">
                   Submit</button>
               </div>
             </div>
@@ -298,7 +298,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="heartRate">Heart Rate</label>
               <div class="col-sm-3">
-                <input #heartRate type="text" placeholder="75 bpm" class="form-control">
+                <div class="info"> {{ heartRate }} bpm</div>
               </div>
             </div>
             <div>
@@ -308,7 +308,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="bp">Blood Pressure</label>
               <div class="col-sm-3">
-                <input #bp type="text" placeholder="120/80mm Hg" class="form-control">
+                <div class="info"> {{ bloodPressure }} mm Hg</div>
               </div>
             </div>
             <div>
@@ -318,7 +318,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="oxygenSat">Oxygen Saturation</label>
               <div class="col-sm-3">
-                <input #oxygenSat type="text" placeholder="98%" class="form-control">
+                <div class="info"> {{ oxygenSaturation }} %</div>
               </div>
             </div>
             <div>
@@ -328,7 +328,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="temp">Temperature</label>
               <div class="col-sm-3">
-                <input #temp type="text" placeholder="99.5F" class="form-control">
+                <div class="info"> {{ temperature }} F</div>
               </div>
             </div>
           </div>

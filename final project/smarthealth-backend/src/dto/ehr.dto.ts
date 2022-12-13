@@ -17,9 +17,9 @@ export class CreateEHRDto {
   @IsString()
   readonly sex: string;
 
-  // @ApiProperty({ example: 70, description: 'Height of the patient' })
-  // @IsInt()
-  // readonly height: number;
+  @ApiProperty({ example: 70, description: 'Height of the patient' })
+  @IsInt()
+  readonly height: number;
 
   @ApiProperty({ example: 150, description: 'Weight of the patient' })
   @IsInt()

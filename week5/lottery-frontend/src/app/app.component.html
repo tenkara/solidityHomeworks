@@ -124,23 +124,26 @@
         </div>
       </div>
       <div *ngIf="menuSelected==3">
+        <form action="" class="form-horizontal">
         <div class="form-group row">
-          <label for="acctIndex">Account Index to use:</label>
+          <label class="control-label col-sm-3" for="acctIndex">Account Index to use:</label>
           <div class="col-sm-3">
             <input #acctIndex type="number" min="0" [max]="10" placeholder="0" class="form-control">
           </div>
         </div>
-        <div class="form-group row">
-          <label for="tokenAmnt">Number of Tokens to buy:</label>
-          <div class="col-sm-3">
-            <input #tokenAmnt type="number" min="0" [max]="1000" placeholder="1" class="form-control">
+        <div> <p></p> </div>
+          <div class="form-group row">
+            <label class="control-label col-sm-3" for="tokenAmnt">Number of Tokens:</label>
+            <div class="col-sm-3">
+              <input #tokenAmnt type="number" min="0" [max]="1000" placeholder="1" class="form-control">
+            </div>
           </div>
-        </div>
-        <button (click)="buyTokens(acctIndex.value, tokenAmnt.value)" type="submit"
+          <button (click)="buyTokens(acctIndex.value, tokenAmnt.value)" type="submit"
           class="btn btn-primary">Submit</button>
-        <div *ngIf="txSuccess">
-          <p>{{ tokenAmnt.value }} Tokens bought and the Tx Hash is : {{ transactionHash }} </p>
-        </div>
+          <div *ngIf="txSuccess">
+            <p>{{ tokenAmnt.value }} Tokens bought and the Tx Hash is : {{ transactionHash }} </p>
+          </div>
+        </form>
       </div>
     </div>
     <div *ngIf="menuSelected==4">
