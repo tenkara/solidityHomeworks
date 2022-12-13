@@ -1,21 +1,12 @@
-import { ethers, Wallet } from "ethers";
 import * as dotenv from "dotenv";
+import { ethers } from "ethers";
 import { SmartHealth__factory } from "../typechain-types";
-
 dotenv.config();
 
-function convertObjectByte32(obj: object) {
-  let objArray = Object.values(obj);
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
+const contractAddress = "0xAc749f04A21cF9B80597E7bf37ffAaE2399AA63E";
+console.log(`Smart Contract deployed at ${contractAddress}`);
 
-  //convert array into bytes32:
-  return objArray.map((item) => {
-    if (typeof item === "number") {
-      return ethers.utils.hexZeroPad(ethers.utils.hexlify(item), 32);
-    } else {
-      return ethers.utils.formatBytes32String(item);
-    }
-  });
-}
 function DisplayPatientData(patientSummary: any) {
   console.log(`Name: ${ethers.utils.parseBytes32String(patientSummary[0])}`);
   console.log(`Age: ${ethers.utils.parseBytes32String(patientSummary[1])}`);
@@ -36,36 +27,23 @@ function DisplayPatientVital(patientVital: any) {
   );
 }
 
-const PRIVATE_KEY_HCP = process.env.PRIVATE_KEY_HCP || "";
-const HCP_NAME = "St. Michael's Hospital";
-const HCP_NAME1 = "Lenox Hill Hospital";
-const HCP_ADDRESS = "0x5a22277Cb15c24c381f8c07A3bdF430D2c004A2b";
-
-const contractAddress = "0x1D36cf950BF2b5cC0C36267f46985ec45767fC0C";
-console.log(`Smart Contract deployed at ${contractAddress}`);
-
 async function main() {
   const provider = ethers.getDefaultProvider("goerli", {
     alchemy: process.env.ALCHEMY_API,
   });
-  const deployer = new ethers.Wallet(PRIVATE_KEY_HCP, provider);
+  const deployer = new ethers.Wallet(PRIVATE_KEY, provider);
 
-  console.log(`Smart Contract deployed at ${contractAddress}`);
   const tokenContractFactory = new SmartHealth__factory(deployer);
   const tokenContract = tokenContractFactory.attach(contractAddress);
 
   //Get Patient info:
-  const patientData = await tokenContract.getPatientVitalsHCP(
-    HCP_ADDRESS
-  );
+  const patientData = await tokenContract.getPatientSummary();
 
   //Get Patient vitals:
-  const patientVitals = await tokenContract.getPatientSummaryHCP(HCP_ADDRESS);
+  const patientVitals = await tokenContract.getPatientVitals();
 
   //Display Patient's Info:
-  console.log(
-    `Display patient info for: ${deployer.address} as requested by ${HCP_NAME} with address ${HCP_ADDRESS}`
-  );
+  console.log(`Display patient info for: ${deployer.address}`);
   DisplayPatientData(patientData);
   DisplayPatientVital(patientVitals);
 }

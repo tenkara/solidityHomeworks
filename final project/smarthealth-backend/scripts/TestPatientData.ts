@@ -1,10 +1,11 @@
-import * as dotenv from 'dotenv';
-import { ethers } from 'ethers';
-import { SmartHealth__factory } from '../typechain-types';
+import * as dotenv from "dotenv";
+import { ethers } from "ethers";
+import { SmartHealth__factory } from "../typechain-types";
+
 dotenv.config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
-const contractAddress = '0xAc749f04A21cF9B80597E7bf37ffAaE2399AA63E';
+const contractAddress = "0x1D36cf950BF2b5cC0C36267f46985ec45767fC0C";
 console.log(`Smart Contract deployed at ${contractAddress}`);
 
 function DisplayPatientData(patientSummary: any) {
@@ -14,6 +15,9 @@ function DisplayPatientData(patientSummary: any) {
     `Birthsex: ${ethers.utils.parseBytes32String(patientSummary[2])}`
   );
   console.log(`Weight: ${ethers.utils.parseBytes32String(patientSummary[3])}`);
+  console.log(
+    `Height (ft-in): ${ethers.utils.parseBytes32String(patientSummary[4])}`
+  );
 }
 
 function DisplayPatientVital(patientVital: any) {

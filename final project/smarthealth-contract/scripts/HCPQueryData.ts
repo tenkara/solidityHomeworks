@@ -37,12 +37,8 @@ function DisplayPatientVital(patientVital: any) {
 }
 
 const PRIVATE_KEY_HCP = process.env.PRIVATE_KEY_HCP || "";
+const contractAddress = "0xAc749f04A21cF9B80597E7bf37ffAaE2399AA63E";
 const HCP_NAME = "St. Michael's Hospital";
-const HCP_NAME1 = "Lenox Hill Hospital";
-const HCP_ADDRESS = "0x5a22277Cb15c24c381f8c07A3bdF430D2c004A2b";
-
-const contractAddress = "0x1D36cf950BF2b5cC0C36267f46985ec45767fC0C";
-console.log(`Smart Contract deployed at ${contractAddress}`);
 
 async function main() {
   const provider = ethers.getDefaultProvider("goerli", {
@@ -56,21 +52,23 @@ async function main() {
 
   //Get Patient info:
   const patientData = await tokenContract.getPatientVitalsHCP(
-    HCP_ADDRESS
+    convertObjectByte32({ hcpName: HCP_NAME })
   );
 
   //Get Patient vitals:
-  const patientVitals = await tokenContract.getPatientSummaryHCP(HCP_ADDRESS);
+  const patientVitals = await tokenContract.getPatientSummaryHCP(
+    convertObjectByte32({ hcpName: HCP_NAME })
+  );
 
   //Display Patient's Info:
   console.log(
-    `Display patient info for: ${deployer.address} as requested by ${HCP_NAME} with address ${HCP_ADDRESS}`
+    `Display patient info for: ${deployer.address} as requested by ${HCP_NAME}`
   );
   DisplayPatientData(patientData);
   DisplayPatientVital(patientVitals);
 }
 
 main().catch((error) => {
-  console.error(error);
+  console.log(error);
   process.exitCode = 1;
 });
