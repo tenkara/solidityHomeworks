@@ -41,7 +41,10 @@
  *  (window as any).__Zone_enable_cross_context_check = true;
  *
  */
-
+(window as any).global = window;
+(window as any).process = {
+    env: { DEBUG: undefined },
+    };
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
@@ -51,3 +54,6 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+import
+{ Buffer } from 'buffer';
+(window as any).Buffer = Buffer;

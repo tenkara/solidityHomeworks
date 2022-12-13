@@ -54,7 +54,8 @@ export class AppComponent implements OnInit {
   oxygenSaturation?: number;
   temperature?: number;
   encryptionKeyDisplay: any;
-  encryptedMessage?: string;
+  encryptedEHR?: any;
+  decryptedEHR?: any;
 
   // Owner HCP access patient info page variables
 
@@ -121,34 +122,52 @@ export class AppComponent implements OnInit {
   // Simple listener to callback on owner authorize EHR to HCP menu item
   onAuthorizeHCP(menuSelected: number) {
     this.ownerMenuSelected = menuSelected;
-
   }
 
   async encryptEHR(ehrData: string) {
     console.log('encrypt EHR');
     this.ownerMenuSelected = 3;
     try {
-       this.encryptionKeyDisplay = await window.ethereum.request?.({
+      this.encryptionKeyDisplay = await window.ethereum.request?.({
         method: 'eth_getEncryptionPublicKey',
         params: [this.address],
       });
-    console.log(this.encryptionKeyDisplay);
-    this.encryptedMessage = bufferToHex(
-      Buffer.from(
-        JSON.stringify(
-          encrypt({
-            publicKey: this.encryptionKeyDisplay,
-            data: ehrData,
-            version: 'x25519-xsalsa20-poly1305',
-      }),
-        ),
-    'utf8'
-    ))
+      console.log(this.encryptionKeyDisplay);
+      this.encryptedEHR = bufferToHex(
+        Buffer.from(
+          JSON.stringify(
+            encrypt(
+              this.encryptionKeyDisplay,
+              {'data':ehrData},
+              'x25519-xsalsa20-poly1305',
+            )
+            ),
+            'utf8'
+            )
+          // this.encryptedMessage =  encrypt(
+          //     this.encryptionKeyDisplay,
+          //     {'data':ehrData},
+          //     'x25519-xsalsa20-poly1305',
+          //   )
+      );
     } catch (error) {
       console.log(error);
     }
+  }
 
+  async decryptEHR() {
+    console.log('decrypt EHR');
+    this.ownerMenuSelected = 4;
+    try {
+      this.decryptedEHR = await window.ethereum.request?.({
+        method: 'eth_decrypt',
+        params: [this.encryptedEHR, this.address],
+      });
 
+      console.log(this.decryptedEHR);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // Simple listener to callback on owner sign-out menu item
@@ -162,12 +181,12 @@ export class AppComponent implements OnInit {
     this.hcpMenuSelected = menuSelected;
 
     let queryParams = new HttpParams().append(
-      this.patientName? this.patientName : 'patientName',
-      this.dob? this.dob : 'dob'
+      this.patientName ? this.patientName : 'patientName',
+      this.dob ? this.dob : 'dob'
     );
 
     try {
-     // Need the right endpoint for hcp to view patient vitals
+      // Need the right endpoint for hcp to view patient vitals
       this.http
         .get<any>('http://localhost:3000/view/vitals', {
           params: queryParams,
@@ -199,5 +218,4 @@ export class AppComponent implements OnInit {
     this.ownerMenuSelected = menuSelected;
     console.log('todo ' + menuSelected);
   }
-
 }
