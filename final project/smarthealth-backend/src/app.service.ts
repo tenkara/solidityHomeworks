@@ -41,6 +41,7 @@ export class AppService {
   signers: Wallets = { patient: null, hcp: null };
   ownerAddress: string;
   hcpAddress: string;
+  contractAddress: string;
 
   constructor() {
     // Initialise patient and hcp signers
@@ -150,34 +151,29 @@ export class AppService {
     contractAddress: string;
     data: EHR;
   }> {
-    console.log(req);
-    let contractAddress = null;
-    try {
-      const data = [
-        req.name,
-        req.age.toString(),
-        req.sex,
-        req.weight.toString(),
-        req.height.toString(),
-        req.heartRate.toString(),
-        req.bloodPressure,
-        req.oxygenSaturation.toString(),
-        req.temperature.toString(),
-      ];
-      await this.deployContract(data).then(({ address, hash }) => {
-        contractAddress = address;
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    return { contractAddress, data: req };
+    const data = [
+      req.name,
+      req.age.toString(),
+      req.sex,
+      req.weight.toString(),
+      req.height.toString(),
+      req.heartRate.toString(),
+      req.bloodPressure.toString(),
+      req.oxygenSaturation.toString(),
+      req.temperature.toString(),
+    ];
+    return await this.deployContract(data).then(({ address }) => {
+      this.contractAddress = address;
+      return { contractAddress: address, data: req };
+    });
   }
 
   // End point to authorize EHR metadata and details to HCP  (Ken)
   async authorize(
     req: AuthorizeHCPDto,
   ): Promise<{ txHash: string; data: HCP }> {
-    return await smartHealthContract()
+    console.log(`Authorise using address : ${this.contractAddress}`);
+    return await smartHealthContract(this.contractAddress)
       .connect(this.signers.patient)
       .authorizeProvider(
         ethers.utils.formatBytes32String(req.name),
@@ -199,7 +195,8 @@ export class AppService {
   }
 
   async viewHCPDetails(): Promise<{ result: any }> {
-    return await smartHealthContract()
+    console.log(`View HCP Details using address : ${this.contractAddress}`);
+    return await smartHealthContract(this.contractAddress)
       .connect(this.signers.hcp)
       .getHCPDetails(this.signers.hcp.address)
       .then(
@@ -218,9 +215,10 @@ export class AppService {
 
   // End point to view authorized EHR metadata and details  (Ken)
   async viewPatientSummary(address: string): Promise<{ result: any }> {
+    console.log(`View patient summary using address : ${this.contractAddress}`);
     const signer = this.proxyAccount(address);
     if (signer === this.signers.patient) {
-      return await smartHealthContract()
+      return await smartHealthContract(this.contractAddress)
         .connect(signer)
         .getPatientSummary()
         .then(
@@ -238,7 +236,7 @@ export class AppService {
           },
         );
     } else {
-      return await smartHealthContract()
+      return await smartHealthContract(this.contractAddress)
         .connect(signer)
         .getPatientSummaryHCP(this.signers.hcp.address)
         .then(
@@ -259,9 +257,10 @@ export class AppService {
   }
 
   async viewPatientVitals(address: string): Promise<{ result: any }> {
+    console.log(`View patient vitals using address : ${this.contractAddress}`);
     const signer = this.proxyAccount(address);
     if (signer == this.signers.patient) {
-      return await smartHealthContract()
+      return await smartHealthContract(this.contractAddress)
         .connect(signer)
         .getPatientVitals()
         .then(
@@ -279,7 +278,7 @@ export class AppService {
           },
         );
     } else {
-      return await smartHealthContract()
+      return await smartHealthContract(this.contractAddress)
         .connect(signer)
         .getPatientVitalsHCP(this.signers.hcp.address)
         .then(
@@ -297,7 +296,7 @@ export class AppService {
         );
     }
   }
-  
+
   // Function as an account selector, this SHOULD NOT be used in production. The front end should determine and
   // redirect patient/hcp API to call the right endpoint instead. This will eventually be deprecated
   proxyAccount = (address: string): Wallet => {
