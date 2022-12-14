@@ -64,7 +64,7 @@ contract SmartHealth {
         bytes32 infoToAuth,
         bytes32 reason,
         address hcpAddress
-    ) public isPatient {
+    ) external isPatient {
         require(patientAddress != hcpAddress, "Cannot authorise own address");
         hcpData[hcpAddress].hcpName = hcpName;
         hcpData[hcpAddress].infoToAuth = infoToAuth;
@@ -74,7 +74,7 @@ contract SmartHealth {
 
     //allow patient to view their data
     function getPatientSummary()
-        public
+        external
         view
         isPatient
         returns (PatientSummary memory)
@@ -83,7 +83,7 @@ contract SmartHealth {
     }
 
     function getPatientVitals()
-        public
+        external
         view
         isPatient
         returns (PatientVitals memory)
@@ -92,7 +92,7 @@ contract SmartHealth {
     }
 
     function getHCPDetails(address hcpAddress)
-        public
+        external
         view
         returns (ProviderData memory)
     {
@@ -103,7 +103,7 @@ contract SmartHealth {
     //send data as hcpName
     //leaving as array to handle more complicated requests later
     function getPatientVitalsHCP(address hcpAddress)
-        public
+        external
         view
         isAuthorized(hcpAddress)
         returns (PatientVitals memory)
@@ -112,7 +112,7 @@ contract SmartHealth {
     }
 
     function getPatientSummaryHCP(address hcpAddress)
-        public
+        external
         view
         isAuthorized(hcpAddress)
         returns (PatientSummary memory)
