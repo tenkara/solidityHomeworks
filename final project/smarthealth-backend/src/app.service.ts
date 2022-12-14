@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import { Address } from 'cluster';
-import { BigNumber, ethers, Signer, Wallet } from 'ethers';
+import { ethers, Signer, Wallet } from 'ethers';
 import {
   isBalanceZero,
   convertToBytes32Array,
@@ -135,6 +134,7 @@ export class AppService {
 
   // End point to create a new EHR contract with data from the create EHR screen (Ken)
   async deployContract(data: string[]) {
+    console.log('Deploying contract', data);
     let contract = null;
     if (await isBalanceZero(this.signers.patient)) {
       throw new Error('Not enough balance to deploy contract');
@@ -164,7 +164,9 @@ export class AppService {
     ];
     return await this.deployContract(data).then(({ address }) => {
       this.contractAddress = address;
-      return { contractAddress: address, data: req };
+      const result = { contractAddress: address, data: req };
+      console.log('Contract deployed', result);
+      return result;
     });
   }
 
@@ -172,7 +174,7 @@ export class AppService {
   async authorize(
     req: AuthorizeHCPDto,
   ): Promise<{ txHash: string; data: HCP }> {
-    console.log(`Authorise using address : ${this.contractAddress}`);
+    console.log('Authorising HCP', req);
     return await smartHealthContract(this.contractAddress)
       .connect(this.signers.patient)
       .authorizeProvider(
@@ -183,10 +185,12 @@ export class AppService {
       )
       .then(
         ({ transactionHash }) => {
-          return {
+          const result = {
             txHash: transactionHash,
             data: req,
           };
+          console.log('HCP authorised', result);
+          return result;
         },
         (error) => {
           console.log('Authorize error :', error);
@@ -195,17 +199,20 @@ export class AppService {
   }
 
   async viewHCPDetails(): Promise<{ result: any }> {
-    console.log(`View HCP Details using address : ${this.contractAddress}`);
+    console.log(`Getting HCP Details`);
     return await smartHealthContract(this.contractAddress)
       .connect(this.signers.hcp)
       .getHCPDetails(this.signers.hcp.address)
       .then(
         (details) => {
-          return {
+          const result = {
             hcpName: toStr(details.hcpName),
             infoToAuth: toStr(details.infoToAuth),
             reason: toStr(details.reason),
           };
+
+          console.log(`Returning HCP Details`, result);
+          return result;
         },
         (error) => {
           console.log('View HCP Details error :', error);
@@ -215,39 +222,44 @@ export class AppService {
 
   // End point to view authorized EHR metadata and details  (Ken)
   async viewPatientSummary(address: string): Promise<{ result: any }> {
-    console.log(`View patient summary using address : ${this.contractAddress}`);
     const signer = this.proxyAccount(address);
     if (signer === this.signers.patient) {
+      console.log(`Getting Patient Summary as Patient`);
       return await smartHealthContract(this.contractAddress)
         .connect(signer)
         .getPatientSummary()
         .then(
           ({ name, age, birthSex, weight, height }) => {
-            return {
+            const result = {
               name: toStr(name),
               age: toStr(age),
               birthSex: toStr(birthSex),
               weight: toStr(weight),
               height: toStr(height),
             };
+            console.log(`Return Patient Summary`, result);
+            return result;
           },
           (error) => {
             console.log('View patient summary :', error);
           },
         );
     } else {
+      console.log(`Getting Patient Summary as HCP`);
       return await smartHealthContract(this.contractAddress)
         .connect(signer)
         .getPatientSummaryHCP(this.signers.hcp.address)
         .then(
           ({ name, age, birthSex, weight, height }) => {
-            return {
+            const result = {
               name: toStr(name),
               age: toStr(age),
               birthSex: toStr(birthSex),
               weight: toStr(weight),
               height: toStr(height),
             };
+            console.log(`Return Patient Summary`, result);
+            return result;
           },
           (error) => {
             console.log('View patient summary as HCP error :', error);
@@ -257,20 +269,22 @@ export class AppService {
   }
 
   async viewPatientVitals(address: string): Promise<{ result: any }> {
-    console.log(`View patient vitals using address : ${this.contractAddress}`);
     const signer = this.proxyAccount(address);
     if (signer == this.signers.patient) {
+      console.log(`Getting Patient Vitals as Patient`);
       return await smartHealthContract(this.contractAddress)
         .connect(signer)
         .getPatientVitals()
         .then(
           ({ heartRate, bloodPressure, oxygenSat, temperature }) => {
-            return {
+            const result = {
               heartRate: toStr(heartRate),
               bloodPressure: toStr(bloodPressure),
               oxygenSat: toStr(oxygenSat),
               temperature: toStr(temperature),
             };
+            console.log(`Return Patient Vital`, result);
+            return result;
           },
 
           (error) => {
@@ -278,17 +292,20 @@ export class AppService {
           },
         );
     } else {
+      console.log(`Getting Patient Vitals as HCP`);
       return await smartHealthContract(this.contractAddress)
         .connect(signer)
         .getPatientVitalsHCP(this.signers.hcp.address)
         .then(
           ({ heartRate, bloodPressure, oxygenSat, temperature }) => {
-            return {
+            const result = {
               heartRate: toStr(heartRate),
               bloodPressure: toStr(bloodPressure),
               oxygenSat: toStr(oxygenSat),
               temperature: toStr(temperature),
             };
+            console.log(`Return Patient Vital`, result);
+            return result;
           },
           (error) => {
             console.log('View patient vitals as HCP error :', error);
