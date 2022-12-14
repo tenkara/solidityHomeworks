@@ -1,41 +1,95 @@
 <!-- Begin Landing page and Role play -->
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-4" style="background-color:black;">
-      <h2>SmartHealth</h2>
+<nav class="navbar navbar-expand-lg navbar-light bg-light"  id="smarthealth-header">
+  <div class="container-fluid">
+    <div class="title">
+      <h1><strong class="smart">Smart</strong><strong class="health">Health</strong></h1>
     </div>
-    <div class="col-md-7" style="background-color:#1c1b1b;">
-      <div *ngIf="roleSelected==0">
-        <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
-      </div>
-      <div *ngIf="roleSelected==1">
-        <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
-      </div>
-      <div *ngIf="roleSelected==-1">
-        <p>Hello {{ signedRole }} user, good bye!</p>
-      </div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+            <a class="nav-link active" id="active" aria-current="page" href="#">Home</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+            <a class="nav-link" href="#">Features</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+            <a class="nav-link" href="#">Team</a>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="col-md-1">
-      <div class="pull-right">
-        <p></p>
-        <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
-          <button (click)="connectWallet()" type="button" class="btn btn-primary"> Sign-In</button>
+    <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+      <button (click)="connectWallet()" type="button" class="btn btn-outline-primary" id="btn"> Sign In</button>
+    </div>
+    <div *ngIf="roleSelected==0" class="greeting">
+      <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
+    </div>
+    <div *ngIf="roleSelected==1" class="greeting">
+      <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
+    </div>
+    <!-- <div *ngIf="roleSelected==-1" class="greeting">
+      <p>Good bye  {{ signedRole }}!</p>
+    </div> -->
+</nav>
+
+<br>
+
+<div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1" class="content">
+    <h1 class="heading">Your Healthcare Information Managed And Authorized By You</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h3>Why SmartHealth?</h3>
+          <p>Healthcare data breaches hit all-time high in 2021, impacting 45M people and continues to grow as health systems and hospitals are under unprecedented stress from the pandemic. </p>
+          <button  class="btn btn-outline-primary" id="content-btn">Learn More</button>
+        </div>
+        <div class="col">
+          <h3>How Does SmartHealth Help Humanity?</h3>
+          <p>Leverages Blockchain technology to give the control back to you
+            Secure login, creation and management of your own Electronic Health Record
+            Need-to-know information provided by you to an authorized party</p>
+            <button  class="btn btn-outline-primary" id="content-btn">Learn More</button>
         </div>
       </div>
-    </div>
+      <div class="row">
+        <div class="col">
+          <h3>What is SmartHealth?</h3>
+          <p>SmartHealth provides a secure platform using blockchain technology for exchanging Electronic Health Records authorized by the patient to specific helathcare providers.</p>
+          <button  class="btn btn-outline-primary" id="content-btn">Learn More</button>
+        </div>
+        <div class="col">
+          <h3>Working Software Demo</h3>
+          <p>
+            <strong>1. </strong>&nbsp; Front-end Angular, Bootstrap, Typescript
+            <br>
+            <strong>2. </strong>&nbsp; Integration With Metamask for Registration and Log In
+            <br>
+            <strong>3. </strong>&nbsp; EHR/PHR data Creation, Update, Transfer Capabilities
+            <br>
+            <strong>4. </strong>&nbsp; Back-end Nest.js with Node, Testnet, Solidity, Typescipt
+            <br>
+            <strong>5. </strong>&nbsp; Smart Contracts Support the Front-end Capabilities
+            <br>
+            <strong>6. </strong>&nbsp; External Oracle Integration with PriceMedic</p>
+        </div>
+      </div>
   </div>
-  <hr>
-  <!-- End Landing page and Role play -->
+</div>
+
+<!-- End Landing page and Role play -->
 
 
-  <!-- Begin Owner Menu and Details -->
-
+<!-- Begin Owner Menu and Details -->
   <div *ngIf="roleSelected==0">
     <!-- Owner Menu and Details-->
     <div class="row">
-      <div class="col-md-4" style="background-color:black;">
-        <h3>Menu</h3>
+      <div class="screen-col">
+        <h2>Menu</h2>
         <hr>
         <ul class="menuItems">
           <li>
@@ -61,8 +115,8 @@
 
       <div class="col-md-1">
       </div>
-      <div class="col-md-7" style="background-color:black;">
-        <h3>Details</h3>
+      <div class="screen-col">
+        <h2>Details</h2>
         <hr>
         <div *ngIf="ownerMenuSelected==1">
           <h4>Health Summary</h4>
@@ -88,9 +142,9 @@
               </div>
             </div>
             <div formGroupName="data" class="form-group row">
-              <!-- <label class="control-label col-sm-3" for="other">Height</label> -->
+              <label class="control-label col-sm-3" for="other">Height</label>
               <div class="col-sm-3">
-                <!-- <input formControlName="height" #other type="text" placeholder="70" class="form-control"> -->
+                <input formControlName="height" #other type="number" placeholder="170" class="form-control">
               </div>
             </div>
             <div formGroupName="data" class="form-group row">
@@ -99,12 +153,7 @@
                 <input formControlName="weight" #other type="number" placeholder="150" class="form-control">
               </div>
             </div>
-            <div formGroupName="data" class="form-group row">
-              <label class="control-label col-sm-3" for="other">Height</label>
-              <div class="col-sm-3">
-                <input formControlName="height" #other type="number" placeholder="170" class="form-control">
-              </div>
-            </div>
+           
 
           </form>
           <div>
@@ -126,56 +175,59 @@
                 <div formGroupName="data" class="form-group row">
                   <label class="control-label col-sm-3" for="other">Blood Pressure</label>
                   <div class="col-sm-3">
-                    <input formControlName="bloodPressure" #other type="number" placeholder="25" class="form-control">
+                    <input formControlName="bloodPressure" #other type="string" placeholder="25" class="form-control">
                   </div>
                 </div>
                 <div formGroupName="data" class="form-group row">
                   <label class="control-label col-sm-3" for="other">Saturation</label>
                   <div class="col-sm-3">
-                    <input formControlName="oxygenSaturation" #other type="number" placeholder="98%"
+                    <input formControlName="oxygenSaturation" #other type="string" placeholder="98%"
                       class="form-control">
                   </div>
                 </div>
                 <div formGroupName="data" class="form-group row">
                   <label class="control-label col-sm-3" for="other">Temperature</label>
                   <div class="col-sm-3">
-                    <input formControlName="temperature" #other type="number" placeholder="99.5 F" class="form-control">
+                    <input formControlName="temperature" #other type="string" placeholder="99.5 F" class="form-control">
                   </div>
                 </div>
               </form>
-              <br>
-
-              <div class="container text-center">
-                <div class="row">
-                  <div class="col">
-                  </div>
-                  <div class="col">
-                  </div>
-                  <div class="col">
-                  </div>
-                  <div class="col">
-                    <button (click)="submitCreate(sub)" type="button" class="btn btn-primary"> Submit</button>
-                  </div>
+            </div>
+            <br>
+            <div>
+              <p></p>
+              <div class="form-group row">
+                <div class="col-md-5"></div>
+                <div class="col-sm-4">
+                  <button (click)="submitCreate(sub)" type="button" class="btn btn-outline-primary" id="submit"> Submit</button>
                 </div>
               </div>
             </div>
           </div>
+          <p></p>
         </div>
-        <div *ngIf="ownerMenuSelected==2">
 
+
+        <div *ngIf="ownerMenuSelected==2">
+          <p></p>
+          <h4>Authorization : </h4>
+
+          <br>
 
           <form [formGroup]="sub2" class="form-horizontal ">
             <div formGroupName="hcp" class="form-group row">
-              <label class="control-label col-sm-3 " for="other">HCP Name</label>
-              <div class="col-sm-3">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">HCP Name</label>
+              <div class="col-sm-4">
                 <input formControlName="HCPName" type="text" placeholder="Summit Medical Clinic" class="form-control">
               </div>
             </div>
+            <p></p>
             <div class="form-group row">
-              <label class="control-label col-sm-3 " for="other">Information to Authorize</label>
-
-              <div formGroupName="hcp" class="col-sm-3">
-                <select formControlName="vitals" class="form-select-bg-size: 25px" aria-label="Default select example">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">Authorize</label>
+              <div formGroupName="hcp" class="col-sm-4">
+                <select  formControlName="vitals" class="form-select-bg-size: 25px" aria-label="Default select example">
                   <option selected>Vitals</option>
                   <option value="1">Analitics1</option>
                   <option value="2">Analitics2</option>
@@ -183,50 +235,43 @@
                 </select>
               </div>
             </div>
+            <p></p>
             <div formGroupName="hcp" class="form-group row">
-              <label class="control-label col-sm-3" for="other">Reason</label>
-              <div class="col-sm-3">
+              <div class="col-md-1"></div>
+              <label class="control-label col-sm-4" for="other">Reason</label>
+              <div class="col-sm-4">
                 <input formControlName="reason" type="text" placeholder="PCP Referral" class="form-control">
-
               </div>
             </div>
-
           </form>
-
-          <div class="container text-center">
-            <div class="row">
-              <div class="col">
-              </div>
-              <div class="col">
-              </div>
-
-              <div class="col">
-                <button (click)="submitAuthorize(sub2)" type="button" class="btn btn-primary"> Submit</button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div *ngIf="ownerMenuSelected==3">
+          <p></p>
           <div class="form-group row">
-            <label for="other">Todo</label>
-            <div class="col-sm-3">
-              <input #other type="text" placeholder="Todo" class="form-control">
+            <div class="col-md-5"></div>
+            <div class="col-sm-4">
+              <button (click)="submitAuthorize(sub2)" type="button" class="btn btn-outline-primary" id="submit"> Submit</button>
             </div>
           </div>
+          <p></p>
+          <p></p>
         </div>
-
+      </div>
+      <div *ngIf="ownerMenuSelected==3">
+        <div class="form-group row">
+          <label for="other">Todo</label>
+          <div class="col-sm-3">
+            <input #other type="text" placeholder="Todo" class="form-control">
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
+<!-- End Owner Menu and Details -->
   <!-- Begin HCP Menu and Details -->
   <div *ngIf="roleSelected==1">
 
     <div class="row">
-      <div class="col-md-4" style="background-color:black;">
-        <h3>Menu</h3>
+      <div class="screen-col">
+        <h2>Menu</h2>
         <hr>
         <ul class="menuItems">
           <li>
@@ -246,10 +291,14 @@
 
       <div class="col-md-1">
       </div>
-      <div class="col-md-6" style="background-color:black;">
-        <h3>Details</h3>
+      <div class="screen-col">
+        <h2>Details</h2>
         <hr>
+
         <div *ngIf="hcpMenuSelected==1">
+          <br>
+          <h4>Patient :</h4>
+          <br>
           <form action="" class="form-horizontal">
             <div class="hcp-form-group row">
               <div class="col-md-1"></div>
@@ -274,19 +323,19 @@
             <div class="form-group row">
               <div class="col-md-4"></div>
               <div class="col-sm-4">
-                <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit"
-                  class="btn btn-primary">
+                <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-outline-primary" id="submit">
                   Submit</button>
               </div>
             </div>
           </form>
           <div style="margin-top:50px;">
-            <h4>Vitals </h4>
+            <h4>Vitals: </h4>
+            <br>
             <div class="hcp-form-group row">
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="heartRate">Heart Rate</label>
               <div class="col-sm-3">
-                <div class="info"> {{ heartRate }} bpm</div>
+                <div class="info">&nbsp; {{ heartRate }} bpm</div>
               </div>
             </div>
             <div>
@@ -296,7 +345,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="bp">Blood Pressure</label>
               <div class="col-sm-3">
-                <div class="info"> {{ bloodPressure }} mm Hg</div>
+                <div class="info">&nbsp; {{ bloodPressure }} mm Hg</div>
               </div>
             </div>
             <div>
@@ -306,7 +355,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="oxygenSat">Oxygen Saturation</label>
               <div class="col-sm-3">
-                <div class="info"> {{ oxygenSaturation }} %</div>
+                <div class="info">&nbsp; {{ oxygenSaturation }} %</div>
               </div>
             </div>
             <div>
@@ -316,7 +365,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="temp">Temperature</label>
               <div class="col-sm-3">
-                <div class="info"> {{ temperature }} F</div>
+                <div class="info">&nbsp; {{ temperature }} F</div>
               </div>
             </div>
           </div>
@@ -331,4 +380,3 @@
     </div>
   </div>
   <!-- End HCP menu and details -->
-</div>

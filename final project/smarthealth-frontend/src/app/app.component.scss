@@ -1,56 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa');
+
+#smarthealth-header {
+  background-image: url(../assets/background.jpg);
+  width: 100%;
+  height: 7em;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: "Comfortaa";
+  margin-bottom: 2.5em;
+}
+
+body {
+  max-width: 100vh;
+  max-height: 100vh;
+}
+
+
+
+
+#btn {
+  margin-top: 0.5em;
+  margin-right: 3em;
+  font-family: "Comfortaa";
+  font-size: 1em;
+}
+
+#content-btn {
+  width: 8em;
+}
+
+#submit {
+  width: 150%;
+}
+
+#active {
+  color: #ee0909c9;
+}
+
+
+h1 {
+  font-family: "Comfortaa";
+  font-size: 2.3em;
+  word-spacing: 0.2em;
+}
+
+
+h2 {
+  font-family: "Comfortaa";
+  font-size: 1.7em;
+}
+
+h3 {
+  font-size: 1.2em;
+  font-weight: 600;
+  font-family: "Comfortaa";
+  letter-spacing: 0.02em;
+}
+
+h4 {
+  font-family: "Comfortaa";
+  letter-spacing: 0.02em;
+  font-size: 1.3em;
+}
+
+
+p {
+  font-size: 0.9em;
+  line-height: 1.5em;
+  letter-spacing: 0.02em;
+}
+
+input {
+  font-family: "Comfortaa";
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  width: 150%;
+}
+
+
+label {
+  font-family: "Comfortaa";
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  margin-top: 0.8em;
+}
+
+select {
+  height: 120%;
+  width: 150%;
+  border-radius: 6px;
+  margin-top: -0.2em;
+}
+
+.content {
+  width: 100%;
+  font-family: "Comfortaa";
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  text-align: left;
+  align-content: center;
+
+}
+
+.col {
+  padding-top: 4em;
+  padding-right: 6.5em;
+  padding-left: 6.5em;
+}
+
+.title {
+margin-top: 1em;
+margin-right: 4em;
+width: auto;
+ }
+
+.greeting {
+  margin-top: 1.5em;
+  margin-right: -4em;
+  width: 25%;
+  font-family: "Comfortaa";
+  font-size: 1.3em;
+  color: #EEE;
+}
+
+.nav-item {
+  margin-top: 1.3em;
+  font-family: "Comfortaa";
+  font-size: 1.1em;
+  padding-right: 0.9em;
+}
+
+.smart {
+  color: #174ACE;
+  font-size: 1em;
+}
+
+.health {
+  color: #EE0909;
+  font-size: 1em;
+}
+
+.nav-link {
+  color: #174ACE;
+}
+
+nav {
+  padding: 3em;
+}
+
+.btn {
+  width: 100%;
+}
+
 .info{
-  background-color: lightgrey;
-  width: 3x;
-  padding: 1px;
+  background-color: rgba(211, 211, 211, 0.716);
+  width: 205%;
+  height: 100%;
+  padding: 3px;
+  border-radius: 6px;
   margin: 2px;
+}
+
+.screen-col {
+  width: 45%;
+  padding-left: 2em;
 }
 
 .menuItems {
   margin: 0 0 2em 0;
   list-style-type: none;
-  padding: 0;
-  width: 15em;
+  font-family: "Comfortaa";
+  width: 25em;
 }
 
 .menuItems li {
   display: flex;
 }
-
 .menuItems button {
   flex: 1;
   cursor: pointer;
   position: relative;
+  font-size: 14px;
+  font-family: "Comfortaa";
   left: 0;
   background-color: #EEE;
   margin: .5em;
-  padding: 0;
-  border-radius: 4px;
+  padding: 1em;
+  border-radius: 6px;
   display: flex;
   align-items: stretch;
-  height: 1.8em;
+  height: 2.8em;
 }
 
 .menuItems button:hover {
-  color: #2c3a41;
+  color: #174ACE;
   background-color: #e6e6e6;
   left: .1em;
 }
-
 .menuItems button:active {
   background-color: #525252;
   color: #fafafa;
 }
-
 .menuItems button.selected {
   background-color: black;
   color: white;
 }
-
 .menuItems button.selected:hover {
   background-color: #505050;
   color: white;
 }
-
 .menuItems button.selected:active {
   background-color: black;
   color: white;
@@ -58,19 +221,21 @@
 
 .menuItems .badge {
   display: inline-block;
-  font-size: small;
+  // font-size: small;
   color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #405061;
-  line-height: 1em;
-  margin-right: .8em;
+  padding: 0.8em 0.7em 0 1em;
+  background-color: #3a57a0;
+  line-height: 45px;
+  height: 3.45em;
+  margin-left: -1.4em;
+  margin-right: 1em;
+  margin-top: -1.4em;
   border-radius: 4px 0 0 4px;
 }
 
 .menuItems .name {
   align-self: center;
 }
-
 .menuItems .form-control {
   flex: 1;
   cursor: pointer;
