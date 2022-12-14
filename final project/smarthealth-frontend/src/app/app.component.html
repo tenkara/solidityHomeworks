@@ -1,5 +1,4 @@
 <!-- Begin Landing page and Role play -->
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light"  id="smarthealth-header">
   <div class="container-fluid">
     <div class="title">
@@ -36,9 +35,7 @@
       <p>Good bye  {{ signedRole }}!</p>
     </div> -->
 </nav>
-
 <br>
-
 <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1" class="content">
     <h1 class="heading">Your Healthcare Information Managed And Authorized By You</h1>
     <div class="container">
@@ -80,10 +77,7 @@
       </div>
   </div>
 </div>
-
 <!-- End Landing page and Role play -->
-
-
 <!-- Begin Owner Menu and Details -->
   <div *ngIf="roleSelected==0">
     <!-- Owner Menu and Details-->
@@ -112,7 +106,6 @@
           </li>
         </ul>
       </div>
-
       <div class="col-md-1">
       </div>
       <div class="screen-col">
@@ -121,7 +114,6 @@
         <div *ngIf="ownerMenuSelected==1">
           <h4>Health Summary</h4>
           <br>
-
           <form [formGroup]="sub" class="form-horizontal">
             <div formGroupName="data" class="form-group row">
               <label class="control-label col-sm-3" for="other">Name</label>
@@ -153,23 +145,16 @@
                 <input formControlName="weight" #other type="number" placeholder="150" class="form-control">
               </div>
             </div>
-
-
           </form>
           <div>
-
             <div><br><br>
               <h6 class="h6">Vitals</h6>
               <br>
               <form [formGroup]="sub" action="" class="form-horizontal">
-
                 <div formGroupName="data" class="form-group row">
                   <label class="control-label col-sm-3" for="other">Heart Rate</label>
                   <div class="col-sm-3">
-
                     <input formControlName="heartRate" #other type="number" placeholder=75 class="form-control">
-
-
                   </div>
                 </div>
                 <div formGroupName="data" class="form-group row">
@@ -206,14 +191,10 @@
           </div>
           <p></p>
         </div>
-
-
         <div *ngIf="ownerMenuSelected==2">
           <p></p>
           <h4>Authorization : </h4>
-
           <br>
-
           <form [formGroup]="sub2" class="form-horizontal ">
             <div formGroupName="hcp" class="form-group row">
               <div class="col-md-1"></div>
@@ -268,7 +249,6 @@
 <!-- End Owner Menu and Details -->
   <!-- Begin HCP Menu and Details -->
   <div *ngIf="roleSelected==1">
-
     <div class="row">
       <div class="screen-col">
         <h2>Menu</h2>
@@ -288,13 +268,11 @@
           </li>
         </ul>
       </div>
-
       <div class="col-md-1">
       </div>
       <div class="screen-col">
         <h2>Details</h2>
         <hr>
-
         <div *ngIf="hcpMenuSelected==1">
           <br>
           <h4>Patient :</h4>
@@ -314,7 +292,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="dob">Date Of Birth</label>
               <div class="col-sm-4">
-                <input #dob type="text" placeholder="12/05/2017" class="form-control">
+                <input #dob type="text" placeholder="12/05/2000" class="form-control">
               </div>
             </div>
             <div>
@@ -323,12 +301,12 @@
             <div class="form-group row">
               <div class="col-md-4"></div>
               <div class="col-sm-4">
-                <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-outline-primary" id="submit">
+                <button (click)="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-outline-primary" id="submit">
                   Submit</button>
               </div>
             </div>
           </form>
-          <div style="margin-top:50px;">
+          <div *ngIf="hcpAccessVitals" style="margin-top:50px;">
             <h4>Vitals: </h4>
             <br>
             <div class="hcp-form-group row">
