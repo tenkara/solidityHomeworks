@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ethers } from 'ethers';
 import { FormControl, FormGroup } from '@angular/forms';
+import { observable } from 'rxjs';
 declare global {
   interface Window {
     ethereum: ethers.providers.ExternalProvider;
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit {
   hcpName?: string;
   hcpAddress?: string;
   hcpAccessVitals: boolean = false;
+  hcpAccess: boolean = false;
 
   // Current menu item selected from HCP menu
   hcpMenuSelected?: number = 0; // For menu options
@@ -228,12 +230,16 @@ export class AppComponent implements OnInit {
       this.http
         .get<any>('http://localhost:3000/view/vitals', {
           params: queryParams,
+          observe: 'response',
         })
         .subscribe((ans) => {
-          this.heartRate = ans.heartRate;
-          this.bloodPressure = ans.bloodPressure;
-          this.oxygenSaturation = ans.oxygenSat;
-          this.temperature = ans.temperature;
+          this.heartRate = ans.body.heartRate;
+          this.bloodPressure = ans.body.bloodPressure;
+          this.oxygenSaturation = ans.body.oxygenSat;
+          this.temperature = ans.body.temperature;
+          if (ans.status === 200) {
+            this.hcpAccess = true;
+          }
         });
     } catch (error) {
       console.log(error);
@@ -250,6 +256,8 @@ export class AppComponent implements OnInit {
     this.roleSelected = 1;
     this.hcpMenuSelected = 1;
     console.log(`patient: ${patientName} , dob: ${dob} `);
-    this.hcpAccessVitals = true;
+    if (this.hcpAccess) {
+      this.hcpAccessVitals = true;
+    }
   }
 }
