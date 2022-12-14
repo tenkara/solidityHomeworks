@@ -47,6 +47,7 @@ export class AppComponent implements OnInit {
   // HCP sign-in page variables
   hcpName?: string;
   hcpAddress?: string;
+  hcpAccessVitals: boolean = false;
 
   // Current menu item selected from HCP menu
   hcpMenuSelected?: number = 0; // For menu options
@@ -249,5 +250,6 @@ export class AppComponent implements OnInit {
     this.roleSelected = 1;
     this.hcpMenuSelected = 1;
     console.log(`patient: ${patientName} , dob: ${dob} `);
+    this.hcpAccessVitals = true;
   }
 }

@@ -314,7 +314,7 @@
               <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="dob">Date Of Birth</label>
               <div class="col-sm-4">
-                <input #dob type="text" placeholder="12/05/2017" class="form-control">
+                <input #dob type="text" placeholder="12/05/2000" class="form-control">
               </div>
             </div>
             <div>
@@ -323,12 +323,12 @@
             <div class="form-group row">
               <div class="col-md-4"></div>
               <div class="col-sm-4">
-                <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-outline-primary" id="submit">
+                <button (click)="submitPatientInfo(patientName.value, dob.value)" type="submit" class="btn btn-outline-primary" id="submit">
                   Submit</button>
               </div>
             </div>
           </form>
-          <div style="margin-top:50px;">
+          <div *ngIf="hcpAccessVitals" style="margin-top:50px;">
             <h4>Vitals: </h4>
             <br>
             <div class="hcp-form-group row">
