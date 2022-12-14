@@ -16,8 +16,12 @@ body {
   max-height: 100vh;
 }
 
-
-
+img {
+  min-height: 3em;
+  min-width: 4em;
+  padding-right: 1em;
+  margin-top: -1em;
+}
 
 #btn {
   margin-top: 0.5em;
@@ -114,7 +118,7 @@ select {
 }
 
 .title {
-margin-top: 1em;
+margin-top: 1.3em;
 margin-right: 4em;
 width: auto;
  }
