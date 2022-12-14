@@ -184,9 +184,9 @@ export class AppService {
         this.signers.hcp.address,
       )
       .then(
-        ({ transactionHash }) => {
+        ({ hash }) => {
           const result = {
-            txHash: transactionHash,
+            txHash: hash,
             data: req,
           };
           console.log('HCP authorised', result);
