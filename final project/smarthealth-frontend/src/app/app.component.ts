@@ -69,22 +69,22 @@ export class AppComponent implements OnInit {
   //Forms
   sub = new FormGroup({
     data: new FormGroup({
-      name: new FormControl(''),
-      age: new FormControl(),
-      sex: new FormControl(''),
-      height: new FormControl(),
-      weight: new FormControl(),
-      heartRate: new FormControl(),
-      bloodPressure: new FormControl(''),
-      oxygenSaturation: new FormControl(''),
-      temperature: new FormControl(''),
+      name: new FormControl('John Smith'),
+      age: new FormControl(25),
+      sex: new FormControl('Male'),
+      height: new FormControl(170),
+      weight: new FormControl(150),
+      heartRate: new FormControl(80),
+      bloodPressure: new FormControl('120/70'),
+      oxygenSaturation: new FormControl('98%'),
+      temperature: new FormControl('99F'),
     }),
   });
   sub2 = new FormGroup({
     hcp: new FormGroup({
-      HCPName: new FormControl(''),
-      vitals: new FormControl(''),
-      reason: new FormControl(''),
+      HCPName: new FormControl('Summit Medical Clinic'),
+      vitals: new FormControl('1'),
+      reason: new FormControl('PCP Referral'),
     }),
   });
 
