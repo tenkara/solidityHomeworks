@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa');
 
 #smarthealth-header {
-  background-image: url(../assets/background.jpg);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,15,122,1) 100%);
   width: 100%;
   height: 7em;
   background-position: center;
@@ -12,12 +12,16 @@
 }
 
 body {
-  max-width: 100vh;
-  max-height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-
-
+img {
+  min-height: 3em;
+  min-width: 4em;
+  padding-right: 1em;
+  margin-top: -1em;
+}
 
 #btn {
   margin-top: 0.5em;
@@ -25,30 +29,30 @@ body {
   font-family: "Comfortaa";
   font-size: 1em;
 }
-
 #content-btn {
   width: 8em;
 }
-
 #submit {
   width: 150%;
 }
+
 
 #active {
   color: #ee0909c9;
 }
 
-
 h1 {
   font-family: "Comfortaa";
   font-size: 2.3em;
   word-spacing: 0.2em;
+  color: #ffffff
 }
 
 
 h2 {
   font-family: "Comfortaa";
   font-size: 1.7em;
+  color: #ffffff
 }
 
 h3 {
@@ -56,12 +60,14 @@ h3 {
   font-weight: 600;
   font-family: "Comfortaa";
   letter-spacing: 0.02em;
+  color: #ffffff
 }
 
 h4 {
   font-family: "Comfortaa";
   letter-spacing: 0.02em;
   font-size: 1.3em;
+  color: #ffffff
 }
 
 
@@ -69,6 +75,7 @@ p {
   font-size: 0.9em;
   line-height: 1.5em;
   letter-spacing: 0.02em;
+  color: #ffffff
 }
 
 input {
@@ -76,11 +83,14 @@ input {
   font-size: 14px;
   letter-spacing: 0.02em;
   width: 150%;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 
 label {
   font-family: "Comfortaa";
+  color: #ffffff;
   font-size: 14px;
   letter-spacing: 0.02em;
   margin-top: 0.8em;
@@ -91,6 +101,8 @@ select {
   width: 150%;
   border-radius: 6px;
   margin-top: -0.2em;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .content {
@@ -100,13 +112,10 @@ select {
   align-items: center;
   justify-content: center;
 }
-
 .container {
   text-align: left;
   align-content: center;
-
 }
-
 .col {
   padding-top: 4em;
   padding-right: 6.5em;
@@ -114,7 +123,7 @@ select {
 }
 
 .title {
-margin-top: 1em;
+margin-top: 1.3em;
 margin-right: 4em;
 width: auto;
  }
@@ -127,36 +136,29 @@ width: auto;
   font-size: 1.3em;
   color: #EEE;
 }
-
 .nav-item {
   margin-top: 1.3em;
   font-family: "Comfortaa";
   font-size: 1.1em;
   padding-right: 0.9em;
 }
-
 .smart {
   color: #174ACE;
   font-size: 1em;
 }
-
 .health {
   color: #EE0909;
   font-size: 1em;
 }
-
 .nav-link {
   color: #174ACE;
 }
-
 nav {
   padding: 3em;
 }
-
 .btn {
   width: 100%;
 }
-
 .info{
   background-color: rgba(211, 211, 211, 0.716);
   width: 205%;
@@ -165,30 +167,28 @@ nav {
   border-radius: 6px;
   margin: 2px;
 }
-
 .screen-col {
   width: 45%;
   padding-left: 2em;
 }
-
 .menuItems {
   margin: 0 0 2em 0;
   list-style-type: none;
   font-family: "Comfortaa";
   width: 25em;
 }
-
 .menuItems li {
   display: flex;
 }
 .menuItems button {
   flex: 1;
+  color: #ffffff;
   cursor: pointer;
   position: relative;
   font-size: 14px;
   font-family: "Comfortaa";
   left: 0;
-  background-color: #EEE;
+  background-color: #161653;
   margin: .5em;
   padding: 1em;
   border-radius: 6px;
@@ -198,8 +198,8 @@ nav {
 }
 
 .menuItems button:hover {
-  color: #174ACE;
-  background-color: #e6e6e6;
+  color: #a8c1ff;
+  background-color: #171751;
   left: .1em;
 }
 .menuItems button:active {
@@ -218,13 +218,12 @@ nav {
   background-color: black;
   color: white;
 }
-
 .menuItems .badge {
   display: inline-block;
   // font-size: small;
   color: white;
   padding: 0.8em 0.7em 0 1em;
-  background-color: #3a57a0;
+  background-color: #174ACE;
   line-height: 45px;
   height: 3.45em;
   margin-left: -1.4em;
@@ -232,7 +231,6 @@ nav {
   margin-top: -1.4em;
   border-radius: 4px 0 0 4px;
 }
-
 .menuItems .name {
   align-self: center;
 }
