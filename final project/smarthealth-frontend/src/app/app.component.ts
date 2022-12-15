@@ -19,17 +19,13 @@ declare global {
 export class AppComponent implements OnInit {
   // HTML variables and contents for the landing page
   title = 'SmartHealth';
-
   // Enable role selection and display the appropriate page
   roleSelected?: number = 3; // 0: Owner, 1: HCP, -1: unknown, 3: not selected (used for landing page empty display)
-
   // Owner sign-in page variables
   ownerName?: string;
   greeting?: string;
-
   // Current menu item selected from Owner menu
   ownerMenuSelected?: number = 0; // For menu options
-
   // Owner create EHR page variables
   contractAddress: string = '';
   name?: string;
@@ -52,16 +48,17 @@ export class AppComponent implements OnInit {
   hcpAddress?: string;
   hcpAccessVitals: boolean = false;
   hcpAccess: boolean = false;
+  hcpAccessVitals: boolean = false;
+  hcpAccess: boolean = false;
 
   // Current menu item selected from HCP menu
   hcpMenuSelected?: number = 0; // For menu options
   provider?: ethers.providers.Web3Provider;
   account?: ethers.Wallet;
   signer?: ethers.providers.JsonRpcSigner;
-  address?: string; // Address of the current account signed in through MetaMask
+  address: string = ''; // Address of the current account signed in through MetaMask
   signedName?: string; // Name of the current account signed in through MetaMask for later iterations
   signedRole?: string; // Role of the current account signed in through MetaMask
-
   //HCP acces to patient info
   patientName?: string;
   dob?: string;
@@ -99,18 +96,14 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {
     console.log('AppComponent constructor');
   }
-
   // For later iterations using lifecycle hooks
   ngOnInit(): void {}
-
   // Connect to MetaMask and sign-in with one of the roles
   async connectWallet() {
     try {
       console.log('connectWallet');
-
       // Connect to the provider
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
-
       if (window.ethereum) {
         // Get the account to use for interaction with SmartHealth contract(s)
         let accounts = await this.provider.send('eth_requestAccounts', []);
@@ -120,7 +113,6 @@ export class AppComponent implements OnInit {
         let queryParams = new HttpParams().append('address', this.address);
         console.log(`account: ${accounts[0]}\n`);
         console.log(`account: ${await this.signer.getAddress()}\n`);
-
         this.http
           .get<any>('http://localhost:3000/signed-name/address', {
             params: queryParams,
@@ -140,7 +132,6 @@ export class AppComponent implements OnInit {
               console.log('unknown role');
             }
           });
-
         this.ownerMenuSelected = -1; // Hide the sign-in button
         this.hcpMenuSelected = -1; // Hide the sign-in button
       } else {
@@ -150,7 +141,6 @@ export class AppComponent implements OnInit {
       console.log(error);
     }
   }
-
   // Simple listener to callback on owner create EHR menu item
   onCreateEHR(menuSelected: number) {
     this.ownerMenuSelected = menuSelected;
@@ -265,38 +255,36 @@ export class AppComponent implements OnInit {
     this.ownerMenuSelected = menuSelected;
     this.roleSelected = -1;
   }
-
   // Simple listener to callback on HCP Access patient info menu item
   async onAccessPatientInfo(menuSelected: number) {
+  async onAccessPatientInfo(menuSelected: number) {
     this.hcpMenuSelected = menuSelected;
-    // let queryParams = new HttpParams().append('address', this.address);
-    // try {
-    //   // Need the right endpoint for hcp to view patient vitals
-    //   this.http
-    //     .get<any>('http://localhost:3000/view/vitals', {
-    //       params: queryParams,
-    //       observe: 'response',
-    //     })
-    //     .subscribe((ans) => {
-    //       this.heartRate = ans.body.heartRate;
-    //       this.bloodPressure = ans.body.bloodPressure;
-    //       this.oxygenSaturation = ans.body.oxygenSat;
-    //       this.temperature = ans.body.temperature;
-    //       if (ans.status === 200) {
-    //         this.hcpAccess = true;
-    //       }
-    //     });
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    let queryParams = new HttpParams().append('address', this.address);
+    try {
+      // Need the right endpoint for hcp to view patient vitals
+      this.http
+        .get<any>('http://localhost:3000/view/vitals', {
+          params: queryParams,
+          observe: 'response',
+        })
+        .subscribe((ans) => {
+          this.heartRate = ans.body.heartRate;
+          this.bloodPressure = ans.body.bloodPressure;
+          this.oxygenSaturation = ans.body.oxygenSat;
+          this.temperature = ans.body.temperature;
+          if (ans.status === 200) {
+            this.hcpAccess = true;
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
-
   onHcpExit(menuSelected: number) {
     this.hcpMenuSelected = menuSelected;
     this.roleSelected = -1;
     console.log(`todo ${menuSelected}`);
   }
-
   submitPatientInfo(patientName: string, dob: string) {
     this.roleSelected = 1;
     this.hcpMenuSelected = 1;

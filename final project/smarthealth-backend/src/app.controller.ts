@@ -19,12 +19,12 @@ export class AppController {
   // @Get('signed-name/address?')
   // initializeAccounts(@Param ('address') address: string): Promise<{ result: string }> {
   //   return this.appService.initializeAccounts(address);
-  // } 
+  // }
 
   @Get('signed-name/address?')
-  initializeAccounts(@Query ('address') address: string): Promise<any> {
+  initializeAccounts(@Query('address') address: string): Promise<any> {
     return this.appService.initializeAccounts(address);
-  } 
+  }
 
   @Get('check/role')
   @ApiOperation({ summary: 'Check signer role by address' })
@@ -58,5 +58,11 @@ export class AppController {
   @ApiOperation({ summary: "View patient's vitals" })
   viewVitals(@Query('address') address: string): Promise<any> {
     return this.appService.viewPatientVitals(address);
+  }
+
+  @Get('view/hcp')
+  @ApiOperation({ summary: 'View HCP details' })
+  viewHCPDetails(): Promise<any> {
+    return this.appService.viewHCPDetails();
   }
 }

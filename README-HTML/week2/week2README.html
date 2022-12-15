@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>This Ballot Project demonstrates an on-chain ballot voting system consisting of proposals that voters can vote on for a winning proposal by following the rules of the Ballot&period;sol contract&period;</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="this-ballot-project-demonstrates-an-on-chain-ballot-voting-system-consisting-of-proposals-that-voters-can-vote-on-for-a-winning-proposal-by-following-the-rules-of-the-ballotsol-contract">This Ballot Project demonstrates an on-chain ballot voting system consisting of proposals that voters can vote on for a winning proposal by following the rules of the Ballot.sol contract.</h1>
+<p>This project uses yarn (as package manager), hardhat (as self contained dev environment to deploy and run the Ballot contract locally on a virtualized ethereum node), ethers.js (for connecting to a public blockchain testnet (Goerli), Typescript for writing tests with TDD approach, mocha test framework, chai for TDD/BDD assertions, and dotenv for loading the environment.</p>
+<p>Run the following tasks to build, deploy and use the contract to vote on proposals:</p>
+<pre><code class="language-shell">git clone this repo to your local environment
+ensure node, yarn are installed
+yarn install
+yarn compile
+yarn config set nodeLinker node-modules
+yarn add hardhat --dev
+yarn hardhat init
+&quot;Create a Typescript project&quot;
+.gitignore? y
+yarn add --dev [list of suggested dev dependencies from running the above command]
+yarn add mocha --dev
+```shell
+
+code .
+
+</code></pre>
+
+        
+        
+    </body>
+    </html>

@@ -1,6 +1,6 @@
-import { Bytes, ethers } from 'ethers';
-import { SmartHealth__factory } from '../typechain-types';
-import * as dotenv from 'dotenv';
+import { ethers } from "ethers";
+import { SmartHealth__factory } from "../typechain-types";
+import * as dotenv from "dotenv";
 dotenv.config();
 
 function convertObjectByte32(obj: object) {
@@ -41,7 +41,13 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 // };
 
 //Input Parameters:
-let person = { name: "Jorge", age: "34", birthSex: "Male", weight: "190" };
+let person = {
+  name: "Jorge",
+  age: "34",
+  birthSex: "Male",
+  weight: "190",
+  height: "5,7",
+};
 let personVital = {
   heartRate: "75",
   bloodPressure: "12/80",
