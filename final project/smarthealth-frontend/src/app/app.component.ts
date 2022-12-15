@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ethers } from 'ethers';
+import { FormControl, FormGroup } from '@angular/forms';
 import { encrypt } from 'eth-sig-util';
 import { bufferToHex } from 'ethereumjs-util';
 
@@ -30,12 +31,27 @@ export class AppComponent implements OnInit {
   ownerMenuSelected?: number = 0; // For menu options
 
   // Owner create EHR page variables
+  contractAddress: string = '';
+  name?: string;
+  age?: string;
+  sex?: number;
+  weight?: number;
+  height?: number;
+  heartRateEHR?: number;
+  bloodPressureEHR?: string;
+  oxygenSaturationEHR?: number;
+  temperatureEHR?: number;
 
   // Owner authorize EHR to HCP page variables
+  HCPName?: string;
+  vitals?: string;
+  reason?: string;
 
   // HCP sign-in page variables
   hcpName?: string;
   hcpAddress?: string;
+  hcpAccessVitals: boolean = false;
+  hcpAccess: boolean = false;
 
   // Current menu item selected from HCP menu
   hcpMenuSelected?: number = 0; // For menu options
@@ -58,6 +74,27 @@ export class AppComponent implements OnInit {
   decryptedEHR?: any;
 
   // Owner HCP access patient info page variables
+  //Forms
+  sub = new FormGroup({
+    data: new FormGroup({
+      name: new FormControl('John Smith'),
+      age: new FormControl(25),
+      sex: new FormControl('Male'),
+      height: new FormControl(170),
+      weight: new FormControl(150),
+      heartRate: new FormControl(80),
+      bloodPressure: new FormControl('120/70'),
+      oxygenSaturation: new FormControl('98%'),
+      temperature: new FormControl('99F'),
+    }),
+  });
+  sub2 = new FormGroup({
+    hcp: new FormGroup({
+      HCPName: new FormControl('Summit Medical Clinic'),
+      vitals: new FormControl('1'),
+      reason: new FormControl('PCP Referral'),
+    }),
+  });
 
   constructor(private http: HttpClient) {
     console.log('AppComponent constructor');
@@ -119,9 +156,62 @@ export class AppComponent implements OnInit {
     this.ownerMenuSelected = menuSelected;
   }
 
+  submitCreate(data: FormGroup) {
+    console.log(data);
+    this.http
+      .post<any>('http://localhost:3000/create', {
+        name: this.sub.value.data?.name,
+        age: this.sub.value.data?.age,
+        sex: this.sub.value.data?.sex,
+        weight: this.sub.value.data?.weight,
+        height: this.sub.value.data?.height,
+        heartRate: this.sub.value.data?.heartRate,
+        bloodPressure: this.sub.value.data?.bloodPressure,
+        oxygenSaturation: this.sub.value.data?.oxygenSaturation,
+        temperature: this.sub.value.data?.temperature,
+      })
+      .subscribe((ans) => {
+        this.contractAddress = ans.contractAddress;
+        this.name = ans.data.name;
+        this.age = ans.data.age;
+        this.sex = ans.data.sex;
+        this.weight = ans.data.weight;
+        this.height = ans.data.height;
+        this.heartRateEHR = ans.data.heartRate;
+        this.bloodPressureEHR = ans.data.bloodPressure;
+        this.oxygenSaturationEHR = ans.data.oxygenSaturation;
+        this.temperatureEHR = ans.data.temperature;
+        console.log(
+          this.name,
+          this.contractAddress,
+          this.sex,
+          this.weight,
+          this.height,
+          this.heartRateEHR,
+          this.bloodPressureEHR,
+          this.oxygenSaturationEHR,
+          this.temperatureEHR
+        );
+      });
+  }
   // Simple listener to callback on owner authorize EHR to HCP menu item
   onAuthorizeHCP(menuSelected: number) {
     this.ownerMenuSelected = menuSelected;
+  }
+  submitAuthorize(hcp: FormGroup) {
+    console.log(this.sub2);
+    this.http
+      .post<any>('http://localhost:3000/authorize', {
+        name: this.sub2.value.hcp?.HCPName,
+        auth: this.sub2.value.hcp?.vitals,
+        reason: this.sub2.value.hcp?.reason,
+      })
+      .subscribe((ans) => {
+        this.HCPName = ans.name;
+        this.vitals = ans.auth;
+        this.reason = ans.reason;
+        console.log(ans.data.name, ans.data.auth, ans.data.reason);
+      });
   }
 
   async encryptEHR(ehrData: string) {
@@ -138,17 +228,17 @@ export class AppComponent implements OnInit {
           JSON.stringify(
             encrypt(
               this.encryptionKeyDisplay,
-              {'data':ehrData},
-              'x25519-xsalsa20-poly1305',
+              { data: ehrData },
+              'x25519-xsalsa20-poly1305'
             )
-            ),
-            'utf8'
-            )
-          // this.encryptedMessage =  encrypt(
-          //     this.encryptionKeyDisplay,
-          //     {'data':ehrData},
-          //     'x25519-xsalsa20-poly1305',
-          //   )
+          ),
+          'utf8'
+        )
+        // this.encryptedMessage =  encrypt(
+        //     this.encryptionKeyDisplay,
+        //     {'data':ehrData},
+        //     'x25519-xsalsa20-poly1305',
+        //   )
       );
     } catch (error) {
       console.log(error);
@@ -177,29 +267,28 @@ export class AppComponent implements OnInit {
   }
 
   // Simple listener to callback on HCP Access patient info menu item
-  onAccessPatientInfo(menuSelected: number) {
+  async onAccessPatientInfo(menuSelected: number) {
     this.hcpMenuSelected = menuSelected;
-
-    let queryParams = new HttpParams().append(
-      this.patientName ? this.patientName : 'patientName',
-      this.dob ? this.dob : 'dob'
-    );
-
-    try {
-      // Need the right endpoint for hcp to view patient vitals
-      this.http
-        .get<any>('http://localhost:3000/view/vitals', {
-          params: queryParams,
-        })
-        .subscribe((ans) => {
-          this.heartRate = ans.result.heartRate;
-          this.bloodPressure = ans.result.bloodPressure;
-          this.oxygenSaturation = ans.result.oxygenSat;
-          this.temperature = ans.result.temperature;
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    // let queryParams = new HttpParams().append('address', this.address);
+    // try {
+    //   // Need the right endpoint for hcp to view patient vitals
+    //   this.http
+    //     .get<any>('http://localhost:3000/view/vitals', {
+    //       params: queryParams,
+    //       observe: 'response',
+    //     })
+    //     .subscribe((ans) => {
+    //       this.heartRate = ans.body.heartRate;
+    //       this.bloodPressure = ans.body.bloodPressure;
+    //       this.oxygenSaturation = ans.body.oxygenSat;
+    //       this.temperature = ans.body.temperature;
+    //       if (ans.status === 200) {
+    //         this.hcpAccess = true;
+    //       }
+    //     });
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   onHcpExit(menuSelected: number) {
@@ -212,6 +301,9 @@ export class AppComponent implements OnInit {
     this.roleSelected = 1;
     this.hcpMenuSelected = 1;
     console.log(`patient: ${patientName} , dob: ${dob} `);
+    if (this.hcpAccess) {
+      this.hcpAccessVitals = true;
+    }
   }
 
   onTodo(menuSelected: number) {

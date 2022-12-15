@@ -1,586 +1,529 @@
 <!-- Begin Landing page and Role play -->
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-    content="Secure and Smart Healthcare services, messaging and payment Web3 based platform">
-  <meta name="author" content="Raj Nakka, and other contributors">
-  <meta name="docsearch:language" content="en">
-  <meta name="docsearch:version" content="1.0">
-
-  <title>SmartHealth · Secure and Smart Healthcare services, messaging and payment Web3 based platform.</title>
-
-  <link rel="canonical" href="https://getbootstrap.com/">
-
-
-
-
-
-  <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
-  <link href="/docs/5.2/assets/css/docs.css" rel="stylesheet">
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-  <link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
-  <link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-  <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
-  <meta name="theme-color" content="#712cf9">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@getbootstrap">
-  <meta name="twitter:creator" content="@getbootstrap">
-  <meta name="twitter:title" content="Bootstrap">
-  <meta name="twitter:description"
-    content="Powerful, extensible, and feature-packed frontend toolkit. Build and customize with Sass, utilize prebuilt grid system and components, and bring projects to life with powerful JavaScript plugins.">
-  <meta name="twitter:image" content="/docs/5.2/assets/brand/bootstrap-social.png">
-
-  <meta property="og:url" content="https://getbootstrap.com/">
-  <meta property="og:title" content="Bootstrap">
-  <meta property="og:description"
-    content="Powerful, extensible, and feature-packed frontend toolkit. Build and customize with Sass, utilize prebuilt grid system and components, and bring projects to life with powerful JavaScript plugins.">
-  <meta property="og:type" content="website">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1000">
-  <meta property="og:image:height" content="500">
-  <meta property="og:image" content="/docs/5.2/assets/brand/bootstrap-social.png">
-
-  <script defer="" src="https://cdn.usefathom.com/script.js" data-site="ITUSEYJG"></script>
-
-  <script>
-    window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
-    ga('create', 'UA-146052-10', 'getbootstrap.com');
-    ga('set', 'anonymizeIp', true);
-    ga('send', 'pageview');
-  </script>
-  <script async="" src="https://www.google-analytics.com/analytics.js"></script>
-
-
-  <script id="_carbonads_projs" type="text/javascript"
-    src="https://srv.carbonads.net/ads/CKYIKKJL.json?segment=placement:getbootstrapcom&amp;callback=_carbonads_go"></script>
-</head>
-
-<!-- <head>
-  <meta charset="UTF-8">
-  <title>SmartHealth Dapp secure Healthcare services and payment platform</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/css/mdb.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="app.component.scss" type="text/css">
-</head> -->
-
-<body>
-  <main class="container-fluid">
-
-
-    <header>
-      <!-- <div id="logo-container">
-        <h1 id="logo-text" class="text-center align-baseline">
-          <span class="align-middle">
-            <font color="#0F52BA">Smart</font>
-          </span>
-          <font color="#FF2626">Health</font>
-        </h1>
-        <h3 id="logo-text" class="text-center">
-          <font color="white">Secure Healthcare services and payment Dapp</font>
-        </h3> -->
-        <!-- <img id="mm-logo" src="smarthealth.svg"> -->
-      <!-- </div> -->
-    </header>
-
-    <div class="container">
-      <div class="form-group row">
-        <div class="col-sm-3" style="background-color:black;">
-          <h1 id="logo-text" class="text-center align-baseline">
-            <span class="align-middle">
-              <font color="#0F52BA">Smart</font>
-            </span>
-            <span class="align-middle">
-              <font color="#FF2626">Health</font>
-            </span>
-          </h1>
-        </div>
-        <div class="col-sm-7" style="background-color:#1c1b1b;">
-          <h5 id="logo-text" class="text-center align-baseline">
-            <span class="align-middle">
-              <font color="white">Secure Healthcare services and payment Dapp</font>
-            </span>
-          </h5>
-          <div *ngIf="roleSelected==0">
-            <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
-          </div>
-          <div *ngIf="roleSelected==1">
-            <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
-          </div>
-          <div *ngIf="roleSelected==-1">
-            <p>Hello {{ signedRole }} user, good bye!</p>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="pull-right">
-            <p></p>
-            <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
-              <button (click)="connectWallet()" type="button" class="btn btn-primary"> Sign-In</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <!-- End Landing page and Role play -->
-
-
-      <!-- Begin Owner Menu and Details -->
-
-      <div *ngIf="roleSelected==0">
-        <!-- Owner Menu and Details-->
-        <div class="row">
-          <div class="col-md-4" style="background-color:black;">
-            <h3>Menu</h3>
-            <hr>
-            <ul class="menuItems">
-              <li>
-                <button type="button" (click)="onCreateEHR(1)">
-                  <span class="badge"></span>
-                  <span class="name">Create Health Record</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onAuthorizeHCP(2)">
-                  <span class="badge"></span>
-                  <span class="name">Authorize Health Record</span>
-                </button>
-              </li>
-              <li>
-              <li>
-                <button type="button" (click)="onAuthorizeHCP(2)">
-                  <span class="badge"></span>
-                  <span class="name">View Health Record</span>
-                </button>
-              </li>
-              <li>
-              <li>
-                <button type="button" (click)="onAuthorizeHCP(2)">
-                  <span class="badge"></span>
-                  <span class="name">Update Health Record</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onAuthorizeHCP(2)">
-                  <span class="badge"></span>
-                  <span class="name">Appointment Check-in Form</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onAuthorizeHCP(2)">
-                  <span class="badge"></span>
-                  <span class="name">Update Health Insurance</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onAuthorizeHCP(2)">
-                  <span class="badge"></span>
-                  <span class="name">Request Prescription Refill</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onTodo(3)">
-                  <span class="badge"></span>
-                  <span class="name">Encrypt Any Health Related info</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onTodo(4)">
-                  <span class="badge"></span>
-                  <span class="name">Decrypt Any Health Related info</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onTodo(5)">
-                  <span class="badge"></span>
-                  <span class="name">Encrypt and send off-chain</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onTodo(6)">
-                  <span class="badge"></span>
-                  <span class="name">Encrypt and send on-chain</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onTodo(6)">
-                  <span class="badge"></span>
-                  <span class="name">Find Best Healthcare Providers</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onTodo(6)">
-                  <span class="badge"></span>
-                  <span class="name">Manage Payments</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onTodo(6)">
-                  <span class="badge"></span>
-                  <span class="name">Send Payment</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onOwnerExit(7)">
-                  <span class="badge"></span>
-                  <span class="name">Exit</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <div class="col-md-1">
-          </div>
-          <div class="col-md-6" style="background-color:black;">
-            <h3>Details</h3>
-            <hr>
-            <div *ngIf="ownerMenuSelected==1">
-              <p></p>
-              <h4>Health Summary : </h4>
-
-              <br>
-              <form action="" class="form-horizontal">
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-4" for="acctIndex">Name</label>
-                  <div class="col-sm-4">
-                    <input #acctIndex type="string" placeholder="John Smith" class="form-control">
-                  </div>
-                </div>
-                <div>
-                  <p></p>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-4" for="other">Age</label>
-                  <div class="col-sm-4">
-                    <input #other type="text" placeholder="25" class="form-control">
-                  </div>
-                </div>
-                <div>
-                  <p></p>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-4" for="other">Birth Sex</label>
-                  <div class="col-sm-4">
-                    <input #other type="text" placeholder="Male" class="form-control">
-                  </div>
-                </div>
-                <div>
-                  <p></p>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-4" for="other">Height</label>
-                  <div class="col-sm-4">
-                    <input #other type="text" placeholder="70" class="form-control">
-                  </div>
-                </div>
-                <div>
-                  <p></p>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-4" for="other">Weight</label>
-                  <div class="col-sm-4">
-                    <input #other type="text" placeholder="150" class="form-control">
-                  </div>
-                </div>
-              </form>
-
-              <div>
-                <br>
-                <br>
-                <h4>Vitals :</h4>
-                <br>
-                <form action="" class="form-horizontal">
-                  <div class="form-group row">
-                    <div class="col-md-1"></div>
-                    <label class="control-label col-sm-4" for="other">Heart Rate</label>
-                    <div class="col-sm-4">
-                      <input #acctIndex type="string" placeholder="75 bpm" class="form-control">
-                    </div>
-                    <div>
-                      <p></p>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-1"></div>
-                    <label class="control-label col-sm-4" for="other">Blood Pressure</label>
-                    <div class="col-sm-4">
-                      <input #other type="text" placeholder="25" class="form-control">
-                    </div>
-                  </div>
-                  <div>
-                    <p></p>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-1"></div>
-                    <label class="control-label col-sm-4" for="other">Saturation</label>
-                    <div class="col-sm-4">
-                      <input #other type="text" placeholder="98%" class="form-control">
-                    </div>
-                  </div>
-                  <div>
-                    <p></p>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-1"></div>
-                    <label class="control-label col-sm-4" for="other">Temperature</label>
-                    <div class="col-sm-4">
-                      <input #other type="text" placeholder="99.5 F" class="form-control">
-                    </div>
-                  </div>
-                </form>
-                <br>
-                <div>
-                  <p></p>
-                  <div class="form-group row">
-                    <div class="col-md-5"></div>
-                    <div class="col-sm-4">
-                      <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <p></p>
-            </div>
-
-            <div *ngIf="ownerMenuSelected==2">
-              <form action="" class="form-horizontal">
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-4" for="other">HCP Name</label>
-                  <div class="col-sm-4">
-                    <input #ownerName type="text" placeholder="Summit Medical Clinic" class="form-control">
-                  </div>
-                </div>
-                <p></p>
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-4" for="other">Information to Authorize</label>
-                  <div class="col-sm-4">
-                    <select class="form-select-bg-size: 25px" aria-label="Default select example">
-                      <option selected>Vitals</option>
-                      <option value="1">Analitics1</option>
-                      <option value="2">Analitics2</option>
-                      <option value="3">Analitics3</option>
-                    </select>
-                  </div>
-                </div>
-                <p></p>
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-4" for="other">Reason</label>
-                  <div class="col-sm-4">
-                    <input #ownerName type="text" placeholder="PCP Referral" class="form-control">
-                  </div>
-                </div>
-              </form>
-              <p></p>
-              <div class="form-group row">
-                <div class="col-md-5"></div>
-                <div class="col-sm-4">
-                  <button (click)="{}" type="button" class="btn btn-primary"> Submit</button>
-                </div>
-              </div>
-              <p></p>
-              <p></p>
-            </div>
-
-            <div *ngIf="ownerMenuSelected==3">
-              <form action="" class="form-horizontal">
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-4" for="ehrData">Health Record: </label>
-                  <div class="col-sm-4">
-                    <input #ehrData type="text" placeholder="Summary:{Name:Joe Smith}(Age:25}" class="form-control">
-                  </div>
-                </div>
-                <p></p>
-                <div class="form-group row">
-                  <div class="col-md-5"></div>
-                  <div class="col-sm-4">
-                    <button (click)="encryptEHR(ehrData.value)" type="button" class="btn btn-primary"> Encrypt </button>
-                  </div>
-                </div>
-
-                <p></p>
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <div class="col-sm-11">
-                    <p class="text-break">Encryption key: {{ encryptionKeyDisplay }}</p>
-                  </div>
-                  <p></p>
-                  <div class="form-group row">
-                    <div class="col-md-1"></div>
-                    <div class="col-sm-11">
-                      <p class="text-break">Encrypted text: {{ encryptedEHR }}</p>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <div *ngIf="ownerMenuSelected==4">
-              <form action="" class="form-horizontal">
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <div class="col-sm-11">
-                    <p class="text-break">Encrypted EHR: {{ encryptedEHR }}</p>
-                  </div>
-                </div>
-                <p></p>
-                <div class="form-group row">
-                  <div class="col-md-5"></div>
-                  <div class="col-sm-4">
-                    <button (click)="decryptEHR()" type="button" class="btn btn-primary"> Decrypt </button>
-                  </div>
-                </div>
-
-                <p></p>
-                <div class="form-group row">
-                  <div class="col-md-1"></div>
-                  <div class="col-sm-11">
-                    <p class="text-break">Decrypted EHR: {{ decryptedEHR }}</p>
-                  </div>
-                  <p></p>
-                </div>
-              </form>
-
-
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
-      <!-- End Owner Menu and Details -->
-
-
-      <!-- Begin HCP Menu and Details -->
-      <div *ngIf="roleSelected==1">
-
-        <div class="row">
-          <div class="col-md-4" style="background-color:black;">
-            <h3>Menu</h3>
-            <hr>
-            <ul class="menuItems">
-              <li>
-                <button type="button" (click)="onAccessPatientInfo(1)">
-                  <span class="badge"></span>
-                  <span class="name">Access Patient Info</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" (click)="onHcpExit(2)">
-                  <span class="badge"></span>
-                  <span class="name">Exit</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <div class="col-md-1">
-          </div>
-          <div class="col-md-6" style="background-color:black;">
-            <h3>Details</h3>
-            <hr>
-            <div *ngIf="hcpMenuSelected==1">
-              <form action="" class="form-horizontal">
-                <div class="hcp-form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-3" for="patientName">Patient Name</label>
-                  <div class="col-sm-4">
-                    <input #patientName type="text" placeholder="Joe Smith" class="form-control">
-                  </div>
-                </div>
-                <div>
-                  <p></p>
-                </div>
-                <div class="hcp-form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-3" for="dob">Date Of Birth</label>
-                  <div class="col-sm-4">
-                    <input #dob type="text" placeholder="12/05/2017" class="form-control">
-                  </div>
-                </div>
-                <div>
-                  <p></p>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-4"></div>
-                  <div class="col-sm-4">
-                    <button disabled="submitPatientInfo(patientName.value, dob.value)" type="submit"
-                      class="btn btn-primary">
-                      Submit</button>
-                  </div>
-                </div>
-              </form>
-              <div style="margin-top:50px;">
-                <h4>Vitals </h4>
-                <div class="hcp-form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-3" for="heartRate">Heart Rate</label>
-                  <div class="col-sm-3">
-                    <div class="info"> {{ heartRate }} bpm</div>
-                  </div>
-                </div>
-                <div>
-                  <p></p>
-                </div>
-                <div class="hcp-form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-3" for="bp">Blood Pressure</label>
-                  <div class="col-sm-3">
-                    <div class="info"> {{ bloodPressure }} mm Hg</div>
-                  </div>
-                </div>
-                <div>
-                  <p></p>
-                </div>
-                <div class="hcp-form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-3" for="oxygenSat">Oxygen Saturation</label>
-                  <div class="col-sm-3">
-                    <div class="info"> {{ oxygenSaturation }} %</div>
-                  </div>
-                </div>
-                <div>
-                  <p></p>
-                </div>
-                <div class="hcp-form-group row">
-                  <div class="col-md-1"></div>
-                  <label class="control-label col-sm-3" for="temp">Temperature</label>
-                  <div class="col-sm-3">
-                    <div class="info"> {{ temperature }} F</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <p></p>
-              <br>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-1">
-        </div>
-      </div>
-      <!-- End HCP menu and details -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="smarthealth-header">
+  <div class="container-fluid">
+    <div class="title">
+      <img src="../assets/logo.png" width="45" alt="" class="d-inline-block align-middle mr-2">
+      <h1 class="d-inline-block align-middle mr-2"><strong class="smart">Smart</strong><strong
+          class="health">Health</strong></h1>
     </div>
-  </main>
-</body>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+          <a class="nav-link active" id="active" aria-current="page" href="#">Home</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+          <a class="nav-link" href="#">Features</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+          <a class="nav-link" href="#">Team</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1">
+    <button (click)="connectWallet()" type="button" class="btn btn-outline-primary" id="btn"> Sign In</button>
+  </div>
+  <div *ngIf="roleSelected==0" class="greeting">
+    <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
+  </div>
+  <div *ngIf="roleSelected==1" class="greeting">
+    <p>Hello {{ signedRole }}, &nbsp; welcome!</p>
+  </div>
+  <!-- <div *ngIf="roleSelected==-1" class="greeting">
+      <p>Good bye  {{ signedRole }}!</p>
+    </div> -->
+</nav>
+<br>
 
-</html>
+<div *ngIf="ownerMenuSelected==0 || hcpMenuSelected==0 || roleSelected==-1" class="content">
+  <h1 class="heading">Your Healthcare Information Managed And Authorized By You</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3>Why SmartHealth?</h3>
+        <p>Healthcare data breaches hit all-time high in 2021, impacting 45M people and continues to grow as health
+          systems and hospitals are under unprecedented stress from the pandemic. </p>
+        <button class="btn btn-outline-primary" id="content-btn">Learn More</button>
+      </div>
+      <div class="col">
+        <h3>How Does SmartHealth Help Humanity?</h3>
+        <p>Leverages Blockchain technology to give the control back to you
+          Secure login, creation and management of your own Electronic Health Record
+          Need-to-know information provided by you to an authorized party</p>
+        <button class="btn btn-outline-primary" id="content-btn">Learn More</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h3>What is SmartHealth?</h3>
+        <p>SmartHealth provides a secure platform using blockchain technology for exchanging Electronic Health Records
+          authorized by the patient to specific helathcare providers.</p>
+        <button class="btn btn-outline-primary" id="content-btn">Learn More</button>
+      </div>
+      <div class="col">
+        <h3>Working Software Demo</h3>
+        <p>
+          <strong>1. </strong>&nbsp; Front-end Angular, Bootstrap, Typescript
+          <br>
+          <strong>2. </strong>&nbsp; Integration With Metamask for Registration and Log In
+          <br>
+          <strong>3. </strong>&nbsp; EHR/PHR data Creation, Update, Transfer Capabilities
+          <br>
+          <strong>4. </strong>&nbsp; Back-end Nest.js with Node, Testnet, Solidity, Typescipt
+          <br>
+          <strong>5. </strong>&nbsp; Smart Contracts Support the Front-end Capabilities
+          <br>
+          <strong>6. </strong>&nbsp; External Oracle Integration with PriceMedic
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Landing page and Role play -->
+
+
+<!-- Begin Owner Menu and Details -->
+
+<div *ngIf="roleSelected==0">
+  <!-- Owner Menu and Details-->
+  <div class="row">
+    <div class="col-md-4" style="background-color:black;">
+      <h3>Menu</h3>
+      <hr>
+      <ul class="menuItems">
+        <li>
+          <button type="button" (click)="onCreateEHR(1)">
+            <span class="badge"></span>
+            <span class="name">Create Health Record</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onAuthorizeHCP(2)">
+            <span class="badge"></span>
+            <span class="name">Authorize Health Record</span>
+          </button>
+        </li>
+        <li>
+        <li>
+          <button type="button" (click)="onAuthorizeHCP(2)">
+            <span class="badge"></span>
+            <span class="name">View Health Record</span>
+          </button>
+        </li>
+        <li>
+        <li>
+          <button type="button" (click)="onAuthorizeHCP(2)">
+            <span class="badge"></span>
+            <span class="name">Update Health Record</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onAuthorizeHCP(2)">
+            <span class="badge"></span>
+            <span class="name">Appointment Check-in Form</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onAuthorizeHCP(2)">
+            <span class="badge"></span>
+            <span class="name">Update Health Insurance</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onAuthorizeHCP(2)">
+            <span class="badge"></span>
+            <span class="name">Request Prescription Refill</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onTodo(3)">
+            <span class="badge"></span>
+            <span class="name">Encrypt Any Health Related info</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onTodo(4)">
+            <span class="badge"></span>
+            <span class="name">Decrypt Any Health Related info</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onTodo(5)">
+            <span class="badge"></span>
+            <span class="name">Encrypt and send off-chain</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onTodo(6)">
+            <span class="badge"></span>
+            <span class="name">Encrypt and send on-chain</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onTodo(6)">
+            <span class="badge"></span>
+            <span class="name">Find Best Healthcare Providers</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onTodo(6)">
+            <span class="badge"></span>
+            <span class="name">Manage Payments</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onTodo(6)">
+            <span class="badge"></span>
+            <span class="name">Send Payment</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onOwnerExit(7)">
+            <span class="badge"></span>
+            <span class="name">Exit</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-1">
+    </div>
+    <div class="screen-col">
+      <h3>Details</h3>
+      <hr>
+      <div *ngIf="ownerMenuSelected==1">
+        <p></p>
+        <h4>Health Summary : </h4>
+        <br>
+        <form [formGroup]="sub" class="form-horizontal">
+          <div formGroupName="data" class="form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="other">Name</label>
+            <div class="col-sm-3">
+              <input formControlName="name" #other type="string" placeholder="John Smith" class="form-control">
+            </div>
+          </div>
+          <p></p>
+          <div formGroupName="data" class="form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="other">Age</label>
+            <div class="col-sm-3">
+              <input formControlName="age" #other type="number" placeholder="25" class="form-control">
+            </div>
+          </div>
+          <p></p>
+          <div formGroupName="data" class="form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="other">Birth Sex</label>
+            <div class="col-sm-3">
+              <input formControlName="sex" #other type="text" placeholder="Male" class="form-control">
+            </div>
+          </div>
+          <p></p>
+          <div formGroupName="data" class="form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="other">Height</label>
+            <div class="col-sm-3">
+              <input formControlName="height" #other type="number" placeholder="170" class="form-control">
+            </div>
+          </div>
+          <p></p>
+          <div formGroupName="data" class="form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="other">Weight</label>
+            <div class="col-sm-3">
+              <input formControlName="weight" #other type="number" placeholder="150" class="form-control">
+            </div>
+          </div>
+          <p></p>
+        </form>
+        <div>
+          <div><br><br>
+            <h4 class="h6">Vitals :</h4>
+            <br>
+            <form [formGroup]="sub" action="" class="form-horizontal">
+              <div formGroupName="data" class="form-group row">
+                <div class="col-md-1"></div>
+                <label class="control-label col-sm-3" for="other">Heart Rate</label>
+                <div class="col-sm-3">
+                  <input formControlName="heartRate" #other type="number" placeholder=75 class="form-control">
+                </div>
+              </div>
+              <p></p>
+              <div formGroupName="data" class="form-group row">
+                <div class="col-md-1"></div>
+                <label class="control-label col-sm-3" for="other">Blood Pressure</label>
+                <div class="col-sm-3">
+                  <input formControlName="bloodPressure" #other type="string" placeholder="25" class="form-control">
+                </div>
+              </div>
+              <p></p>
+              <div formGroupName="data" class="form-group row">
+                <div class="col-md-1"></div>
+                <label class="control-label col-sm-3" for="other">Saturation</label>
+                <div class="col-sm-3">
+                  <input formControlName="oxygenSaturation" #other type="string" placeholder="98%" class="form-control">
+                </div>
+              </div>
+              <p></p>
+              <div formGroupName="data" class="form-group row">
+                <div class="col-md-1"></div>
+                <label class="control-label col-sm-3" for="other">Temperature</label>
+                <div class="col-sm-3">
+                  <input formControlName="temperature" #other type="string" placeholder="99.5 F" class="form-control">
+                </div>
+              </div>
+              <p></p>
+            </form>
+          </div>
+          <br>
+          <div>
+            <p></p>
+            <div class="form-group row">
+              <div class="col-md-1"></div>
+              <div class="col-sm-5">
+                <button (click)="submitCreate(sub)" type="button" class="btn btn-outline-primary" id="submit">
+                  Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p></p>
+      </div>
+
+      <div *ngIf="ownerMenuSelected==2">
+        <p></p>
+        <h4>Authorization : </h4>
+        <br>
+        <form [formGroup]="sub2" class="form-horizontal ">
+          <div formGroupName="hcp" class="form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-4" for="other">HCP Name</label>
+            <div class="col-sm-4">
+              <input formControlName="HCPName" type="text" placeholder="Summit Medical Clinic" class="form-control">
+            </div>
+          </div>
+          <p></p>
+          <div class="form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-4" for="other">Authorize</label>
+            <div formGroupName="hcp" class="col-sm-4">
+              <select formControlName="vitals" class="form-select-bg-size: 25px" aria-label="Default select example">
+                <option selected>Vitals</option>
+                <option value="1">Analitics1</option>
+                <option value="2">Analitics2</option>
+                <option value="3">Analitics3</option>
+              </select>
+            </div>
+          </div>
+          <p></p>
+          <div formGroupName="hcp" class="form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-4" for="other">Reason</label>
+            <div class="col-sm-4">
+              <input formControlName="reason" type="text" placeholder="PCP Referral" class="form-control">
+            </div>
+          </div>
+        </form>
+        <p></p>
+        <div class="form-group row">
+          <div class="col-md-5"></div>
+          <div class="col-sm-4">
+            <button (click)="submitAuthorize(sub2)" type="button" class="btn btn-outline-primary" id="submit">
+              Submit</button>
+          </div>
+        </div>
+        <p></p>
+        <p></p>
+      </div>
+    <!-- </div> -->
+
+    <div *ngIf="ownerMenuSelected==3">
+      <form action="" class="form-horizontal">
+        <div class="form-group row">
+          <!-- <div class="col-md-1"></div> -->
+          <label class="control-label col-sm-4" for="ehrData">Health Record: </label>
+          <div class="col-sm-4">
+            <input #ehrData type="text" placeholder="Summary:{Name:Joe Smith}(Age:25}" class="form-control">
+          </div>
+        </div>
+        <p></p>
+        <div class="form-group row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <button (click)="encryptEHR(ehrData.value)" type="button" class="btn btn-primary"> Encrypt </button>
+          </div>
+        </div>
+
+        <p></p>
+        <div class="form-group row">
+          <!-- <div class="col-md-5"></div> -->
+          <div class="col-sm-11">
+            <p class="text-break">Encryption key: {{ encryptionKeyDisplay }}</p>
+          </div>
+          <p></p>
+          <div class="form-group row">
+            <!-- <div class="col-md-5"></div> -->
+            <div class="col-sm-11">
+              <p class="text-break">Encrypted text: {{ encryptedEHR }}</p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="ownerMenuSelected==4">
+      <form action="" class="form-horizontal">
+        <div class="form-group row">
+          <div class="col-md-1"></div>
+          <div class="col-sm-11">
+            <p class="text-break">Encrypted EHR: {{ encryptedEHR }}</p>
+          </div>
+        </div>
+        <p></p>
+        <div class="form-group row">
+          <div class="col-md-5"></div>
+          <div class="col-sm-4">
+            <button (click)="decryptEHR()" type="button" class="btn btn-primary"> Decrypt </button>
+          </div>
+        </div>
+
+        <p></p>
+        <div class="form-group row">
+          <div class="col-md-1"></div>
+          <!-- <div class="col-md-5"></div> -->
+          <div class="col-sm-11">
+            <p class="text-break">Decrypted EHR: {{ decryptedEHR }}</p>
+          </div>
+          <p></p>
+        </div>
+      </form>
+
+
+    </div>
+
+  </div>
+
+
+</div>
+</div>
+<!-- End Owner Menu and Details -->
+
+
+<!-- Begin HCP Menu and Details -->
+
+<div *ngIf="roleSelected==1">
+  <div class="row">
+    <div class="screen-col">
+      <h2>Menu</h2>
+      <hr>
+      <ul class="menuItems">
+        <li>
+          <button type="button" (click)="onAccessPatientInfo(1)">
+            <span class="badge"></span>
+            <span class="name">Access Patient Info</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" (click)="onHcpExit(2)">
+            <span class="badge"></span>
+            <span class="name">Exit</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-1">
+    </div>
+    <div class="screen-col">
+      <h2>Details</h2>
+      <hr>
+      <div *ngIf="hcpMenuSelected==1">
+        <br>
+        <h4>Patient :</h4>
+        <br>
+        <form action="" class="form-horizontal">
+          <div class="hcp-form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="patientName">Patient Name</label>
+            <div class="col-sm-4">
+              <input #patientName type="text" placeholder="Joe Smith" class="form-control">
+            </div>
+          </div>
+          <div>
+            <p></p>
+          </div>
+          <div class="hcp-form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="dob">Date Of Birth</label>
+            <div class="col-sm-4">
+              <input #dob type="text" placeholder="12/05/2000" class="form-control">
+            </div>
+          </div>
+          <div>
+            <p></p>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-4"></div>
+            <div class="col-sm-4">
+              <button (click)="submitPatientInfo(patientName.value, dob.value)" type="submit"
+                class="btn btn-outline-primary" id="submit">
+                Submit</button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="hcpAccessVitals" style="margin-top:50px;">
+          <h4>Vitals: </h4>
+          <br>
+          <div class="hcp-form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="heartRate">Heart Rate</label>
+            <div class="col-sm-3">
+              <div class="info">&nbsp; {{ heartRate }} bpm</div>
+            </div>
+          </div>
+          <div>
+            <p></p>
+          </div>
+          <div class="hcp-form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="bp">Blood Pressure</label>
+            <div class="col-sm-3">
+              <div class="info">&nbsp; {{ bloodPressure }} mm Hg</div>
+            </div>
+          </div>
+          <div>
+            <p></p>
+          </div>
+          <div class="hcp-form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="oxygenSat">Oxygen Saturation</label>
+            <div class="col-sm-3">
+              <div class="info">&nbsp; {{ oxygenSaturation }} %</div>
+            </div>
+          </div>
+          <div>
+            <p></p>
+          </div>
+          <div class="hcp-form-group row">
+            <div class="col-md-1"></div>
+            <label class="control-label col-sm-3" for="temp">Temperature</label>
+            <div class="col-sm-3">
+              <div class="info">&nbsp; {{ temperature }} F</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p></p>
+        <br>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1">
+  </div>
+</div>
+<!-- End HCP menu and details -->
