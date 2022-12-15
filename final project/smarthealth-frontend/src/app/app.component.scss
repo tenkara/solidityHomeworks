@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa');
 
 #smarthealth-header {
-  background-image: url(../assets/background.jpg);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,15,122,1) 100%);
   width: 100%;
   height: 7em;
   background-position: center;
@@ -12,8 +12,8 @@
 }
 
 body {
-  max-width: 100vh;
-  max-height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 img {
@@ -38,6 +38,7 @@ img {
   width: 150%;
 }
 
+
 #active {
   color: #ee0909c9;
 }
@@ -47,12 +48,14 @@ h1 {
   font-family: "Comfortaa";
   font-size: 2.3em;
   word-spacing: 0.2em;
+  color: #ffffff
 }
 
 
 h2 {
   font-family: "Comfortaa";
   font-size: 1.7em;
+  color: #ffffff
 }
 
 h3 {
@@ -60,12 +63,14 @@ h3 {
   font-weight: 600;
   font-family: "Comfortaa";
   letter-spacing: 0.02em;
+  color: #ffffff
 }
 
 h4 {
   font-family: "Comfortaa";
   letter-spacing: 0.02em;
-  font-size: 1.3em;
+  font-size: 1.3em; 
+  color: #ffffff
 }
 
 
@@ -73,6 +78,7 @@ p {
   font-size: 0.9em;
   line-height: 1.5em;
   letter-spacing: 0.02em;
+  color: #ffffff
 }
 
 input {
@@ -80,11 +86,14 @@ input {
   font-size: 14px;
   letter-spacing: 0.02em;
   width: 150%;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 
 label {
   font-family: "Comfortaa";
+  color: #ffffff;
   font-size: 14px;
   letter-spacing: 0.02em;
   margin-top: 0.8em;
@@ -95,6 +104,8 @@ select {
   width: 150%;
   border-radius: 6px;
   margin-top: -0.2em;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .content {
@@ -187,12 +198,13 @@ nav {
 }
 .menuItems button {
   flex: 1;
+  color: #ffffff;
   cursor: pointer;
   position: relative;
   font-size: 14px;
   font-family: "Comfortaa";
   left: 0;
-  background-color: #EEE;
+  background-color: #161653;
   margin: .5em;
   padding: 1em;
   border-radius: 6px;
@@ -202,8 +214,8 @@ nav {
 }
 
 .menuItems button:hover {
-  color: #174ACE;
-  background-color: #e6e6e6;
+  color: #a8c1ff;
+  background-color: #171751;
   left: .1em;
 }
 .menuItems button:active {
@@ -228,7 +240,7 @@ nav {
   // font-size: small;
   color: white;
   padding: 0.8em 0.7em 0 1em;
-  background-color: #3a57a0;
+  background-color: #174ACE;
   line-height: 45px;
   height: 3.45em;
   margin-left: -1.4em;

@@ -113,78 +113,96 @@
         <h2>Details</h2>
         <hr>
         <div *ngIf="ownerMenuSelected==1">
-          <h4>Health Summary</h4>
+          <h4>Health Summary : </h4>
           <br>
           <form [formGroup]="sub" class="form-horizontal">
             <div formGroupName="data" class="form-group row">
+              <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="other">Name</label>
               <div class="col-sm-3">
                 <input formControlName="name" #other type="string" placeholder="John Smith" class="form-control">
               </div>
             </div>
+            <p></p>
             <div formGroupName="data" class="form-group row">
+              <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="other">Age</label>
               <div class="col-sm-3">
                 <input formControlName="age" #other type="number" placeholder="25" class="form-control">
               </div>
             </div>
+            <p></p>
             <div formGroupName="data" class="form-group row">
+              <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="other">Birth Sex</label>
               <div class="col-sm-3">
                 <input formControlName="sex" #other type="text" placeholder="Male" class="form-control">
               </div>
             </div>
+            <p></p>
             <div formGroupName="data" class="form-group row">
+              <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="other">Height</label>
               <div class="col-sm-3">
                 <input formControlName="height" #other type="number" placeholder="170" class="form-control">
               </div>
             </div>
+            <p></p>
             <div formGroupName="data" class="form-group row">
+              <div class="col-md-1"></div>
               <label class="control-label col-sm-3" for="other">Weight</label>
               <div class="col-sm-3">
                 <input formControlName="weight" #other type="number" placeholder="150" class="form-control">
               </div>
             </div>
+            <p></p>
           </form>
           <div>
             <div><br><br>
-              <h6 class="h6">Vitals</h6>
+              <h4 class="h6">Vitals :</h4>
               <br>
               <form [formGroup]="sub" action="" class="form-horizontal">
                 <div formGroupName="data" class="form-group row">
+                  <div class="col-md-1"></div>
                   <label class="control-label col-sm-3" for="other">Heart Rate</label>
                   <div class="col-sm-3">
                     <input formControlName="heartRate" #other type="number" placeholder=75 class="form-control">
                   </div>
                 </div>
+                <p></p>
                 <div formGroupName="data" class="form-group row">
+                  <div class="col-md-1"></div>
                   <label class="control-label col-sm-3" for="other">Blood Pressure</label>
                   <div class="col-sm-3">
                     <input formControlName="bloodPressure" #other type="string" placeholder="25" class="form-control">
                   </div>
                 </div>
+                <p></p>
                 <div formGroupName="data" class="form-group row">
+                  <div class="col-md-1"></div>
                   <label class="control-label col-sm-3" for="other">Saturation</label>
                   <div class="col-sm-3">
                     <input formControlName="oxygenSaturation" #other type="string" placeholder="98%"
                       class="form-control">
                   </div>
                 </div>
+                <p></p>
                 <div formGroupName="data" class="form-group row">
+                  <div class="col-md-1"></div>
                   <label class="control-label col-sm-3" for="other">Temperature</label>
                   <div class="col-sm-3">
                     <input formControlName="temperature" #other type="string" placeholder="99.5 F" class="form-control">
                   </div>
                 </div>
+                <p></p>
               </form>
             </div>
             <br>
             <div>
               <p></p>
               <div class="form-group row">
-                <div class="col-md-5"></div>
-                <div class="col-sm-4">
+                <div class="col-md-1"></div>
+                <div class="col-sm-5">
                   <button (click)="submitCreate(sub)" type="button" class="btn btn-outline-primary" id="submit"> Submit</button>
                 </div>
               </div>
